@@ -1,0 +1,57 @@
+# pure-data-patchwork
+
+AB - simple A-B switcher;
+cents~ - quick cents to ratio;
+centToFloat - convert messages like "200c" into "0.2";
+chorus - CE-2'ish, with single triangle wave modulator;
+clipSymbol - limit a symbol to N characters;
+createCanvasArray - on creation, creates an N grid canvas, uses [else/canvas.wname] external;
+**delay~ - has filters, infinite feedback, modulation, pitch shifter and *magic***;   - has GUI;
+**fastSeq - record any input on text buffer with time tags, acts like a "midi rec"**;   - has GUI;
+feedForward~ - simple ff delay, no feedback;
+fileRec~ - convenience shell for [writesf~];
+fixSampleRate - to be used with [block~], adjusts smprate to a fixed value;
+freq - just maps 0-1 -> pow 3 -> * 21000;
+functionRandom
+functionSaw - sawtooth wave formula for sinesum;
+functionSquare - square wave formula for sinesum;
+functionTriangle - triangle wave formula for sinesum;
+getLast - get last element in a list;
+getPreset - input a path to a text file and spew it entirely;
+globalRegistry - ping pong system for smart patches, used with [register] (experimental);
+inputRange - trims midi input between two values;
+invertRatio - really, just "expr 1/($f1+1)-1";
+invoiceFilter~ - 2p / 4p with lowpass, highpass or bandpass, envelope, keytracking and modulation, use inside synth voice;
+keys - maps keyboard into 2 octave musical keyboard;
+**LFO~ - multi wave LFO, accepts cents, dBs and absolute values.** has GUi;
+limit~ - basic audio limiter;
+listFind - list as argument, list item as input, index as output;
+listIndex - quick find item by index;
+listMerge - interpolates two lists, like '1 2 3 4' + 'a b c d' = '1 a 2 b 3 c 4 d';
+listSink - receives a stream of floats/symbols, and outputs a N list;
+listStream - decompose a list into a stream;
+mainOut~ - quick shell for [dac~];
+makePair - quick shell for [makenote];
+midiVol - multiply 2nd float of a list by N;
+modulate - input + input * N;
+modulate~ - same as above, at audio rate;
+numSeq - create a stream of numbers;
+onePass - kinda like 'onebang', but with anything;
+openFile - open audio file, stores in a buffer and output buffer name;
+pitchShift~ - classic '2-tapehead' pitch shifter, with feedback crazyness;
+pot~ - "audio taper" potentiometer;
+prefixMsg - receives a message, prefix with argument (e.g: $0) and broadcast it to the patch;
+register - ping pong system for smmart patches, used with [globalRegistry] (experimental);
+**sampleKit~ - accepts list of audio files, quick load a kit and maps to keyboard**;
+**samplePlayer~ - can loop, reverse, change tempo, trim start/end and sync with bpm.** has GUI;
+scale - map numbers to musical scale, e.g: '0 1 2 3 4 5 6' => '0 2 4 5 7 9 11';
+sineSummer - wraps sinesum functions, [numSeq] and [renderWave] to feed a table. Choose how many partials;
+slowStream - limit a stream of data into N ms drips;
+softSig~ - just a softened [sig~];
+tableBank - used inside [sampleKit~];
+tone2ratio - really just 'expr pow(2, $f1/12)';
+waveShaper~ - turns ramp into sine, triangle or square. Aliased;
+wavetableOsc~ - 2-head wavetable oscillator with cross-fade;
+**wavetableSynth - 12-voice synthesizer with mono/unison mode, 2-osc/2-filter per voice, with all the gizmo.** has GUI;
+wavetableVoice~ - [wavetableSynth] voice;
+

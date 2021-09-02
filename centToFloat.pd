@@ -1,0 +1,32 @@
+#N canvas 0 95 418 374 12;
+#X obj 40 9 inlet;
+#X obj 40 34 symbol;
+#X obj 40 59 list fromsymbol;
+#X obj 40 84 t l l;
+#X obj 107 104 list length;
+#X obj 107 130 - 1;
+#X obj 40 155 list split;
+#X obj 73 180 == 99;
+#X obj 40 206 spigot;
+#X obj 40 231 list tosymbol;
+#X obj 40 256 f;
+#X text 114 180 c = ascii 99;
+#X text 202 16 useful when input can be a float or a cent value \,
+like LFO~ \, that can operate on absolute values or cents. append the
+'c' letter at the end of the number., f 26;
+#X obj 40 281 / 100;
+#X obj 40 306 outlet;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 3 1 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 1;
+#X connect 6 0 8 0;
+#X connect 6 1 7 0;
+#X connect 7 0 8 1;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 10 0 13 0;
+#X connect 13 0 14 0;
