@@ -1,4 +1,4 @@
-#N canvas 137 151 510 376 12;
+#N canvas 137 151 510 443 12;
 #X obj 82 111 keyup;
 #X obj 128 111 key;
 #X msg 82 136 \$1 0;
@@ -16,17 +16,18 @@
 #X msg 352 181 -1;
 #X obj 352 206 text delete \$0.keyboard, f 11;
 #X obj 82 174 unpack;
-#X obj 215 313 pack;
+#X obj 202 346 pack;
 #X obj 82 199 text search \$0.keyboard, f 11;
 #X msg 112 265 12;
 #X obj 142 293 + \$1;
-#X obj 215 338 outlet;
+#X obj 202 396 outlet;
 #X obj 206 234 inlet;
 #X obj 82 239 sel -1 25;
 #X obj 189 20 loadbang;
 #X obj 189 45 \$2;
 #X obj 189 74 sel 0;
 #X obj 128 136 pack f 127;
+#X obj 202 371 limit 0 128;
 #X connect 0 0 2 0;
 #X connect 1 0 5 0;
 #X connect 1 0 22 0;
@@ -38,7 +39,7 @@
 #X connect 9 0 10 0;
 #X connect 11 0 13 0;
 #X connect 11 1 12 1;
-#X connect 12 0 16 0;
+#X connect 12 0 23 0;
 #X connect 13 0 18 0;
 #X connect 14 0 15 0;
 #X connect 15 0 12 0;
@@ -49,3 +50,4 @@
 #X connect 20 0 21 0;
 #X connect 21 1 22 1;
 #X connect 22 0 11 0;
+#X connect 23 0 16 0;
