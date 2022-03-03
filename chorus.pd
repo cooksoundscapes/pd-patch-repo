@@ -5,7 +5,7 @@
 #X obj 140 212 outlet~;
 #X obj 140 177 xfade~ 0.5;
 #X obj 173 76 delwrite~ \$0chorus 100;
-#X obj 173 125 expr~ (abs($v1-.5)*12)+4;
+#X obj 173 125 expr~ (abs($v1-.5)*8)+4;
 #X connect 0 0 4 0;
 #X connect 0 0 5 0;
 #X connect 1 0 6 0;

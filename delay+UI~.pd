@@ -1,4 +1,4 @@
-#N canvas 669 187 450 451 12;
+#N canvas 66 158 908 511 12;
 #X obj 233 255 *~;
 #X obj 25 367 *~;
 #N canvas 253 155 450 300 reverse 0;
@@ -42,6 +42,7 @@
 #X connect 18 0 5 0;
 #X restore 49 274 pd reverse;
 #X obj 25 74 inlet~ fwd;
+#X obj 113 73 prefixMsg \$0;
 #X obj 63 407 outlet~;
 #N canvas 0 95 450 300 normal 0;
 #X obj 161 85 r \$0delay;
@@ -210,28 +211,98 @@
 #X connect 6 0 7 0;
 #X connect 7 0 1 0;
 #X restore 129 339 pd filtering;
+#X obj 387 47 cnv 15 75 120 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 464 47 cnv 15 115 120 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 581 47 cnv 15 102 120 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 685 47 cnv 15 78 120 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 765 47 cnv 15 116 120 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 394 64 vsl 17 70 0 1 0 0 \$0dry empty dry 0 -9 0 10 -262144
+-1 -1 6900 1;
+#X obj 421 64 vsl 17 70 0 1 0 0 \$0wet empty wet 0 -9 0 10 -262144
+-1 -1 6100 1;
+#X obj 515 64 vsl 17 70 0 1 0 0 \$0feedback empty feedback -13 -9 0
+10 -262144 -1 -1 6700 1;
+#X obj 478 64 vsl 17 70 0 2000 0 0 empty empty delay -10 -9 0 10 -262144
+-1 -1 900 1;
+#X obj 545 94 tgl 22 0 \$0reverse empty reverse -9 -7 0 10 -262144
+-1 -1 0 1;
+#X obj 614 64 vsl 17 70 0 1 0 0 \$0lp empty LP 0 -9 0 10 -262144 -1
+-1 4800 1;
+#X obj 641 64 vsl 17 70 0 1 0 0 \$0hp empty HP 0 -9 0 10 -262144 -1
+-1 2500 1;
+#X floatatom 600 142 5 0 0 0 Hz - -;
+#X floatatom 641 142 5 0 0 0 - - -;
+#X floatatom 478 142 5 0 0 1 ms - #0delay;
+#X obj 694 64 vsl 17 70 0 16 0 0 \$0modRate empty rate -6 -9 0 10 -262144
+-1 -1 600 1;
+#X obj 721 64 vsl 17 70 0 10 0 0 \$0modInt empty int. 0 -9 0 10 -262144
+-1 -1 1700 1;
+#X obj 775 64 vsl 17 70 -24 24 0 0 empty empty tune -7 -9 0 10 -262144
+-1 -1 3450 1;
+#X obj 802 64 vsl 17 70 0 1 0 0 \$0magic empty magic 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 775 142 5 0 0 1 semitones - #0pitch;
+#X obj 629 173 freq;
+#X obj 670 173 freq;
+#X msg 361 9 set 1;
+#X obj 694 141 hradio 15 1 0 2 empty \$0waveLabel sin 32 8 0 10 -262144
+-1 -1 1;
+#X msg 683 232 tri;
+#X msg 717 232 sin;
+#X msg 717 289 label \$1;
+#X obj 717 314 s \$0waveLabel;
+#X obj 717 264 symbol;
+#X obj 628 201 loadbang;
+#X obj 713 175 s \$0waveform;
+#X obj 694 201 sel 0 1;
 #X obj 66 129 *~;
 #X obj 84 104 pot~ \$0wet;
-#X obj 113 73 broadcast \$0;
-#X connect 0 0 13 0;
-#X connect 1 0 4 0;
-#X connect 2 0 7 0;
+#X obj 815 175 r \$0pitch;
+#X msg 815 200 set \$1;
+#X connect 0 0 14 0;
+#X connect 1 0 5 0;
+#X connect 2 0 8 0;
 #X connect 3 0 1 0;
 #X connect 3 0 2 0;
-#X connect 3 0 17 0;
-#X connect 3 1 19 0;
-#X connect 5 0 7 0;
-#X connect 7 0 16 0;
-#X connect 8 0 15 0;
-#X connect 9 0 1 1;
-#X connect 10 0 0 1;
-#X connect 11 0 2 1;
-#X connect 11 0 5 0;
-#X connect 12 0 14 0;
-#X connect 13 0 6 0;
-#X connect 14 0 6 0;
-#X connect 15 0 19 0;
-#X connect 16 0 0 0;
+#X connect 3 0 50 0;
+#X connect 3 1 4 0;
+#X connect 6 0 8 0;
+#X connect 8 0 17 0;
+#X connect 9 0 16 0;
+#X connect 9 0 40 0;
+#X connect 10 0 1 1;
+#X connect 11 0 0 1;
+#X connect 12 0 2 1;
+#X connect 12 0 6 0;
+#X connect 13 0 15 0;
+#X connect 14 0 7 0;
+#X connect 15 0 7 0;
 #X connect 16 0 4 0;
-#X connect 17 0 12 0;
-#X connect 18 0 17 1;
+#X connect 17 0 0 0;
+#X connect 17 0 5 0;
+#X connect 26 0 32 0;
+#X connect 28 0 38 0;
+#X connect 29 0 39 0;
+#X connect 35 0 37 0;
+#X connect 38 0 30 0;
+#X connect 39 0 31 0;
+#X connect 40 0 23 0;
+#X connect 41 0 48 0;
+#X connect 41 0 49 0;
+#X connect 42 0 46 0;
+#X connect 43 0 46 0;
+#X connect 44 0 45 0;
+#X connect 46 0 44 0;
+#X connect 47 0 42 0;
+#X connect 49 0 42 0;
+#X connect 49 1 43 0;
+#X connect 50 0 13 0;
+#X connect 51 0 50 1;
+#X connect 52 0 53 0;
+#X connect 53 0 35 0;
+#X coords 0 -1 1 1 496 140 1 386 30;

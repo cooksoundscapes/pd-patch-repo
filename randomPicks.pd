@@ -18,17 +18,17 @@
 #X obj 194 282 list length;
 #X obj 194 208 route list float;
 #X msg 248 239 0 \$1;
-#X text 57 17 1st arg is repeats \, rest of args is a list that contains
-the random iterations., f 28;
 #X obj 41 227 t b f;
 #X obj 41 279 list split;
 #X msg 74 304 \$1;
+#X text 57 17 1st arg sets iterations \, rest of args is a list that
+contains the random choices, f 28;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 2 0 3 0;
 #X connect 3 0 5 0;
-#X connect 5 0 19 0;
-#X connect 6 0 20 0;
+#X connect 5 0 18 0;
+#X connect 6 0 19 0;
 #X connect 7 0 8 0;
 #X connect 8 0 9 0;
 #X connect 9 0 10 0;
@@ -46,7 +46,7 @@ the random iterations., f 28;
 #X connect 16 2 14 0;
 #X connect 17 0 6 1;
 #X connect 17 0 15 0;
-#X connect 19 0 6 0;
-#X connect 19 1 20 1;
-#X connect 20 1 21 0;
-#X connect 21 0 4 0;
+#X connect 18 0 6 0;
+#X connect 18 1 19 1;
+#X connect 19 1 20 0;
+#X connect 20 0 4 0;

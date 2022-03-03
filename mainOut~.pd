@@ -1,28 +1,35 @@
-#N canvas 5 95 450 300 12;
-#X obj 201 37 cnv 2 63 2 empty \$0label 0.00\ dB 2 12 1 12 -1 -1 0
-;
+#N canvas 5 95 429 530 12;
+#X obj 104 324 cnv 2 63 2 empty \$0label 0.00\\\ dB 2 12 1 12 #000000
+#000000 0;
 #X obj 46 88 inlet~;
 #X obj 46 181 *~;
 #X obj 204 86 pow 2;
 #X obj 204 187 s \$0label;
 #X obj 204 111 expr 20 * log10($f1);
 #X obj 204 137 makefilename %.2f;
-#X obj 207 55 hsl 52 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 5100 1;
+#X obj 110 342 hsl 52 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 145 137 lop~ 20;
 #X obj 336 78 1;
 #X obj 336 53 loadbang;
 #X msg 204 162 label \$1\\\ dB;
 #X obj 46 210 dac~ 1 2;
 #X obj 99 88 inlet~;
-#X obj 253 43 tgl 8 0 empty empty empty 17 7 0 10 -258113 -261682 -1
-1 1;
+#X obj 156 330 tgl 8 0 empty empty empty 17 7 0 10 #fc0400 #fce0c4
+#000000 0 1;
 #X obj 99 181 *~;
 #X obj 67 129 *~ 1;
-#X obj 88 39 == 0;
+#X obj 90 38 == 0;
+#X obj 49 264 else/vu~;
+#X obj 58 325 vu 15 120 empty empty -1 -8 0 10 #404040 #000000 1 0
+;
+#X obj 177 274 else/vu~;
+#X obj 174 325 vu 15 120 empty empty -1 -8 0 10 #404040 #000000 1 0
+;
 #X connect 1 0 2 0;
 #X connect 1 0 16 0;
 #X connect 2 0 12 0;
+#X connect 2 0 18 0;
 #X connect 3 0 5 0;
 #X connect 3 0 8 0;
 #X connect 5 0 6 0;
@@ -36,6 +43,11 @@
 #X connect 13 0 15 0;
 #X connect 14 0 17 0;
 #X connect 15 0 12 1;
+#X connect 15 0 20 0;
 #X connect 16 0 15 0;
 #X connect 17 0 16 1;
-#X coords 0 -1 1 1 65 55 1 200 20;
+#X connect 18 0 19 0;
+#X connect 18 1 19 1;
+#X connect 20 0 21 0;
+#X connect 20 1 21 1;
+#X coords 0 -1 1 1 180 150 1 50 300;

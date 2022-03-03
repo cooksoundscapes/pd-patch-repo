@@ -7,8 +7,8 @@
 #X obj 150 109 inlet;
 #X obj 117 162 list split;
 #X obj 117 71 t b f;
-#X msg 150 187 \$1;
-#X obj 150 212 outlet;
+#X msg 150 190 \$1;
+#X obj 150 215 outlet;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 2 0 3 1;

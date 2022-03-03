@@ -1,4 +1,4 @@
-#N canvas 514 212 852 411 12;
+#N canvas 594 296 680 411 12;
 #X obj 20 78 t l b b;
 #X obj 55 105 onePass;
 #X obj 55 130 timer;
@@ -53,29 +53,29 @@ cycle \, the list is sorted \;, f 45;
 #X restore 262 144 pd waits;
 #X obj 126 21 r \$0arm;
 #X obj 126 110 sel 1;
-#X obj 465 61 bng 24 250 50 0 empty empty armRecord -12 -5 0 10 -262144
--1 -1;
-#X obj 465 98 bng 24 250 50 0 empty empty play/stop -12 -7 0 10 -262144
--1 -1;
-#X floatatom 513 59 5 0 0 1 BPM #0BpmBox #0setBpm;
-#X floatatom 513 82 2 1 32 1 - - #0beats;
-#X floatatom 531 82 3 2 32 0 - - -;
-#X floatatom 513 36 5 0 0 1 bars - #0setBars;
-#X obj 582 89 cnv 16 60 16 empty \$0BarsLabel Bars:2 2 8 0 10 -99735
--262127 0;
-#X obj 582 36 cnv 15 60 16 empty \$0statusLabel stopped 2 8 0 12 -99735
--36310 0;
-#X obj 514 107 bng 15 250 50 0 empty empty clear 17 7 0 10 -262144
--1 -1;
+#X obj 465 61 bng 24 250 50 0 empty empty armRecord -12 -5 0 10 #fcfcfc
+#000000 #000000;
+#X obj 465 98 bng 24 250 50 0 empty empty play/stop -12 -7 0 10 #fcfcfc
+#000000 #000000;
+#X floatatom 513 59 5 0 0 1 BPM \$0BpmBox \$0setBpm 0;
+#X floatatom 513 82 2 1 32 1 - - \$0beats 0;
+#X floatatom 531 82 3 2 32 0 - - - 0;
+#X floatatom 513 36 5 0 0 1 bars - \$0setBars 0;
+#X obj 582 89 cnv 16 60 16 empty \$0BarsLabel Bars:0 2 8 0 10 #605858
+#fcfcb8 0;
+#X obj 582 36 cnv 15 60 16 empty \$0statusLabel clear 2 8 0 12 #605b58
+#ffffbb 0;
+#X obj 514 107 bng 15 250 50 0 empty empty clear 17 7 0 10 #fcfcfc
+#000000 #000000;
 #X text 180 14 1: rec \; 2: overdub;
 #N canvas 837 119 506 402 statusLabel 0;
 #X obj 76 349 s \$0statusLabel;
 #X msg 33 119 label armed \, color #ff0000 0 #ffffff, f 18;
 #X obj 254 148 metro 400;
-#X obj 254 173 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 254 127 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 254 173 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X obj 254 127 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 254 218 sel 0 1 2 3 5;
 #X msg 153 249 color #ff0000 0 #ffffff, f 13;
 #X msg 49 160 label REC;
@@ -83,7 +83,7 @@ cycle \, the list is sorted \;, f 45;
 #X msg 76 212 label running;
 #X msg 10 78 label clear \, color #605b58 0 #ffffbb, f 18;
 #X obj 254 193 +;
-#X floatatom 326 174 5 0 0 0 - - -;
+#X floatatom 326 174 5 0 0 0 - - - 0;
 #X msg 274 288 color #555555 0 #ffaa00, f 13;
 #X msg 374 249 color #555555 0 #21dd54, f 13;
 #X msg 384 289 color #21dd54 0 #ffffff, f 13;
@@ -153,7 +153,7 @@ cycle \, the list is sorted \;, f 45;
 #X connect 5 0 3 0;
 #X connect 6 1 5 0;
 #X connect 7 0 2 0;
-#X restore 541 5 pd resetUI;
+#X restore 531 5 pd resetUI;
 #N canvas 0 95 450 300 ArmingConditions 0;
 #X obj 136 41 f;
 #X msg 55 152 1;
@@ -184,7 +184,7 @@ cycle \, the list is sorted \;, f 45;
 #X connect 9 5 10 0;
 #X connect 10 0 2 0;
 #X restore 401 135 pd ArmingConditions;
-#N canvas 0 95 450 427 PlayingConditions 1;
+#N canvas 0 95 450 427 PlayingConditions 0;
 #X obj 112 183 f;
 #X obj 140 324 s \$0state;
 #X obj 150 183 r \$0state;
@@ -201,9 +201,9 @@ cycle \, the list is sorted \;, f 45;
 #X obj 196 375 outlet;
 #X text 331 136 0: clear \; 1: armed \; 2: stopped \; 3: armed-dub
 \; 4: recording \; 5: layering \; 6: playing;
-#X obj 113 66 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X floatatom 170 134 5 0 0 0 - - -;
+#X obj 113 66 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X floatatom 170 134 5 0 0 0 - - - 0;
 #X connect 0 0 7 0;
 #X connect 2 0 0 1;
 #X connect 2 0 16 0;
@@ -266,49 +266,40 @@ cycle \, the list is sorted \;, f 45;
 #X restore 401 183 pd processState;
 #X msg 85 78 symbol end;
 #X obj 85 53 r \$0endSignal;
-#N canvas 0 95 450 251 getLength 0;
+#N canvas 0 95 450 251 getLength 1;
 #X obj 59 21 inlet;
 #X obj 59 46 list split 1;
 #X obj 99 73 route symbol;
 #X obj 99 98 sel end;
 #X obj 59 182 s \$0length;
-#X obj 329 144 makefilename %.2fs, f 9;
-#X obj 329 118 / 1000;
-#X msg 248 179 label \$1;
-#X obj 248 204 s \$0lengthLabel;
+#X obj 248 125 s \$0lengthLabel;
 #X obj 59 148 spigot;
 #X msg 99 123 1, f 2;
 #X msg 145 128 0, f 2;
-#X obj 248 98 moses 2000;
-#X obj 248 126 makefilename %.1fms, f 10;
 #X obj 248 14 r \$0speed;
 #X obj 248 39 t b f;
 #X obj 248 73 * 1;
+#X obj 248 99 prettyTime;
 #X connect 0 0 1 0;
-#X connect 1 0 9 0;
+#X connect 1 0 6 0;
 #X connect 1 1 2 0;
 #X connect 2 0 3 0;
-#X connect 2 1 11 0;
-#X connect 3 0 10 0;
-#X connect 3 1 11 0;
-#X connect 5 0 7 0;
-#X connect 6 0 5 0;
-#X connect 7 0 8 0;
-#X connect 9 0 4 0;
-#X connect 9 0 16 0;
-#X connect 10 0 9 1;
-#X connect 11 0 9 1;
-#X connect 12 0 13 0;
-#X connect 12 1 6 0;
-#X connect 13 0 7 0;
-#X connect 14 0 15 0;
-#X connect 15 0 16 0;
-#X connect 15 1 16 1;
-#X connect 16 0 12 0;
+#X connect 2 1 8 0;
+#X connect 3 0 7 0;
+#X connect 3 1 8 0;
+#X connect 6 0 4 0;
+#X connect 6 0 11 0;
+#X connect 7 0 6 1;
+#X connect 8 0 6 1;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 10 1 11 1;
+#X connect 11 0 12 0;
+#X connect 12 0 5 0;
 #X restore 49 284 pd getLength;
 #X obj 262 43 sel 1;
-#X obj 570 108 hsl 70 14 0 1 0 0 empty \$0progressBar 3.8 -2 7 0 12
--228856 -260097 -202113 5549 1;
+#X obj 570 108 hsl 70 14 0 1 0 0 empty \$0progressBar 0 -2 7 0 12 #dcdcdc
+#fc8000 #c45800 0 1;
 #N canvas 0 95 450 300 progressBar 0;
 #X obj 204 37 r \$0play;
 #X obj 186 121 f;
@@ -457,12 +448,12 @@ cycle \, the list is sorted \;, f 45;
 #X connect 10 0 8 0;
 #X connect 11 0 9 0;
 #X restore 565 135 pd showTime;
-#X obj 513 82 cnv 15 43 19 empty \$0signatureLabel 4/4 2 10 0 14 -99865
--262130 0;
-#X obj 582 55 cnv 16 60 16 empty \$0lengthLabel 4.69s 2 8 0 10 -99735
--262127 0;
-#X obj 582 72 cnv 16 60 16 empty \$0BpmLabel BPM:102.4 2 8 0 10 -99735
--262127 0;
+#X obj 513 82 cnv 15 43 19 empty \$0signatureLabel 4/4 2 10 0 14 #606060
+#fcfcc4 0;
+#X obj 582 55 cnv 16 60 16 empty \$0lengthLabel - 2 8 0 10 #605b58
+#ffffbb 0;
+#X obj 582 72 cnv 16 60 16 empty \$0BpmLabel BPM:0.0 2 8 0 10 #605858
+#fcfcb8 0;
 #N canvas 153 140 450 300 noteOffs 0;
 #X obj 50 65 inlet;
 #X obj 50 152 outlet;
@@ -479,8 +470,12 @@ cycle \, the list is sorted \;, f 45;
 #X connect 5 0 4 0;
 #X connect 6 0 1 0;
 #X restore 231 245 pd noteOffs;
-#X obj 593 259 globalTransport;
-#X obj 593 284 sel 1;
+#X obj 550 237 globalTransport;
+#X obj 550 262 sel 1;
+#X obj 456 354 symbol \$0seq;
+#X obj 456 379 outlet;
+#X obj 456 304 r \$0state;
+#X obj 456 329 sel 5;
 #X connect 0 0 3 0;
 #X connect 0 1 1 0;
 #X connect 0 2 2 1;
@@ -530,4 +525,7 @@ cycle \, the list is sorted \;, f 45;
 #X connect 56 0 21 0;
 #X connect 57 0 58 0;
 #X connect 58 0 26 0;
+#X connect 59 0 60 0;
+#X connect 61 0 62 0;
+#X connect 62 0 59 0;
 #X coords 0 -1 1 1 198 98 1 450 30;
