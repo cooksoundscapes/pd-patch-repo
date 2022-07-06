@@ -1,0 +1,12 @@
+dry 1;
+level 1;
+time 57.3741;
+feedback 0.675798;
+modInt 2.85714;
+modRate 0.674719;
+waveform 1;
+reverse;
+lowpass 4868;
+highpass 0;
+pitch 7;
+magic 0.00435193;

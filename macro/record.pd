@@ -14,7 +14,7 @@
 #X obj 75 198 delay 60000;
 #X msg 17 198 stop;
 #X obj 396 390 outlet;
-#X obj 36 130 r recording\$0;
+#X obj 48 130 r recording\$0;
 #X obj 429 289 v size\$0;
 #X obj 463 315 v sr\$0;
 #X obj 425 63 v sr\$0;
@@ -36,8 +36,10 @@
 #X obj 25 362 array size;
 #X obj 244 344 array size;
 #X obj 396 263 symbol;
-#X obj 92 46 route set;
-#X obj 152 70 b;
+#X obj 176 105 b;
+#X msg 40 104 set \$1;
+#X obj 92 46 route table;
+#X obj 92 71 symbol;
 #X connect 0 0 1 0;
 #X connect 0 0 29 0;
 #X connect 1 0 5 0;
@@ -70,7 +72,13 @@
 #X connect 25 0 8 0;
 #X connect 27 0 33 0;
 #X connect 28 0 32 0;
-#X connect 28 1 36 0;
+#X connect 28 1 38 0;
 #X connect 35 0 9 0;
-#X connect 36 1 37 0;
-#X connect 37 0 0 0;
+#X connect 36 0 0 0;
+#X connect 37 0 32 0;
+#X connect 38 0 39 0;
+#X connect 38 1 36 0;
+#X connect 39 0 37 0;
+#X connect 39 0 33 1;
+#X connect 39 0 34 1;
+#X connect 39 0 35 1;

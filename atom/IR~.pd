@@ -21,7 +21,7 @@
 #X obj 235 246 array get \$0ir;
 #X obj 235 271 outlet;
 #X obj 235 220 b;
-#X msg 147 10 symbol ~/IRs;
+#X msg 147 10 symbol ~/samples/IRs;
 #X connect 0 0 10 0;
 #X connect 0 1 1 0;
 #X connect 1 0 17 0;
