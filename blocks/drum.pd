@@ -1,0 +1,23 @@
+#N canvas 458 221 450 300 12;
+#X obj 44 26 inlet;
+#X obj 62 218 clone sample-player 8;
+#X obj 62 243 outlet~;
+#X msg 270 65 symbol ~/samples;
+#X obj 270 90 openpanel;
+#X obj 199 171 prepend 0;
+#X msg 270 115 file \$1;
+#X obj 44 51 hold 1;
+#X obj 44 76 unpack;
+#X obj 283 146 hradio 15 1 0 8 empty empty empty 0 -8 0 10 #fcfcfc
+#000000 #000000 0;
+#X msg 44 101 \$1 location 0 \, \$1 play 1;
+#X connect 0 0 7 0;
+#X connect 1 0 2 0;
+#X connect 3 0 4 0;
+#X connect 4 0 6 0;
+#X connect 5 0 1 0;
+#X connect 6 0 5 0;
+#X connect 7 0 8 0;
+#X connect 8 0 10 0;
+#X connect 9 0 5 1;
+#X connect 10 0 1 0;

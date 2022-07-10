@@ -7,13 +7,13 @@
 #X obj 22 215 LP~;
 #X obj 84 102 route fuzz drive crush downsamp filter, f 21;
 #X obj 171 218 inlet~;
-#X obj 105 21 bng 18 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#X obj 107 23 bng 16 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000;
-#X obj 101 21 cnv 15 22 18 empty empty chg 2 10 0 10 #e0e0e0 #404040
+#X obj 107 23 cnv 16 16 16 empty empty chg 0 9 0 9 #e0e0e0 #404040
 0;
-#X msg 105 45 vis 1;
-#X obj 105 70 s pd-\$0drive;
-#N canvas 790 192 291 183 \$0drive 1;
+#X msg 107 45 vis 1;
+#X obj 107 70 s pd-\$0drive;
+#N canvas 790 192 291 183 \$0drive 0;
 #N canvas 670 192 441 404 (subpatch) 0;
 #X obj 11 81 cnv 15 256 152 empty \$0panel .::Drive-Degrade::. 0 11
 0 19 #e0e0e0 #404040 0;
