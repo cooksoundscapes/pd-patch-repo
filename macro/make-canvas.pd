@@ -1,4 +1,4 @@
-#N canvas 374 36 646 454 12;
+#N canvas 674 79 646 454 12;
 #X text 223 16 create and manipulate cnv objects on the parent window
 \;, f 30;
 #X floatatom 149 79 5 0 0 0 Top \$0setY \$0Y 0;
@@ -45,7 +45,7 @@ symbol Label \; \$1setBg symbol #fafafa \; \$1setFg symbol #343434
 #X connect 3 0 2 0;
 #X restore 368 174 pd init_values;
 #X obj 461 305 r \$0window_name;
-#N canvas 134 148 447 300 cook_list 1;
+#N canvas 134 148 447 300 cook_list 0;
 #X obj 33 28 r \$0X;
 #X obj 76 30 r \$0Y;
 #X obj 130 60 r \$0W;
