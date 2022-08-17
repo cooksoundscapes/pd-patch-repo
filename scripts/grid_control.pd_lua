@@ -61,13 +61,23 @@ function grid_control:in_1_list(button)
                 end
             else
                 local next_state = self.state_actions[current_state]()
-                if self.mode == modes.columnsAsTracks and next_state == states.play_cue then
-                    -- if other slot in that column is in play cue, stop it
+                if self.mode == modes.columnsAsTracks then
                     local column = button[1] % 8
-                    for i = 0, 7 do
-                        if self.state[i*8+column] == states.play_cue then
-                            self.state[i*8+column] = states.stopped
-                            self:outlet(1, "list", {i*8+column, states.stopped})  
+                    -- if other slot in that column is in play cue, stop it
+                    if next_state == states.play_cue then
+                        for i = 0, 7 do
+                            if self.state[i*8+column] == states.play_cue then
+                                self.state[i*8+column] = states.stopped
+                                self:outlet(1, "list", {i*8+column, states.stopped})  
+                            end
+                        end
+                    -- if other slot in that column is in rec_cue, set empty
+                    elseif next_state == states.rec_cue then
+                        for i = 0, 7 do
+                            if self.state[i*8+column] == states.rec_cue then
+                                self.state[i*8+column] = states.empty
+                                self:outlet(1, "list", {i*8+column, states.empty})  
+                            end
                         end
                     end
                 end
@@ -82,9 +92,6 @@ function grid_control:in_2(sel, atoms)
     if sel == "bang" then --> resolve all cues
         for i = 0, 63 do --> traverse all grid
             if self.state[i] == states.rec_cue then
-                self.state[i] = states.recording
-                self:outlet(1, "list", {i, states.recording})
-            elseif self.state[i] == states.play_cue then
                 if self.mode == modes.columnsAsTracks then
                     -- if a slot in that column is playing, stop it now
                     local column = i % 8
@@ -95,8 +102,24 @@ function grid_control:in_2(sel, atoms)
                         end
                     end
                 end
+                self.state[i] = states.recording
+                self:outlet(1, "list", {i, states.recording})
+
+            elseif self.state[i] == states.play_cue then
+                if self.mode == modes.columnsAsTracks then
+                    -- if a slot in that column is playing, stop it now
+                    local column = i % 8
+                    for c=0, 7 do
+                        if self.state[c*8+column] == states.playing 
+                        or self.state[c*8+column] == states.recording then
+                            self.state[c*8+column] = states.stopped
+                            self:outlet(1, "list", {c*8+column, states.stopped})
+                        end
+                    end
+                end
                 self.state[i] = states.playing 
                 self:outlet(1, "list", {i, states.playing})
+
             elseif self.state[i] == states.stop_cue then
                 self.state[i] = states.stopped
                 self:outlet(1, "list", {i, states.stopped})

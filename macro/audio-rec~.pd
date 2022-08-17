@@ -36,11 +36,11 @@
 #X obj 92 142 symbol;
 #X text 31 4 Basic audio recorder abstraction.;
 #X obj 210 135 b;
-#X obj 92 93 route table reload bang;
 #X text 31 20 Bang starts/stops recording \, "table" msg sets array
 \; * left outlet outputs rec info and right outlet rec state. *;
-#X connect 0 0 1 0;
-#X connect 0 0 27 0;
+#X obj 329 162 change;
+#X obj 92 93 route table reload bang rec;
+#X connect 0 0 37 0;
 #X connect 1 0 5 0;
 #X connect 1 1 7 0;
 #X connect 2 0 25 0;
@@ -70,7 +70,7 @@
 #X connect 20 0 30 0;
 #X connect 25 0 29 0;
 #X connect 26 0 28 0;
-#X connect 26 1 36 0;
+#X connect 26 1 38 0;
 #X connect 31 0 9 0;
 #X connect 32 0 28 0;
 #X connect 33 0 32 0;
@@ -78,6 +78,9 @@
 #X connect 33 0 30 1;
 #X connect 33 0 31 1;
 #X connect 35 0 8 0;
-#X connect 36 0 33 0;
-#X connect 36 1 35 0;
-#X connect 36 2 0 0;
+#X connect 37 0 27 0;
+#X connect 37 0 1 0;
+#X connect 38 0 33 0;
+#X connect 38 1 35 0;
+#X connect 38 2 0 0;
+#X connect 38 3 0 0;
