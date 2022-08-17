@@ -1,6 +1,6 @@
-#N canvas 241 127 353 271 12;
-#X obj 93 33 inlet;
-#N canvas 259 64 406 479 table-reader 1;
+#N canvas 241 127 370 288 12;
+#X obj 24 68 inlet;
+#N canvas 259 64 406 479 table-reader 0;
 #X obj 42 244 *~;
 #X obj 42 269 +~;
 #X obj 42 330 tabread4~;
@@ -82,11 +82,11 @@
 #X connect 36 0 13 0;
 #X connect 37 0 12 0;
 #X connect 38 0 28 0;
-#X restore 93 141 pd table-reader;
-#X obj 82 172 outlet~;
-#X obj 180 206 outlet;
-#X obj 93 60 broadcast \$0;
-#N canvas 404 168 423 320 set_values 0;
+#X restore 24 176 pd table-reader;
+#X obj 13 207 outlet~;
+#X obj 111 241 outlet;
+#X obj 24 95 broadcast \$0;
+#N canvas 404 168 423 281 set_values 0;
 #X obj 82 19 r \$0table;
 #X msg 26 64 set \$1;
 #X obj 26 95 s set-table\$0;
@@ -105,8 +105,6 @@
 #X obj 82 44 list split 1;
 #X obj 122 70 unpack;
 #X obj 122 150 mul 1;
-#X floatatom 28 232 13 0 0 0 - - - 0;
-#X floatatom 66 262 13 0 0 0 - - - 0;
 #X connect 0 0 15 0;
 #X connect 1 0 2 0;
 #X connect 3 0 4 0;
@@ -120,15 +118,13 @@
 #X connect 8 1 11 0;
 #X connect 11 0 14 0;
 #X connect 13 0 10 0;
-#X connect 13 0 18 0;
 #X connect 14 0 12 0;
-#X connect 14 0 19 0;
 #X connect 15 0 1 0;
 #X connect 15 1 16 0;
 #X connect 16 0 8 0;
 #X connect 16 1 9 0;
 #X connect 17 0 13 0;
-#X restore 93 87 pd set_values;
+#X restore 24 122 pd set_values;
 #N canvas 373 78 305 410 play_messages 0;
 #X obj 46 36 r \$0play;
 #X obj 125 52 > 0;
@@ -172,9 +168,12 @@
 #X connect 17 0 16 0;
 #X connect 17 1 18 0;
 #X connect 18 0 16 1;
-#X restore 93 114 pd play_messages;
-#X msg 144 172 pos \$1;
-#X msg 206 172 isPlaying \$1;
+#X restore 24 149 pd play_messages;
+#X msg 75 207 pos \$1;
+#X msg 137 207 isPlaying \$1;
+#X text 146 14 play: lvl | (lvl \, loc) \; trim: (start \, end) \;
+loop: 1 | 0 \; reverse: 1 | 0 \; table: (tName \, size \, smprate)
+\; speed: percent \;;
 #X connect 0 0 4 0;
 #X connect 1 0 2 0;
 #X connect 1 1 6 0;
