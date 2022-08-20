@@ -1,4 +1,4 @@
-#N canvas 241 127 370 288 12;
+#N canvas 241 127 382 295 12;
 #X obj 24 68 inlet;
 #N canvas 259 64 406 479 table-reader 0;
 #X obj 42 244 *~;

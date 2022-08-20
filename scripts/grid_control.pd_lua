@@ -93,10 +93,11 @@ function grid_control:in_2(sel, atoms)
         for i = 0, 63 do --> traverse all grid
             if self.state[i] == states.rec_cue then
                 if self.mode == modes.columnsAsTracks then
-                    -- if a slot in that column is playing, stop it now
+                    -- if a slot in that column is playing, or recording, stop it now
                     local column = i % 8
                     for c=0, 7 do
-                        if self.state[c*8+column] == states.playing then
+                        if self.state[c*8+column] == states.playing 
+                        or self.state[c*8+column] == states.recording then
                             self.state[c*8+column] = states.stopped
                             self:outlet(1, "list", {c*8+column, states.stopped})  
                         end
@@ -127,15 +128,21 @@ function grid_control:in_2(sel, atoms)
         end
     elseif sel == "flush" then --> output all saved state
         for i = 0, 63 do
-            self:outlet(1, "list", i, self.state[i])
+            if self.state[i] ~= nil then
+                self:outlet(1, "list", {i, self.state[i]})
+            end
         end
+    elseif sel == "reset" then
+        for i = 0, 63 do
+            self:outlet(1, "list", {i, 0})
+        end  
     elseif sel == "set" then
         local newState = states[atoms[2]]
         if newState ~= nil and atoms[1] >= 0 and atoms[1] <= 63 then
             self.state[atoms[1]] = newState
             self:outlet(1, "list", {atoms[1], newState})
         else 
-            self:error(string.format("State $s doesn't exists.", atoms[2]))
+            self:error(string.format("State %s doesn't exists.", atoms[2]))
         end
     elseif sel == "mode-set" then
         local newMode = modes[atoms[1]]

@@ -1,0 +1,11 @@
+#N canvas 458 221 450 300 12;
+#X obj 27 18 metronome;
+#X obj 154 36 sample-controller;
+#X obj 154 65 click~;
+#X obj 152 133 clone sample-track~ 8;
+#X obj 152 158 out~;
+#X obj 152 106 adc~ 1;
+#X obj 296 158 s positions;
+#X connect 3 0 4 0;
+#X connect 3 1 6 0;
+#X connect 5 0 3 0;

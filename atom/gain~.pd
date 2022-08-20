@@ -1,30 +1,30 @@
 #N canvas 821 227 450 314 12;
-#X obj 83 111 inlet~;
-#X obj 83 136 *~;
-#X obj 83 161 outlet~;
-#X obj 167 39 hsl 80 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#X obj 83 20 inlet~;
+#X obj 83 166 *~;
+#X obj 83 191 outlet~;
+#X obj 167 69 hsl 80 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
 #000000 #000000 0 1;
-#X obj 164 117 lop~ 50;
-#X obj 164 92 * 4;
-#X obj 231 112 rmstodb;
-#X obj 231 137 - 100;
-#X obj 231 162 makefilename %.2fdB;
-#X obj 231 212 s \$0db;
-#X obj 196 21 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#X obj 164 147 lop~ 50;
+#X obj 164 122 * 4;
+#X obj 231 142 rmstodb;
+#X obj 231 167 - 100;
+#X obj 231 192 makefilename %.2fdB;
+#X obj 231 242 s \$0db;
+#X obj 196 51 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000;
-#X obj 212 21 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#X obj 212 51 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000;
-#X obj 228 21 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#X obj 228 51 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000;
-#X obj 196 21 cnv 15 55 15 empty \$0db 12.04dB 12 6 0 10 #ffffff #ff0400
+#X obj 196 51 cnv 15 55 15 empty \$0db -100.00dB 0 6 0 10 #ffffff #ff0400
 0;
-#X obj 164 67 pow 3;
-#X obj 273 41 expr cbrt($f1);
-#X obj 61 54 savestate;
-#X msg 273 14 0.25;
-#X obj 121 79 f;
-#X obj 65 233 label;
-#X obj 231 187 label 10 55 1;
+#X obj 164 97 pow 3;
+#X obj 323 71 expr cbrt($f1);
+#X obj 61 84 savestate;
+#X msg 323 44 0.25;
+#X obj 121 109 f;
+#X obj 231 217 label 10 55 1;
+#X obj 164 20 inlet;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 3 0 14 0;
@@ -34,7 +34,7 @@
 #X connect 5 0 6 0;
 #X connect 6 0 7 0;
 #X connect 7 0 8 0;
-#X connect 8 0 20 0;
+#X connect 8 0 19 0;
 #X connect 10 0 17 0;
 #X connect 11 0 17 0;
 #X connect 12 0 17 0;
@@ -44,5 +44,6 @@
 #X connect 16 1 18 0;
 #X connect 17 0 15 0;
 #X connect 18 0 16 0;
-#X connect 20 0 9 0;
-#X coords 0 -1 1 1 94 38 1 160 20;
+#X connect 19 0 9 0;
+#X connect 20 0 3 0;
+#X coords 0 -1 1 1 94 38 1 160 50;
