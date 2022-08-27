@@ -75,7 +75,7 @@
 #X restore 214 338 pd prepare-message;
 #X obj 325 229 r positions;
 #X obj 197 25 loadbang;
-#X msg 197 50 mode-set columnsAsTracks \, reset, f 22;
+#X msg 197 51 mode columnsAsTracks \, reset, f 21;
 #X connect 0 0 1 0;
 #X connect 0 1 1 1;
 #X connect 1 0 6 0;

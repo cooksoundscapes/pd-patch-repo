@@ -1,4 +1,4 @@
-#N canvas 52 104 672 416 12;
+#N canvas 544 112 691 445 12;
 #X obj 251 156 timer;
 #X obj 251 131 t b b;
 #N canvas 205 156 451 349 minimum-taps 0;
@@ -30,30 +30,30 @@
 #X obj 251 105 inlet;
 #X obj 108 63 bng 14 250 50 0 empty empty empty 17 7 0 10 #202020 #ffe3c6
 #000000;
-#X obj 160 309 s tempo;
+#X obj 160 379 s tempo;
 #X obj 43 77 nbx 3 20 -1e+37 1e+37 0 0 empty empty Bpm 52 11 0 14 #202020
 #feffc6 #000000 0 256;
-#X msg 165 226 set \$1;
-#X msg 165 176 60000 \$1;
-#X obj 165 201 /;
-#X msg 43 264 60000 \$1;
-#X obj 43 289 /;
+#X msg 165 296 set \$1;
+#X msg 165 246 60000 \$1;
+#X obj 165 271 /;
+#X msg 43 334 60000 \$1;
+#X obj 43 359 /;
 #X obj 371 21 loadbang;
 #X obj 371 134 metro;
 #X obj 380 77 / 8;
-#X obj 371 374 s tick;
-#X obj 383 263 sel 0;
-#X obj 383 349 s beat;
+#X obj 371 414 s tick;
+#X obj 383 303 sel 0;
+#X obj 383 389 s beat;
 #X obj 380 51 r tempo;
-#X obj 436 349 s bar;
-#X obj 436 323 sel 0;
+#X obj 436 389 s bar;
+#X obj 436 363 sel 0;
 #X msg 198 71 120;
-#X obj 383 289 else/count 3;
+#X obj 383 329 else/count 3;
 #X obj 57 100 nbx 3 15 1 1e+09 0 0 empty empty beats 38 8 0 10 #202020
 #ff8300 #000000 0 256;
 #X msg 198 97 4;
 #X obj 371 231 else/count 7;
-#X obj 57 167 s beats\$0;
+#X obj 57 237 s beats\$0;
 #X obj 567 121 r beats\$0;
 #X obj 484 84 * 2;
 #X obj 484 109 - 1;
@@ -72,9 +72,10 @@
 #X obj 320 66 t b b;
 #X obj 43 120 hradio 12 1 0 4 empty empty empty 0 -8 0 10 #202020 #ffe3c6
 #000000 0;
-#X msg 77 193 number \$1;
+#X msg 77 263 number \$1;
 #X obj 108 6 r taptempo;
 #X obj 128 31 r resetmetro;
+#X floatatom 316 356 5 0 0 0 - - - 0;
 #X connect 0 0 2 0;
 #X connect 1 0 0 0;
 #X connect 1 1 0 1;
@@ -100,6 +101,7 @@
 #X connect 22 0 17 0;
 #X connect 22 0 20 0;
 #X connect 22 0 42 0;
+#X connect 22 0 46 0;
 #X connect 23 0 26 0;
 #X connect 23 0 43 0;
 #X connect 24 0 23 0;

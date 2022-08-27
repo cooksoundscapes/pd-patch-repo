@@ -25,6 +25,8 @@ function grid_control:initialize(sel, atoms)
     self.state = {}
     self.rec_armed = 0
     self.mode = modes.free
+    self.size = 64
+    self.delete_delay = 1000
     self.state_actions = {
         [states.empty] = function() if self.rec_armed == 1 then return states.rec_cue end end,
         [states.stopped] = function() return states.play_cue end,
@@ -34,6 +36,8 @@ function grid_control:initialize(sel, atoms)
         [states.play_cue] = function() return states.stopped end,
         [states.stop_cue] = function() return states.playing end
     }
+    self.deleteTimeout = pd.Clock:new():register(self, "deleteSlot")
+    self.willDelete = -1 --> slot to be deleted
     return true
 end
 
@@ -51,8 +55,10 @@ function grid_control:in_1_list(button)
             end 
             self:outlet(1, "list", { APC.rec_arm, self.rec_armed })
 
-        elseif button[1] >= 0 and button[1] <= 63 then --> process state!
+        elseif button[1] >= 0 and button[1] < self.size then --> process state!
             local current_state = self.state[button[1]]
+            self.willDelete = button[1]
+            self.deleteTimeout:delay(self.delete_delay)
 
             if current_state == nil then --> button was never used
                 if self.rec_armed == 1 then
@@ -85,66 +91,77 @@ function grid_control:in_1_list(button)
                 self:outlet(1, "list", {button[1], next_state})
             end
         end
+    else
+        self.deleteTimeout:unset()
     end
 end
 
-function grid_control:in_2(sel, atoms)
-    if sel == "bang" then --> resolve all cues
-        for i = 0, 63 do --> traverse all grid
-            if self.state[i] == states.rec_cue then
-                if self.mode == modes.columnsAsTracks then
-                    -- if a slot in that column is playing, or recording, stop it now
-                    local column = i % 8
-                    for c=0, 7 do
-                        if self.state[c*8+column] == states.playing 
-                        or self.state[c*8+column] == states.recording then
-                            self.state[c*8+column] = states.stopped
-                            self:outlet(1, "list", {c*8+column, states.stopped})  
-                        end
+function grid_control:in_2_bang() --> resolve cues
+    for i = 0, self.size - 1 do
+        if self.state[i] == states.rec_cue then
+            if self.mode == modes.columnsAsTracks then
+                -- if a slot in that column is playing or recording, stop it
+                local column = i % 8
+                for c=0, 7 do
+                    local slot = c*8+column
+                    if self.state[slot] == states.playing 
+                    or self.state[slot] == states.recording then
+                        self.state[slot] = states.stopped
+                        self:outlet(1, "list", {slot, states.stopped})  
                     end
                 end
-                self.state[i] = states.recording
-                self:outlet(1, "list", {i, states.recording})
+            end
+            self.state[i] = states.recording
+            self:outlet(1, "list", {i, states.recording})
 
-            elseif self.state[i] == states.play_cue then
-                if self.mode == modes.columnsAsTracks then
-                    -- if a slot in that column is playing, stop it now
-                    local column = i % 8
-                    for c=0, 7 do
-                        if self.state[c*8+column] == states.playing 
-                        or self.state[c*8+column] == states.recording then
-                            self.state[c*8+column] = states.stopped
-                            self:outlet(1, "list", {c*8+column, states.stopped})
-                        end
+        elseif self.state[i] == states.play_cue then
+            if self.mode == modes.columnsAsTracks then
+                -- if a slot in that column is playing, stop it now
+                local column = i % 8
+                for c=0, 7 do
+                    local slot = c*8+column
+                    if self.state[slot] == states.playing 
+                    or self.state[slot] == states.recording then
+                        self.state[slot] = states.stopped
+                        self:outlet(1, "list", {slot, states.stopped})
                     end
                 end
-                self.state[i] = states.playing 
-                self:outlet(1, "list", {i, states.playing})
+            end
+            self.state[i] = states.playing 
+            self:outlet(1, "list", {i, states.playing})
 
-            elseif self.state[i] == states.stop_cue then
-                self.state[i] = states.stopped
-                self:outlet(1, "list", {i, states.stopped})
-            end
+        elseif self.state[i] == states.stop_cue then
+            self.state[i] = states.stopped
+            self:outlet(1, "list", {i, states.stopped})
         end
-    elseif sel == "flush" then --> output all saved state
-        for i = 0, 63 do
-            if self.state[i] ~= nil then
-                self:outlet(1, "list", {i, self.state[i]})
-            end
+    end
+end
+
+function grid_control:in_2_flush()    
+    for i = 0, self.size - 1 do
+        if self.state[i] ~= nil then
+            self:outlet(1, "list", {i, self.state[i]})
         end
-    elseif sel == "reset" then
-        for i = 0, 63 do
-            self:outlet(1, "list", {i, 0})
-        end  
-    elseif sel == "set" then
+    end
+end
+
+function grid_control:in_2_reset()
+    for i = 0, self.size - 1 do
+        self.state[i] = 0
+        self:outlet(1, "list", {i, 0})
+    end
+end
+
+function grid_control:in_2(sel, atoms)    
+    if sel == "set" then
         local newState = states[atoms[2]]
-        if newState ~= nil and atoms[1] >= 0 and atoms[1] <= 63 then
+        if newState ~= nil and atoms[1] >= 0 and atoms[1] < self.size then
             self.state[atoms[1]] = newState
             self:outlet(1, "list", {atoms[1], newState})
         else 
             self:error(string.format("State %s doesn't exists.", atoms[2]))
         end
-    elseif sel == "mode-set" then
+    elseif sel == "mode" then
         local newMode = modes[atoms[1]]
         if newMode ~= nil then
             self.mode = newMode
@@ -153,4 +170,12 @@ function grid_control:in_2(sel, atoms)
             self:error(string.format("Mode %s doesn't exists.", atoms[1]))
         end
     end
+end
+
+function grid_control:deleteSlot()
+    self:outlet(1, "list", {self.willDelete, 0})
+end
+
+function grid_control:finalize()
+    self.deleteTimeout:destruct()
 end
