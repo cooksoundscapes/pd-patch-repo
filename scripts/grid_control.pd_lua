@@ -23,12 +23,12 @@ function grid_control:initialize(sel, atoms)
     self.inlets = 2
     self.outlets = 1
     self.state = {}
-    self.rec_armed = 0
+    self.rec_arm = 0
     self.mode = modes.free
     self.size = 64
     self.delete_delay = 1000
     self.state_actions = {
-        [states.empty] = function() if self.rec_armed == 1 then return states.rec_cue end end,
+        [states.empty] = function() if self.rec_arm == 1 then return states.rec_cue end end,
         [states.stopped] = function() return states.play_cue end,
         [states.recording] = function() return states.play_cue end,
         [states.playing] = function() return states.stop_cue end,
@@ -48,12 +48,12 @@ function grid_control:in_1_list(button)
     end
     if button[2] > 0 then --> note on
         if button[1] == APC.rec_arm then 
-            if self.rec_armed == 0 then
-                self.rec_armed = 1
+            if self.rec_arm == 0 then
+                self.rec_arm = 1
             else
-                self.rec_armed = 0
+                self.rec_arm = 0
             end 
-            self:outlet(1, "list", { APC.rec_arm, self.rec_armed })
+            self:outlet(1, "list", { APC.rec_arm, self.rec_arm })
 
         elseif button[1] >= 0 and button[1] < self.size then --> process state!
             local current_state = self.state[button[1]]
@@ -61,7 +61,7 @@ function grid_control:in_1_list(button)
             self.deleteTimeout:delay(self.delete_delay)
 
             if current_state == nil then --> button was never used
-                if self.rec_armed == 1 then
+                if self.rec_arm == 1 then
                     self.state[button[1]] = states.rec_cue
                     self:outlet(1, "list", {button[1], states.rec_cue})
                 end
@@ -143,13 +143,14 @@ function grid_control:in_2_flush()
             self:outlet(1, "list", {i, self.state[i]})
         end
     end
+    self:outlet(1, "list", {APC.rec_arm, self.rec_arm})
 end
 
 function grid_control:in_2_reset()
     for i = 0, self.size - 1 do
-        self.state[i] = 0
         self:outlet(1, "list", {i, 0})
     end
+    self:outlet(1, "list", {APC.rec_arm, 0})
 end
 
 function grid_control:in_2(sel, atoms)    
@@ -174,6 +175,8 @@ end
 
 function grid_control:deleteSlot()
     self:outlet(1, "list", {self.willDelete, 0})
+    self.state[self.willDelete] = states.empty
+    pd.post(string.format("Deleting slot %d", self.willDelete))
 end
 
 function grid_control:finalize()
