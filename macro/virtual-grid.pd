@@ -1,0 +1,268 @@
+#N canvas 185 183 451 423 12;
+#N canvas 711 190 316 325 \$0graph 1;
+#N canvas 946 188 579 447 (subpatch) 0;
+#X obj 354 134 else/canvas.mouse 1 1;
+#X obj 426 161 pack;
+#X obj 354 97 s graph_name\$0;
+#X obj 354 46 r get_graph_name\$0;
+#X obj 354 210 s graph_click\$0;
+#X obj 426 186 s graph_coords\$0;
+#X obj 354 72 else/canvas.name -w;
+#X obj 10 10 cnv 15 32 32 empty pad_0 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 10 cnv 15 32 32 empty pad_1 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 10 cnv 15 32 32 empty pad_2 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 10 cnv 15 32 32 empty pad_3 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 10 cnv 15 32 32 empty pad_4 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 10 cnv 15 32 32 empty pad_5 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 10 cnv 15 32 32 empty pad_6 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 10 cnv 15 32 32 empty pad_7 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 10 46 cnv 15 32 32 empty pad_8 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 46 cnv 15 32 32 empty pad_9 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 46 cnv 15 32 32 empty pad_10 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 46 cnv 15 32 32 empty pad_11 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 46 cnv 15 32 32 empty pad_12 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 46 cnv 15 32 32 empty pad_13 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 46 cnv 15 32 32 empty pad_14 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 46 cnv 15 32 32 empty pad_15 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 10 82 cnv 15 32 32 empty pad_16 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 82 cnv 15 32 32 empty pad_17 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 82 cnv 15 32 32 empty pad_18 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 82 cnv 15 32 32 empty pad_19 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 82 cnv 15 32 32 empty pad_20 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 82 cnv 15 32 32 empty pad_21 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 82 cnv 15 32 32 empty pad_22 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 82 cnv 15 32 32 empty pad_23 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 10 118 cnv 15 32 32 empty pad_24 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 118 cnv 15 32 32 empty pad_25 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 118 cnv 15 32 32 empty pad_26 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 118 cnv 15 32 32 empty pad_27 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 118 cnv 15 32 32 empty pad_28 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 118 cnv 15 32 32 empty pad_29 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 118 cnv 15 32 32 empty pad_30 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 118 cnv 15 32 32 empty pad_31 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 10 154 cnv 15 32 32 empty pad_32 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 154 cnv 15 32 32 empty pad_33 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 154 cnv 15 32 32 empty pad_34 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 154 cnv 15 32 32 empty pad_35 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 154 cnv 15 32 32 empty pad_36 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 154 cnv 15 32 32 empty pad_37 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 154 cnv 15 32 32 empty pad_38 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 154 cnv 15 32 32 empty pad_39 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 10 190 cnv 15 32 32 empty pad_40 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 190 cnv 15 32 32 empty pad_41 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 190 cnv 15 32 32 empty pad_42 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 190 cnv 15 32 32 empty pad_43 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 190 cnv 15 32 32 empty pad_44 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 190 cnv 15 32 32 empty pad_45 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 190 cnv 15 32 32 empty pad_46 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 190 cnv 15 32 32 empty pad_47 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 10 226 cnv 15 32 32 empty pad_48 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 226 cnv 15 32 32 empty pad_49 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 226 cnv 15 32 32 empty pad_50 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 226 cnv 15 32 32 empty pad_51 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 226 cnv 15 32 32 empty pad_52 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 226 cnv 15 32 32 empty pad_53 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 226 cnv 15 32 32 empty pad_54 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 226 cnv 15 32 32 empty pad_55 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 10 262 cnv 15 32 32 empty pad_56 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 46 262 cnv 15 32 32 empty pad_57 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 82 262 cnv 15 32 32 empty pad_58 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 118 262 cnv 15 32 32 empty pad_59 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 154 262 cnv 15 32 32 empty pad_60 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 190 262 cnv 15 32 32 empty pad_61 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 226 262 cnv 15 32 32 empty pad_62 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X obj 262 262 cnv 15 32 32 empty pad_63 empty 0 0 0 4 #444444 #fcfcfc
+0;
+#X connect 0 0 4 0;
+#X connect 0 1 1 0;
+#X connect 0 2 1 1;
+#X connect 1 0 5 0;
+#X connect 3 0 6 0;
+#X connect 6 0 2 0;
+#X coords 0 1 100 -1 295 294 1 5 5;
+#X restore 8 8 graph;
+#X restore 144 38 pd \$0graph;
+#N canvas 458 221 343 353 make-grid 0;
+#X msg 65 59 64;
+#X obj 65 110 t f f, f 6;
+#X obj 65 147 % 8;
+#X obj 102 148 div 8;
+#X obj 65 224 pack f f s, f 11;
+#X obj 65 172 * 36;
+#X obj 102 173 * 36;
+#X obj 65 84 num-seq;
+#X obj 65 198 + 10;
+#X obj 102 199 + 10;
+#X msg 64 250 obj \$1 \$2 cnv 15 32 32 empty \$3 empty 0 0 0 0 #444444
+0 0, f 28;
+#X msg 165 204 symbol pad_\$1;
+#X obj 65 14 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000;
+#X obj 89 292 r graph_name\$0;
+#X obj 64 317 send;
+#X obj 65 34 t b b;
+#X obj 105 60 s get_graph_name\$0;
+#X connect 0 0 7 0;
+#X connect 1 0 2 0;
+#X connect 1 1 3 0;
+#X connect 1 1 11 0;
+#X connect 2 0 5 0;
+#X connect 3 0 6 0;
+#X connect 4 0 10 0;
+#X connect 5 0 8 0;
+#X connect 6 0 9 0;
+#X connect 7 0 1 0;
+#X connect 8 0 4 0;
+#X connect 9 0 4 1;
+#X connect 10 0 14 0;
+#X connect 11 0 4 2;
+#X connect 12 0 15 0;
+#X connect 13 0 14 1;
+#X connect 15 0 0 0;
+#X connect 15 1 16 0;
+#X restore 44 37 pd make-grid;
+#X obj 243 26 inlet;
+#X obj 243 51 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X msg 243 71 vis \$1;
+#X obj 243 96 s pd-\$0graph;
+#X obj 24 103 inlet;
+#X msg 91 179 #444444;
+#X obj 91 154 route 0 3 5 2 4 6;
+#X msg 110 205 #db1414;
+#X obj 24 289 symbol, f 10;
+#X msg 24 314 color \$1 0 0;
+#X obj 24 368 send, f 5;
+#X obj 24 225 t b f;
+#X obj 24 128 unpack f f;
+#X msg 56 341 symbol pad_\$1;
+#X obj 299 151 r graph_click\$0;
+#N canvas 26 124 369 254 grid-hover 0;
+#X obj 66 19 r graph_coords\$0;
+#X obj 66 44 unpack;
+#X obj 66 95 i;
+#X obj 105 95 i;
+#X obj 105 120 * 8;
+#X obj 66 120 +;
+#X obj 175 176 b;
+#X obj 66 176 outlet;
+#X obj 231 153 wrap;
+#X obj 231 178 outlet;
+#X obj 66 70 / 36;
+#X obj 105 70 / 36;
+#X obj 66 150 limit-range 0 64;
+#X obj 281 153 wrap;
+#X obj 281 178 outlet;
+#X connect 0 0 1 0;
+#X connect 1 0 10 0;
+#X connect 1 1 11 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 1;
+#X connect 5 0 12 0;
+#X connect 8 0 9 0;
+#X connect 10 0 2 0;
+#X connect 10 0 8 0;
+#X connect 11 0 3 0;
+#X connect 11 0 13 0;
+#X connect 12 0 7 0;
+#X connect 12 1 6 0;
+#X connect 13 0 14 0;
+#X restore 324 202 pd grid-hover;
+#X obj 299 176 * 127;
+#X obj 299 281 outlet;
+#X obj 299 229 pack;
+#X msg 299 254 \$2 \$1;
+#X obj 310 31 else/click;
+#X obj 91 263 symbol;
+#X msg 129 230 #e3b842;
+#X msg 207 232 #58db56;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 6 0 14 0;
+#X connect 7 0 23 0;
+#X connect 8 0 7 0;
+#X connect 8 1 9 0;
+#X connect 8 2 24 0;
+#X connect 8 6 25 0;
+#X connect 9 0 23 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 13 0 10 0;
+#X connect 13 1 15 0;
+#X connect 14 0 13 0;
+#X connect 14 1 8 0;
+#X connect 15 0 12 1;
+#X connect 16 0 18 0;
+#X connect 17 0 20 1;
+#X connect 18 0 20 0;
+#X connect 20 0 21 0;
+#X connect 21 0 19 0;
+#X connect 22 0 3 0;
+#X connect 23 0 10 1;
+#X connect 24 0 23 0;
+#X connect 25 0 23 0;
