@@ -16,8 +16,8 @@
 #X obj 115 131 r \$0params;
 #X obj 280 131 r \$0preseter;
 #X obj 115 229 s \$0set-panel;
-#N canvas 457 266 315 258 \$0delay 1;
-#N canvas 615 135 490 496 (subpatch) 1;
+#N canvas 457 266 315 258 \$0delay 0;
+#N canvas 615 135 490 496 (subpatch) 0;
 #X obj 11 81 cnv 15 280 230 empty \$0delpanel .::Delay::. 0 10 0 17
 #e0e0e0 #404040 0;
 #X obj 24 123 components/slider dry volume;
@@ -68,8 +68,8 @@
 #X obj 323 271 edit-cnv \$0delpanel;
 #A saved;
 #X obj 324 215 s \$0tempo-ratio;
-#X obj 233 173 nbx 3 15 0 128 0 0 empty empty tempo\ ratio -13 -8 0
-10 #fcfcfc #000000 #000000 0 256;
+#X obj 233 173 nbx 3 15 0 128 0 0 empty empty tempo\\\ ratio -13 -8
+0 10 #fcfcfc #000000 #000000 0 256;
 #X obj 243 208 tgl 15 0 empty empty reverse -12 -8 0 10 #fcfcfc #000000
 #000000 0 1;
 #X msg 300 361 reverse \$1;
@@ -120,12 +120,12 @@ highpass pitch magic reverse, f 45;
 #X connect 42 10 14 0;
 #X connect 42 11 40 0;
 #X coords 0 1 100 -1 282 232 1 10 80;
-#X restore 7 7 graph;
+#X restore 10 7 graph;
 #X restore 270 44 pd \$0delay;
 #X obj 127 75 s pd-\$0delay;
 #X obj 115 157 preset dry level time feedback modInt modRate waveform
 reverse lowpass highpass pitch magic, f 24;
-#A saved /home/me/Pd/core-lib/presets/slapback-delay;
+#A saved ;
 #N canvas 458 221 450 300 set-name 0;
 #X obj 37 37 inlet;
 #X obj 37 62 trim-symbol 10;

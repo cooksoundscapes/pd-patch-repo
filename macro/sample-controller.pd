@@ -1,6 +1,6 @@
-#N canvas 389 169 516 409 12;
-#X obj 21 123 notein;
-#X obj 21 149 pack;
+#N canvas 596 430 516 436 12;
+#X obj 38 113 notein;
+#X obj 38 139 pack;
 #X obj 21 278 sel 127;
 #X obj 21 303 s taptempo;
 #X obj 31 206 sel 127;
@@ -77,6 +77,8 @@
 #X obj 197 25 loadbang;
 #X msg 197 51 mode columnsAsTracks \, reset, f 21;
 #X obj 134 152 t f f b;
+#X obj 21 86 inlet;
+#X obj 127 322 outlet;
 #X connect 0 0 1 0;
 #X connect 0 1 1 1;
 #X connect 1 0 6 0;
@@ -95,9 +97,11 @@
 #X connect 12 1 14 0;
 #X connect 13 0 15 0;
 #X connect 13 0 17 0;
+#X connect 13 0 39 0;
 #X connect 14 0 16 0;
 #X connect 14 1 24 0;
 #X connect 16 0 15 0;
+#X connect 16 0 39 0;
 #X connect 17 0 33 0;
 #X connect 19 0 21 0;
 #X connect 19 1 13 1;
@@ -123,3 +127,4 @@
 #X connect 37 1 9 0;
 #X connect 37 1 16 1;
 #X connect 37 2 11 0;
+#X connect 38 0 6 0;
