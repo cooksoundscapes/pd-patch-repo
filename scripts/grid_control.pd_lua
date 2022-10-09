@@ -21,14 +21,14 @@ local modes = {
 
 function grid_control:initialize(sel, atoms)
     self.inlets = 2
-    self.outlets = 1
+    self.outlets = 2
     self.state = {}
-    self.rec_arm = 0
+    self.rec_arm = false
     self.mode = modes.free
-    self.size = 64
+    self.size = 7 * 8
     self.delete_delay = 1000
     self.state_actions = {
-        [states.empty] = function() if self.rec_arm == 1 then return states.rec_cue end end,
+        [states.empty] = function() if self.rec_arm == true then return states.rec_cue end end,
         [states.stopped] = function() return states.play_cue end,
         [states.recording] = function() return states.play_cue end,
         [states.playing] = function() return states.stop_cue end,
@@ -43,17 +43,14 @@ end
 
 function grid_control:in_1_list(button)
     if #button ~= 2 then
-        pd.post("[grid-control]: Not a midi note!")
+        self:error("not a midi note!")
         return
     end
     if button[2] > 0 then --> note on
         if button[1] == APC.rec_arm then 
-            if self.rec_arm == 0 then
-                self.rec_arm = 1
-            else
-                self.rec_arm = 0
-            end 
-            self:outlet(1, "list", { APC.rec_arm, self.rec_arm })
+
+            self.rec_arm = not self.rec_arm
+            self:outlet(1, "list", { APC.rec_arm, self.rec_arm and 1 or 0 })
 
         elseif button[1] >= 0 and button[1] < self.size then --> process state!
             local current_state = self.state[button[1]]
@@ -61,7 +58,7 @@ function grid_control:in_1_list(button)
             self.deleteTimeout:delay(self.delete_delay)
 
             if current_state == nil then --> button was never used
-                if self.rec_arm == 1 then
+                if self.rec_arm == true then
                     self.state[button[1]] = states.rec_cue
                     self:outlet(1, "list", {button[1], states.rec_cue})
                 end
@@ -98,40 +95,44 @@ end
 
 function grid_control:in_2_bang() --> resolve cues
     for i = 0, self.size - 1 do
+        local coord = slotToCoord(i)
         if self.state[i] == states.rec_cue then
             if self.mode == modes.columnsAsTracks then
                 -- if a slot in that column is playing or recording, stop it
-                local column = i % 8
-                for c=0, 7 do
-                    local slot = c*8+column
+                for r=0, 7 do
+                    local slot = r*8+coord.col
                     if self.state[slot] == states.playing 
                     or self.state[slot] == states.recording then
                         self.state[slot] = states.stopped
-                        self:outlet(1, "list", {slot, states.stopped})  
+                        self:outlet(2, "list", {coord.col, "stop", r})
+                        self:outlet(1, "list", {slot, states.stopped})
                     end
                 end
             end
             self.state[i] = states.recording
+            self:outlet(2, "list", {coord.col, "record", coord.row})
             self:outlet(1, "list", {i, states.recording})
 
         elseif self.state[i] == states.play_cue then
             if self.mode == modes.columnsAsTracks then
                 -- if a slot in that column is playing, stop it now
-                local column = i % 8
-                for c=0, 7 do
-                    local slot = c*8+column
+                for r=0, 7 do
+                    local slot = r*8+coord.col
                     if self.state[slot] == states.playing 
                     or self.state[slot] == states.recording then
                         self.state[slot] = states.stopped
+                        self:outlet(2, "list", {coord.col, "stop", r})
                         self:outlet(1, "list", {slot, states.stopped})
                     end
                 end
             end
             self.state[i] = states.playing 
+            self:outlet(2, "list", {coord.col, "play", coord.row})
             self:outlet(1, "list", {i, states.playing})
 
         elseif self.state[i] == states.stop_cue then
             self.state[i] = states.stopped
+            self:outlet(2, "list", {coord.col, "stop", coord.row})
             self:outlet(1, "list", {i, states.stopped})
         end
     end
@@ -143,42 +144,54 @@ function grid_control:in_2_flush()
             self:outlet(1, "list", {i, self.state[i]})
         end
     end
-    self:outlet(1, "list", {APC.rec_arm, self.rec_arm})
+    self:outlet(1, "list", {APC.rec_arm, self.rec_arm and 1 or 0})
 end
 
 function grid_control:in_2_reset()
     for i = 0, self.size - 1 do
+        local coord = slotToCoord(i)
+        self:outlet(2, "list", {coord.col, "delete", coord.row })
         self:outlet(1, "list", {i, 0})
     end
+    self.rec_arm = false
     self:outlet(1, "list", {APC.rec_arm, 0})
 end
 
-function grid_control:in_2(sel, atoms)    
-    if sel == "set" then
-        local newState = states[atoms[2]]
-        if newState ~= nil and atoms[1] >= 0 and atoms[1] < self.size then
-            self.state[atoms[1]] = newState
-            self:outlet(1, "list", {atoms[1], newState})
-        else 
-            self:error(string.format("State %s doesn't exists.", atoms[2]))
-        end
-    elseif sel == "mode" then
-        local newMode = modes[atoms[1]]
-        if newMode ~= nil then
-            self.mode = newMode
-            pd.post(string.format("Mode set to %s.", atoms[1]))
-        else 
-            self:error(string.format("Mode %s doesn't exists.", atoms[1]))
-        end
+function grid_control:in_2_set(atoms)
+    local newState = states[atoms[2]]
+    if newState ~= nil and atoms[1] >= 0 and atoms[1] < self.size then
+        self.state[atoms[1]] = newState
+        self:outlet(1, "list", {atoms[1], newState})
+    else 
+        self:error(string.format("State %s doesn't exists.", atoms[2]))
+    end
+end
+
+function grid_control:in_2_mode(atoms)            
+    local newMode = modes[atoms[1]]
+    if newMode ~= nil then
+        self.mode = newMode
+        pd.post(string.format("Mode set to %s.", atoms[1]))
+    else 
+        self:error(string.format("Mode %s doesn't exists.", atoms[1]))
     end
 end
 
 function grid_control:deleteSlot()
+    local coord = slotToCoord(self.willDelete)
+    self:outlet(2, "list", {coord.col, "delete", coord.row})
     self:outlet(1, "list", {self.willDelete, 0})
     self.state[self.willDelete] = states.empty
-    pd.post(string.format("Deleting slot %d", self.willDelete))
 end
 
 function grid_control:finalize()
     self.deleteTimeout:destruct()
+end
+
+-------- aux functions ----------
+
+function slotToCoord(slot)
+    local col = slot % 8
+    local row = math.floor(slot / 8)
+    return { col=col, row=row }
 end
