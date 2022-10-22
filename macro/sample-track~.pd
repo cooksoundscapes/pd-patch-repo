@@ -8,7 +8,7 @@
 #X obj 50 49 route level;
 #X obj 50 420 / 127;
 #X obj 124 76 list split 1;
-#N canvas 735 337 575 411 set-table 0;
+#N canvas 735 337 575 411 set-table 1;
 #X obj 267 95 expr $f1 * 8 + \$1;
 #X obj 218 208 array size;
 #X obj 299 199 tabread sample-rates, f 12;
@@ -22,12 +22,14 @@
 #X obj 185 285 outlet;
 #X obj 267 42 inlet;
 #X obj 267 70 change -1;
+#X obj 326 140 s smp-rate-setter;
 #X connect 0 0 4 0;
 #X connect 1 0 8 1;
 #X connect 2 0 8 2;
 #X connect 3 0 7 0;
 #X connect 4 0 3 0;
 #X connect 4 1 2 0;
+#X connect 4 1 13 0;
 #X connect 5 0 10 0;
 #X connect 6 0 9 0;
 #X connect 7 0 8 0;
@@ -51,6 +53,9 @@
 #X msg 163 234 record;
 #X msg 174 299 play 1;
 #X obj 71 347 inlet;
+#N canvas 735 337 450 300 set-smprate 1;
+#X obj 118 77 inlet;
+#X restore 29 474 pd set-smprate;
 #X connect 0 0 5 0;
 #X connect 1 0 2 0;
 #X connect 1 1 15 0;
