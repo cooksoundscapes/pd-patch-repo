@@ -2,6 +2,67 @@ local pattern = pd.Class:new():register("pattern")
 
 local socket = require "socket"
 
+--auxiliar functions
+local function finish_record(self)
+    table.insert(self.data, { socket.gettime() * 1000 - self.starttime, "end" })
+    local length = self.data[#self.data][1]
+    self.estimatedbpm = length
+    while self.estimatedbpm > 800 do
+        self.estimatedbpm = self.estimatedbpm / 2
+    end
+    if self.quant > 0 then
+        quantize_table(self)
+    end
+    self:outlet(2, "duration", {length})
+    self:outlet(2, "bpm", {60000 / self.estimatedbpm})
+end
+
+local function play(self, playdata)
+    local note = playdata[self.playindex]
+
+    self.hangingnotes[note[2]] = note[3]
+
+    self:outlet(1, "list", { note[2], note[3] })
+    local lastdelay = note[1]
+
+    self.playindex = (self.playindex % #playdata) + 1
+    self.playclock:delay(playdata[self.playindex][1] - lastdelay / self.speed)
+end    
+
+local function stop(self)
+    self.playing = false
+    self:outlet(2, "list", {"playing", 0})
+    self.playclock:unset()
+    for i = 0, 127 do
+        if self.hangingnotes[i] ~= nil and self.hangingnotes[i] > 0 then
+            pd.post(string.format("[%d] %d -> 0", i, self.hangingnotes[i]))
+            self:outlet(1, "list", { i, 0 })
+            self.hangingnotes[i] = 0
+        end
+    end
+end
+
+local function quantize_table(self)
+    if self.estimatedbpm > 0 then 
+        local slice = self.estimatedbpm / self.quant
+        for i = 1, #self.data do
+            local note = self.data[i]
+            local newtime = 0
+            if note[2] == "end" or note[3] > 0 then
+                newtime = slice * math.floor(note[1] / slice + 0.5)
+            else
+                newtime = slice * math.ceil(note[1] / slice + 0.5)
+            end
+            self.quantized[i] = { newtime, note[2], note[3] }
+        end
+        table.sort(self.quantized, function(a, b) 
+            return a[1] < b[1]
+        end)
+    end
+end
+
+-------------------------------------------------
+
 function pattern:initialize(sel, atoms)
     self.inlets = 2
     self.outlets = 2
@@ -130,64 +191,4 @@ end
 
 function pattern:finalize()
     self.playclock:destruct()
-end
-
---auxiliar functions
-
-function finish_record(self)
-    table.insert(self.data, { socket.gettime() * 1000 - self.starttime, "end" })
-    local length = self.data[#self.data][1]
-    self.estimatedbpm = length
-    while self.estimatedbpm > 800 do
-        self.estimatedbpm = self.estimatedbpm / 2
-    end
-    if self.quant > 0 then
-        quantize_table(self)
-    end
-    self:outlet(2, "duration", {length})
-    self:outlet(2, "bpm", {60000 / self.estimatedbpm})
-end
-
-function play(self, playdata)
-    local note = playdata[self.playindex]
-
-    self.hangingnotes[note[2]] = note[3]
-
-    self:outlet(1, "list", { note[2], note[3] })
-    local lastdelay = note[1]
-
-    self.playindex = (self.playindex % #playdata) + 1
-    self.playclock:delay(playdata[self.playindex][1] - lastdelay / self.speed)
-end    
-
-function stop(self)
-    self.playing = false
-    self:outlet(2, "list", {"playing", 0})
-    self.playclock:unset()
-    for i = 0, 127 do
-        if self.hangingnotes[i] ~= nil and self.hangingnotes[i] > 0 then
-            pd.post(string.format("[%d] %d -> 0", i, self.hangingnotes[i]))
-            self:outlet(1, "list", { i, 0 })
-            self.hangingnotes[i] = 0
-        end
-    end
-end
-
-function quantize_table(self)
-    if self.estimatedbpm > 0 then 
-        local slice = self.estimatedbpm / self.quant
-        for i = 1, #self.data do
-            local note = self.data[i]
-            local newtime = 0
-            if note[2] == "end" or note[3] > 0 then
-                newtime = slice * math.floor(note[1] / slice + 0.5)
-            else
-                newtime = slice * math.ceil(note[1] / slice + 0.5)
-            end
-            self.quantized[i] = { newtime, note[2], note[3] }
-        end
-        table.sort(self.quantized, function(a, b) 
-            return a[1] < b[1]
-        end)
-    end
 end

@@ -19,6 +19,15 @@ local modes = {
     columnsAsTracks = 1
 }
 
+
+-------- aux functions ----------
+local function slotToCoord(slot)
+    local col = slot % 8
+    local row = math.floor(slot / 8)
+    return { col=col, row=row }
+end
+---------------------------------
+
 function grid_control:initialize(sel, atoms)
     self.inlets = 2
     self.outlets = 2
@@ -186,12 +195,4 @@ end
 
 function grid_control:finalize()
     self.deleteTimeout:destruct()
-end
-
--------- aux functions ----------
-
-function slotToCoord(slot)
-    local col = slot % 8
-    local row = math.floor(slot / 8)
-    return { col=col, row=row }
 end
