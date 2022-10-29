@@ -3,6 +3,25 @@ local pattern = pd.Class:new():register("pattern")
 local socket = require "socket"
 
 --auxiliar functions
+local function quantize_table(self)
+    if self.estimatedbpm > 0 then 
+        local slice = self.estimatedbpm / self.quant
+        for i = 1, #self.data do
+            local note = self.data[i]
+            local newtime = 0
+            if note[2] == "end" or note[3] > 0 then
+                newtime = slice * math.floor(note[1] / slice + 0.5)
+            else
+                newtime = slice * math.ceil(note[1] / slice + 0.5)
+            end
+            self.quantized[i] = { newtime, note[2], note[3] }
+        end
+        table.sort(self.quantized, function(a, b) 
+            return a[1] < b[1]
+        end)
+    end
+end
+
 local function finish_record(self)
     table.insert(self.data, { socket.gettime() * 1000 - self.starttime, "end" })
     local length = self.data[#self.data][1]
@@ -39,25 +58,6 @@ local function stop(self)
             self:outlet(1, "list", { i, 0 })
             self.hangingnotes[i] = 0
         end
-    end
-end
-
-local function quantize_table(self)
-    if self.estimatedbpm > 0 then 
-        local slice = self.estimatedbpm / self.quant
-        for i = 1, #self.data do
-            local note = self.data[i]
-            local newtime = 0
-            if note[2] == "end" or note[3] > 0 then
-                newtime = slice * math.floor(note[1] / slice + 0.5)
-            else
-                newtime = slice * math.ceil(note[1] / slice + 0.5)
-            end
-            self.quantized[i] = { newtime, note[2], note[3] }
-        end
-        table.sort(self.quantized, function(a, b) 
-            return a[1] < b[1]
-        end)
     end
 end
 
