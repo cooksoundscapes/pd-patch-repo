@@ -82,8 +82,14 @@ local function change_preset_bank(prev_channel, next_channel, effects)
   end
   file:close()
 
-  if prev_data ~= nil then
-    return prev_data[next_ch]
+  if prev_data[next_ch] ~= nil then
+    for incoming_fx, preset_names in pairs(prev_data[next_ch]) do
+      for fx, attr in pairs(effects) do
+        if fx == incoming_fx then
+          attr.presets = preset_names
+        end
+      end
+    end
   end
 end
 
@@ -175,16 +181,7 @@ function fx_control:in_1_list(atoms)
 
     -- save the preset names for each effect of previous channel
     -- retrieve preset names for each effect of next channel
-    local loaded_preset_names = change_preset_bank(self.channel, next_ch, self.effects)
-    if loaded_preset_names ~= nil then
-      for incoming_fx, preset_names in pairs(loaded_preset_names) do
-        for fx, attr in pairs(self.effects) do
-          if fx == incoming_fx then
-            attr.presets = preset_names
-          end
-        end
-      end
-    end
+    change_preset_bank(self.channel, next_ch, self.effects)
 
     -- update state
     self:outlet(1, "list", {self.channel + offset, 0})
