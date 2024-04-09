@@ -1,0 +1,7 @@
+#N canvas 735 337 450 300 12;
+#X obj 197 80 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000;
+#X obj 197 105 timediff;
+#X floatatom 197 130 16 0 0 0 - - - 0;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;

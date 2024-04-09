@@ -1,0 +1,45 @@
+#N canvas 533 27 547 607 12;
+#X floatatom 165 418 5 0 0 0 - - - 0;
+#X obj 28 495 fx_control delay amp mod;
+#X msg 165 442 delay time \$1;
+#X floatatom 278 426 5 0 0 0 - - - 0;
+#X msg 278 450 delay fdbk \$1;
+#X obj 28 443 notein;
+#X obj 28 468 pack;
+#X obj 28 520 noteout;
+#X obj 166 529 print;
+#X msg 305 479 save delay short;
+#X msg 305 536 save delay long;
+#X msg 305 507 load delay short;
+#X msg 305 564 load delay long;
+#X text 18 17 creation arguments is a list of effects to be loaded
+in the grid \, from top to bottom line \; 1st inlet receives midi notes
+representing grid buttons. 1st outlet outputs light data to the grid
+\; 2nd inlet receives any message with a selector that matches an argument
+and will update the params of the selected preset of that FX. it requires
+3 values: FX - param - value \; 2nd inlet also receives save \, load
+and autosave messages \; save message with only FX name saves to disk
+the selected preset for that FX \; save message with FX + name saves
+the selected preset on that FX \, but with the new name (does not override
+existing files) \; load message needs FX + name to find the file \,
+loads on the selected slot and outputs the params at 2nd outlet in
+a format <channel> <FX> <param> <value> \; changing slots through midi
+notes should output params on 2nd outlet as well \; with a message
+'autosave 1' in 2nd outlet \, everytime a param is changed the preset
+is autosaved within a second \, with the same name \; the 1st line
+of the grid is reserved to switch between channels \; changing the
+channel should reload all FX to the grid state \, but will not output
+params by itself \, only the new light state \;, f 65;
+#X connect 0 0 2 0;
+#X connect 1 0 7 0;
+#X connect 1 1 8 0;
+#X connect 2 0 1 1;
+#X connect 3 0 4 0;
+#X connect 4 0 1 1;
+#X connect 5 0 6 0;
+#X connect 5 1 6 1;
+#X connect 6 0 1 0;
+#X connect 9 0 1 1;
+#X connect 10 0 1 1;
+#X connect 11 0 1 1;
+#X connect 12 0 1 1;

@@ -1,0 +1,148 @@
+#N canvas 674 79 646 454 12;
+#X text 223 16 create and manipulate cnv objects on the parent window
+\;, f 30;
+#X floatatom 149 79 5 0 0 0 Top \$0setY \$0Y 0;
+#X floatatom 149 102 5 0 0 0 Left \$0setX \$0X 0;
+#X floatatom 149 126 5 0 0 0 Width \$0setW \$0W 0;
+#X floatatom 149 150 5 0 0 0 Height \$0setH \$0H 0;
+#X listbox 27 136 10 0 0 2 background \$0setBg \$0bg 0;
+#X listbox 27 173 10 0 0 2 labelColor \$0setFg \$0fg 0;
+#X listbox 27 98 10 0 0 2 label \$0setLabel \$0label 0;
+#X obj 21 39 cnv 2 140 2 empty empty empty 20 12 0 14 #606060 #404040
+0;
+#X listbox 27 62 10 0 0 2 Address \$0setAddr \$0addr 0;
+#X obj 149 55 bng 20 250 50 0 \$0new empty new -24 10 0 12 #ffc7c6
+#000000 #000000;
+#X obj 416 305 send;
+#X obj 291 305 send;
+#X obj 336 305 r \$0addr;
+#X text 134 208 template \; obj X Y cnv size width height send receive
+label x_off y_off font font_size bg color 0, f 17;
+#X floatatom 149 174 5 0 0 0 Font \$0setFSize \$0FSize 0;
+#X text 21 207 \$1: X \; \$2: Y \; \$3: size* \; \$4: W \; \$5: H \;
+\$6: rcv \; \$7: label \; \$8: Xoff* \; \$9: Yoff* \; \$10: fontSize
+\; \$11: bg \; \$12: fg \; * = auto calc;
+#X msg 416 263 obj \$1 \$2 cnv \$3 \$4 \$5 empty \$6 \$7 \$8 \$9 0
+\$10 \$11 \$12 0, f 28;
+#X obj 260 88 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000;
+#X obj 260 110 list 20 20 25 80 30 rcv Test 0 0 12 #fafafa #373737
+;
+#X obj 260 137 list trim;
+#N canvas 21 112 450 443 init_values 0;
+#X obj 135 160 \$0;
+#X obj 213 157 s \$0window_name;
+#X obj 135 117 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
+#X obj 135 87 loadbang;
+#X msg 135 185 \; \$1setX 20 \; \$1setY 20 \; \$1setW 80 \; \$1setH
+20 \; \$1setFSize 12 \; \$1setAddr symbol cnv_\$1_0 \; \$1setLabel
+symbol Label \; \$1setBg symbol #fafafa \; \$1setFg symbol #343434
+\;;
+#X connect 0 0 4 0;
+#X connect 2 0 0 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X restore 368 174 pd init_values;
+#X obj 461 305 r \$0window_name;
+#N canvas 134 148 447 300 cook_list 0;
+#X obj 33 28 r \$0X;
+#X obj 76 30 r \$0Y;
+#X obj 130 60 r \$0W;
+#X obj 187 64 r \$0H;
+#X obj 321 122 r \$0FSize;
+#X obj 257 31 r \$0addr;
+#X obj 270 57 r \$0label;
+#X obj 342 147 r \$0bg;
+#X obj 355 178 r \$0fg;
+#X obj 80 251 outlet;
+#X obj 48 206 f;
+#X obj 48 178 r \$0new;
+#N canvas 458 221 450 300 minimum 0;
+#X obj 163 140 min;
+#X obj 163 165 min 15;
+#X obj 196 104 t b f;
+#X obj 163 190 outlet;
+#X obj 147 61 inlet;
+#X obj 220 63 inlet;
+#X connect 0 0 1 0;
+#X connect 1 0 3 0;
+#X connect 2 0 0 0;
+#X connect 2 1 0 1;
+#X connect 4 0 0 0;
+#X connect 5 0 2 0;
+#X restore 107 90 pd minimum;
+#X obj 80 226 pack f f f f f s s 0 f f s s;
+#X connect 0 0 10 1;
+#X connect 1 0 13 1;
+#X connect 2 0 12 0;
+#X connect 2 0 13 3;
+#X connect 3 0 12 1;
+#X connect 3 0 13 4;
+#X connect 4 0 13 9;
+#X connect 4 0 13 8;
+#X connect 5 0 13 5;
+#X connect 6 0 13 6;
+#X connect 7 0 13 10;
+#X connect 8 0 13 11;
+#X connect 10 0 13 0;
+#X connect 11 0 10 0;
+#X connect 12 0 13 2;
+#X connect 13 0 9 0;
+#X restore 416 235 pd cook_list;
+#N canvas 318 146 431 309 cnv_control 0;
+#X obj 143 238 outlet;
+#X obj 22 17 r \$0X;
+#X obj 67 24 r \$0Y;
+#X obj 232 17 r \$0W;
+#X obj 278 21 r \$0H;
+#X obj 281 193 r \$0FSize;
+#X obj 269 129 r \$0label;
+#X obj 116 21 r \$0bg;
+#X obj 169 43 r \$0fg;
+#X msg 269 155 label \$1;
+#X msg 116 97 color \$1 0 \$2;
+#X msg 22 97 pos \$1 \$2;
+#X msg 232 96 vis_size \$1 \$2;
+#X msg 281 218 label_font 0 \$1;
+#X obj 22 72 pack;
+#X obj 30 44 b;
+#X obj 123 46 b;
+#X obj 116 73 pack s s;
+#X obj 232 69 pack;
+#X obj 240 41 b;
+#X connect 1 0 14 0;
+#X connect 2 0 14 1;
+#X connect 2 0 15 0;
+#X connect 3 0 18 0;
+#X connect 4 0 18 1;
+#X connect 4 0 19 0;
+#X connect 5 0 13 0;
+#X connect 6 0 9 0;
+#X connect 7 0 17 0;
+#X connect 8 0 17 1;
+#X connect 8 0 16 0;
+#X connect 9 0 0 0;
+#X connect 10 0 0 0;
+#X connect 11 0 0 0;
+#X connect 12 0 0 0;
+#X connect 13 0 0 0;
+#X connect 14 0 11 0;
+#X connect 15 0 14 0;
+#X connect 16 0 17 0;
+#X connect 17 0 10 0;
+#X connect 18 0 12 0;
+#X connect 19 0 18 0;
+#X restore 291 235 pd cnv_control;
+#X obj 461 331 else/canvas.name -w 1;
+#X text 134 335 \$3 = smaller of (W \, H \, 15) \; \$8 = fsize / 2
+\; \$9 = 0 \;, f 17;
+#X connect 13 0 12 1;
+#X connect 17 0 11 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 22 0 25 0;
+#X connect 23 0 17 0;
+#X connect 24 0 12 0;
+#X connect 25 0 11 1;
+#X coords 0 -1 1 1 175 180 1 20 20;

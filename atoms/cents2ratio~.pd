@@ -1,0 +1,14 @@
+#N canvas 0 95 450 300 12;
+#X obj 191 72 loadbang;
+#X obj 171 112 \$1;
+#X obj 171 194 sig~;
+#X obj 171 219 outlet~;
+#X obj 234 219 outlet;
+#X obj 143 64 inlet;
+#X obj 171 136 expr pow(2 \, $f1/1200) - 1;
+#X connect 0 0 1 0;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 5 0 1 0;
+#X connect 6 0 2 0;
+#X connect 6 0 4 0;

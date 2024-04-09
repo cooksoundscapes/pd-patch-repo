@@ -1,0 +1,18 @@
+#N canvas 1166 247 450 300 12;
+#X obj 179 130 list2arp;
+#X obj 250 30 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
+#X msg 250 77 play \$1;
+#X msg 283 111 mode down;
+#X msg 283 136 mode up;
+#X msg 283 161 mode updown;
+#X floatatom 321 38 5 0 0 0 - - - 0;
+#X msg 321 61 rate \$1;
+#X msg 106 71 1 2 3 4 5;
+#X connect 1 0 2 0;
+#X connect 2 0 0 1;
+#X connect 3 0 0 1;
+#X connect 4 0 0 1;
+#X connect 5 0 0 1;
+#X connect 6 0 7 0;
+#X connect 7 0 0 1;
+#X connect 8 0 0 0;

@@ -1,0 +1,18 @@
+#N canvas 683 27 673 676 12;
+#X obj 17 34 loadbang;
+#X msg 17 59 \; pd dsp 1;
+#X obj 230 75 adc~ 1;
+#X obj 230 100 sampler~;
+#X obj 247 428 out~;
+#X obj 322 321 spectral-delay~;
+#X obj 206 346 gain~;
+#A saved 0.164557;
+#X obj 322 346 gain~;
+#A saved 0.797468;
+#X connect 0 0 1 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 3 0 5 0;
+#X connect 5 0 7 0;
+#X connect 6 0 4 0;
+#X connect 7 0 4 0;

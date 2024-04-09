@@ -1,0 +1,10 @@
+#N canvas 458 221 450 300 12;
+#X obj 100 70 inlet~;
+#X obj 100 120 gain~;
+#A saved 0;
+#X obj 100 173 dac~;
+#X obj 101 101 cnv 18 92 18 empty empty output~ 2 7 0 12 #e0e0e0 #404040 0;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 2 1;
+#X coords 0 -1 1 1 94 58 2 100 100;

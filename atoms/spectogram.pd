@@ -1,0 +1,42 @@
+#N canvas 361 217 398 237 12;
+#X obj 191 129 loadbang;
+#X obj 191 154 metro 40;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array \$0fftScope 256 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X coords 0 100 255 0 86 70 1 0 0;
+#X restore 12 28 graph;
+#X obj 139 33 inlet~;
+#X obj 266 51 loadbang;
+#X obj 266 76 \$1;
+#X obj 266 102 sel 0;
+#X obj 139 59 rfft~;
+#X obj 121 97 *~;
+#X obj 171 97 *~;
+#X obj 137 133 +~;
+#X obj 137 160 sqrt~;
+#X obj 240 23 block~ 256 1 1;
+#X obj 191 179 tabwrite~ \$0fftScope;
+#X obj 298 128 array size \$0fftScope, f 10;
+#X connect 0 0 1 0;
+#X connect 1 0 13 0;
+#X connect 3 0 7 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 1 14 0;
+#X connect 7 0 8 0;
+#X connect 7 0 8 1;
+#X connect 7 1 9 0;
+#X connect 7 1 9 1;
+#X connect 8 0 10 0;
+#X connect 9 0 10 1;
+#X connect 10 0 11 0;
+#X connect 11 0 13 0;
+#X coords 0 -1 1 1 90 90 2 10 10;
