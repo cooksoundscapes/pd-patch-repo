@@ -1,4 +1,5 @@
-#N canvas 112 73 529 540 12;
+#N canvas 114 145 529 540 12;
+#X declare -path atoms;
 #X obj 233 235 *~;
 #X obj 25 347 *~;
 #N canvas 411 194 674 300 reverse 0;
@@ -120,10 +121,10 @@
 #X connect 13 1 2 0;
 #X restore 106 234 pd modulation;
 #X obj 233 260 limit~ 94 8;
-#N canvas 0 95 390 300 pitchshift 0;
+#N canvas 1 131 390 300 pitchshift 1;
 #X obj 157 111 *~;
 #X obj 88 194 outlet~;
-#N canvas 715 148 416 373 doubleBuffering 0;
+#N canvas 716 184 416 373 doubleBuffering 1;
 #X obj 20 231 *~;
 #X obj 108 319 outlet~;
 #X obj 20 151 -~ 0.5;
@@ -241,9 +242,9 @@
 #X obj 414 303 s \$0waveform;
 #X obj 414 339 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X obj 414 364 s \$0reverse;
-#X floatatom 414 400 5 0 0 0 - - - 0;
+#X floatatom 414 400 10 0 0 0 - - - 0;
 #X obj 414 424 s \$0lp;
-#X floatatom 414 449 5 0 0 0 - - - 0;
+#X floatatom 414 449 10 0 0 0 - - - 0;
 #X obj 414 473 s \$0hp;
 #X obj 92 455 dbtorms;
 #X obj 172 455 dbtorms;
@@ -258,6 +259,7 @@
 #X obj 92 479 s \$0level;
 #X obj 84 104 pot~ \$0level;
 #X obj 66 155 feed-forward~;
+#X obj 260 329 declare -path atoms;
 #X connect 0 0 9 0;
 #X connect 1 0 4 0;
 #X connect 2 0 6 0;

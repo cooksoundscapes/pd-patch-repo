@@ -1,4 +1,5 @@
-#N canvas 406 135 623 737 12;
+#N canvas 410 253 623 737 12;
+#X declare -path atoms;
 #X obj 408 292 env~ 2048;
 #X obj 390 555 del 800;
 #X msg 390 580 stop;
@@ -21,10 +22,10 @@
 #X obj 273 61 s \$0t;
 #X obj 58 266 tabread4~ \$0t;
 #X obj 442 35 r \$0clear;
-#X obj 426 243 r \$0capture;
+#X obj 446 248 r \$0capture;
 #X obj 484 295 r \$0sens;
 #X obj 270 195 inlet~ fwd;
-#X obj 337 222 broadcast \$0;
+#X obj 357 215 broadcast \$0;
 #X obj 453 535 r \$0-length;
 #X obj 58 44 r \$0-length;
 #X obj 58 522 s \$0-length;
@@ -57,7 +58,7 @@
 #X obj 390 455 delay;
 #X obj 390 343 f;
 #X obj 390 368 sel 1;
-#N canvas 735 327 450 300 hann 1;
+#N canvas 735 327 450 300 hann 0;
 #X obj 245 94 inlet~;
 #X obj 190 234 outlet~;
 #X obj 245 119 -~ 0.5;
@@ -96,8 +97,8 @@
 #X obj 29 664 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
 #X obj 29 689 s \$0direct-out;
 #X obj 59 341 *~;
-#X obj 139 664 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
-#X obj 139 689 s \$0direct-out;
+#X obj 407 132 declare -path atoms;
+#X text 324 171 / INLET HERE!;
 #X connect 0 0 35 0;
 #X connect 1 0 2 0;
 #X connect 2 0 15 0;
@@ -173,4 +174,3 @@
 #X connect 72 0 71 1;
 #X connect 73 0 74 0;
 #X connect 75 0 18 0;
-#X connect 76 0 77 0;

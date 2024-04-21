@@ -1,8 +1,8 @@
-#N canvas 706 232 450 278 12;
+#N canvas 707 268 450 278 12;
 #X obj 98 57 inlet~;
 #X obj 98 178 outlet~;
 #X obj 98 150 else/power~ 1;
-#X obj 232 25 inlet;
+#X obj 186 28 inlet;
 #X obj 186 84 clip 0 1;
 #X obj 186 110 expr pow(abs($f1-1) \, 3) * 0.99 + 0.01, f 23;
 #X obj 189 56 hsl 80 20 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc #000000 #000000 0 1;

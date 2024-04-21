@@ -1,6 +1,0 @@
-#N canvas 458 221 450 300 12;
-#X obj 204 90 keys 60;
-#X obj 204 115 input-rec;
-#X obj 204 140 print;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;

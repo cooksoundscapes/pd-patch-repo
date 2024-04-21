@@ -1,5 +1,4 @@
-#N canvas 747 123 426 638 12;
-#X declare -path core-lib;
+#N canvas 748 159 426 638 12;
 #X obj 94 429 *~;
 #X obj 94 115 mtof;
 #X obj 207 140 / 127;
@@ -20,12 +19,11 @@
 #X obj 94 535 outlet~;
 #X obj 142 432 blocks/delay;
 #X obj 142 502 blocks/modulation;
-#X obj 230 45 declare -path core-lib;
 #X obj 207 165 atoms/EG~ 0 200 0.1 180;
 #X connect 0 0 17 0;
 #X connect 0 0 18 0;
 #X connect 1 0 13 0;
-#X connect 2 0 21 0;
+#X connect 2 0 20 0;
 #X connect 3 0 19 0;
 #X connect 4 0 0 0;
 #X connect 5 0 12 0;
@@ -46,4 +44,4 @@
 #X connect 18 0 3 0;
 #X connect 18 0 17 0;
 #X connect 19 0 17 0;
-#X connect 21 0 0 1;
+#X connect 20 0 0 1;

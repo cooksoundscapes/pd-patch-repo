@@ -1,4 +1,5 @@
-#N canvas 72 160 459 253 12;
+#N canvas 73 196 459 253 12;
+#X declare -path atoms;
 #X obj 28 19 inlet;
 #X obj 28 44 broadcast \$0;
 #X obj 203 90 vline~;
@@ -7,7 +8,7 @@
 #X obj 329 206 EG~;
 #X obj 210 119 r setTable\$0;
 #X obj 203 196 outlet~;
-#N canvas 458 221 480 355 cook-msg 1;
+#N canvas 459 257 480 355 cook-msg 0;
 #X obj 41 316 outlet;
 #X obj 351 31 r totalLength\$0;
 #X obj 180 31 r \$0start;
@@ -89,6 +90,7 @@
 #X obj 109 130 s smprate\$0;
 #X obj 329 76 r env\$0;
 #X obj 347 180 pack f 0 1 f;
+#X obj 254 21 declare -path atoms;
 #X connect 0 0 1 0;
 #X connect 2 0 3 0;
 #X connect 3 0 4 0;
