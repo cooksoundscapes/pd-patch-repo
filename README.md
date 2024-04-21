@@ -1,3 +1,3 @@
 # Pd Patch Repo
 
-Core atoms and macros for general use.
+Atoms, macros, instruments, UIs and Lua scripts for general use
