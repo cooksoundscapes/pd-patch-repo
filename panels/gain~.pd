@@ -1,4 +1,4 @@
-#N canvas 831 587 457 345 12;
+#N canvas 832 623 457 345 12;
 #X obj 63 30 inlet~;
 #X obj 63 236 *~;
 #X obj 63 261 outlet~;
@@ -10,7 +10,7 @@
 #X obj 211 262 makefilename %.2fdB;
 #X obj 211 312 s \$0db;
 #X obj 214 123 bng 15 250 50 0 empty empty empty 17 7 0 10 #606060 #c6feff #000000;
-#X obj 144 124 cnv 15 55 15 empty \$0db 0.00dB 18 6 0 10 #ffffff #ff0400 0;
+#X obj 144 124 cnv 15 55 15 empty \$0db -100.00dB 0 6 0 10 #ffffff #ff0400 0;
 #X obj 144 167 pow 3;
 #X obj 327 185 expr cbrt($f1);
 #X obj 20 145 savestate;

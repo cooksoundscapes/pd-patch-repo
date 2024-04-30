@@ -72,12 +72,13 @@ function file_menu:initialize(_, atoms)
     return true
 end
 
+-- file stream always at outlet1
 function file_menu:stream_files(target_dir, path)
     for k,v in pairs(target_dir) do
         if type(v) == "table" then
-            self:outlet(2, "symbol", {k})
+            self:outlet(1, "dir", {k, path})
         else
-            self:outlet(1, "symbol", {path .. "/" .. v})
+            self:outlet(1, "file", {v, path})
         end
     end
 end
@@ -86,11 +87,10 @@ function file_menu:in_1_bang()
     self:stream_files(self.dir_struct, self.rootpath)
 end
 
--- receives a list of symbols which must be a dir path
-function file_menu:in_1_list(atoms)
+function file_menu:resolve_path(list)
     local target_dir = self.dir_struct
     local path = self.rootpath
-    for _,d in pairs(atoms) do
+    for _,d in pairs(list) do
         if type(d) == "string" then
             target_dir = target_dir[d]
             if target_dir == nil then return end
@@ -99,3 +99,51 @@ function file_menu:in_1_list(atoms)
     end
     self:stream_files(target_dir, path)
 end
+
+function file_menu:in_1_list(atoms)
+    self:resolve_path(atoms)
+end
+
+function file_menu:in_1_path(atoms)
+    local str_path = atoms[1]
+    if str_path == nil or type(str_path) ~= "string" then return end
+    str_path = string.gsub(str_path, self.rootpath, "")
+    local list = {}
+    for sub in string.gmatch(str_path, "([^/]+)") do
+        table.insert(list, sub)
+    end
+    self:resolve_path(list)
+end
+
+-- flush always in outlet2
+function file_menu:flush(allow_dirs, allow_files)
+    -- recursive function!
+    local function flush_dir(dir, path, level)
+        for k,v in pairs(dir) do
+            if type(v) ~= "table" then
+                if allow_files == true then
+                    self:outlet(2, "file", {v, path, level})
+                end
+            else
+                if allow_dirs == true then
+                    self:outlet(2, "dir", {k, path, level})
+                end
+                flush_dir(v, path .. "/" .. k, level + 1)
+            end
+        end
+
+    end
+    flush_dir(self.dir_struct, self.rootpath, 1)
+end
+
+function file_menu:in_1_flush_all()
+    self:flush(true, true)
+end
+
+function file_menu:in_1_flush_all_dir()
+   self:flush(true, false)
+end
+
+function file_menu:in_1_flush_all_files()
+    self:flush(false, true)
+ end

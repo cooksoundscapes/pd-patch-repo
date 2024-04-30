@@ -1,0 +1,15 @@
+#N canvas 736 435 450 300 12;
+#X obj 126 63 inlet;
+#X obj 23 147 expr ($f8*pow(2 \, 7)) + ($f7*pow(2 \, 6)) + ($f6*pow(2 \, 5)) + ($f5*pow(2 \, 4)) + ($f4*pow(2 \, 3)) + ($f3*pow(2 \, 2)) + ($f2*pow(2 \, 1)) + ($f1*pow(2 \, 0));
+#X obj 23 202 outlet;
+#X obj 131 105 unpack f f f f f f f f;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 3 0 1 0;
+#X connect 3 1 1 1;
+#X connect 3 2 1 2;
+#X connect 3 3 1 3;
+#X connect 3 4 1 4;
+#X connect 3 5 1 5;
+#X connect 3 6 1 6;
+#X connect 3 7 1 7;

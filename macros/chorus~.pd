@@ -1,4 +1,5 @@
-#N canvas 133 108 496 407 12;
+#N canvas 134 144 496 407 12;
+#X declare -path atoms;
 #X obj 34 180 outlet~;
 #X obj 53 82 delwrite~ \$0buff 100;
 #X obj 57 121 delread4~ \$0buff;
@@ -54,6 +55,7 @@
 #X floatatom 208 312 5 0 0 0 - - - 0;
 #X floatatom 128 289 5 0 0 0 - - - 0;
 #X obj 252 228 +~ 4;
+#X obj 295 18 declare -path atoms;
 #X connect 2 0 23 1;
 #X connect 3 0 24 0;
 #X connect 4 0 24 1;
