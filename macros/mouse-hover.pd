@@ -1,4 +1,4 @@
-#N canvas 335 187 417 264 12;
+#N canvas 336 223 417 264 12;
 #N canvas 811 221 540 247 \$0panel 0;
 #N canvas 23 161 553 337 (subpatch) 0;
 #X obj 58 215 else/canvas.mouse 1 1;
@@ -8,102 +8,54 @@
 #X obj 58 291 s graph_click\$0;
 #X obj 130 267 s graph_coords\$0;
 #X obj 58 153 else/canvas.name -w;
-#X obj 12 12 cnv 15 60 15 empty 0label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 74 12 cnv 15 60 15 empty 1label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 136 12 cnv 15 60 15 empty 2label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 198 12 cnv 15 60 15 empty 3label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 260 12 cnv 15 60 15 empty 4label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 322 12 cnv 15 60 15 empty 5label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 384 12 cnv 15 60 15 empty 6label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 446 12 cnv 15 60 15 empty 7label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 12 29 cnv 15 60 15 empty 8label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 74 29 cnv 15 60 15 empty 9label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 136 29 cnv 15 60 15 empty 10label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 198 29 cnv 15 60 15 empty 11label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 260 29 cnv 15 60 15 empty 12label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 322 29 cnv 15 60 15 empty 13label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 384 29 cnv 15 60 15 empty 14label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 446 29 cnv 15 60 15 empty 15label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 12 46 cnv 15 60 15 empty 16label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 74 46 cnv 15 60 15 empty 17label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 136 46 cnv 15 60 15 empty 18label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 198 46 cnv 15 60 15 empty 19label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 260 46 cnv 15 60 15 empty 20label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 322 46 cnv 15 60 15 empty 21label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 384 46 cnv 15 60 15 empty 22label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 446 46 cnv 15 60 15 empty 23label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 12 63 cnv 15 60 15 empty 24label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 74 63 cnv 15 60 15 empty 25label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 136 63 cnv 15 60 15 empty 26label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 198 63 cnv 15 60 15 empty 27label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 260 63 cnv 15 60 15 empty 28label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 322 63 cnv 15 60 15 empty 29label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 384 63 cnv 15 60 15 empty 30label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 446 63 cnv 15 60 15 empty 31label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 12 80 cnv 15 60 15 empty 32label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 74 80 cnv 15 60 15 empty 33label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 136 80 cnv 15 60 15 empty 34label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 198 80 cnv 15 60 15 empty 35label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 260 80 cnv 15 60 15 empty 36label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 322 80 cnv 15 60 15 empty 37label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 384 80 cnv 15 60 15 empty 38label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 446 80 cnv 15 60 15 empty 39label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 12 97 cnv 15 60 15 empty 40label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 74 97 cnv 15 60 15 empty 41label rec|load 6 8 0 10 #aaaaaa #2a2a2a
-0;
-#X obj 136 97 cnv 15 60 15 empty 42label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 198 97 cnv 15 60 15 empty 43label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 260 97 cnv 15 60 15 empty 44label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 322 97 cnv 15 60 15 empty 45label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 384 97 cnv 15 60 15 empty 46label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
-#X obj 446 97 cnv 15 60 15 empty 47label rec|load 6 8 0 10 #aaaaaa
-#2a2a2a 0;
+#X obj 12 12 cnv 15 60 15 empty 0label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 74 12 cnv 15 60 15 empty 1label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 136 12 cnv 15 60 15 empty 2label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 198 12 cnv 15 60 15 empty 3label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 260 12 cnv 15 60 15 empty 4label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 322 12 cnv 15 60 15 empty 5label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 384 12 cnv 15 60 15 empty 6label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 446 12 cnv 15 60 15 empty 7label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 12 29 cnv 15 60 15 empty 8label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 74 29 cnv 15 60 15 empty 9label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 136 29 cnv 15 60 15 empty 10label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 198 29 cnv 15 60 15 empty 11label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 260 29 cnv 15 60 15 empty 12label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 322 29 cnv 15 60 15 empty 13label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 384 29 cnv 15 60 15 empty 14label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 446 29 cnv 15 60 15 empty 15label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 12 46 cnv 15 60 15 empty 16label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 74 46 cnv 15 60 15 empty 17label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 136 46 cnv 15 60 15 empty 18label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 198 46 cnv 15 60 15 empty 19label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 260 46 cnv 15 60 15 empty 20label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 322 46 cnv 15 60 15 empty 21label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 384 46 cnv 15 60 15 empty 22label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 446 46 cnv 15 60 15 empty 23label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 12 63 cnv 15 60 15 empty 24label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 74 63 cnv 15 60 15 empty 25label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 136 63 cnv 15 60 15 empty 26label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 198 63 cnv 15 60 15 empty 27label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 260 63 cnv 15 60 15 empty 28label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 322 63 cnv 15 60 15 empty 29label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 384 63 cnv 15 60 15 empty 30label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 446 63 cnv 15 60 15 empty 31label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 12 80 cnv 15 60 15 empty 32label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 74 80 cnv 15 60 15 empty 33label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 136 80 cnv 15 60 15 empty 34label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 198 80 cnv 15 60 15 empty 35label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 260 80 cnv 15 60 15 empty 36label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 322 80 cnv 15 60 15 empty 37label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 384 80 cnv 15 60 15 empty 38label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 446 80 cnv 15 60 15 empty 39label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 12 97 cnv 15 60 15 empty 40label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 74 97 cnv 15 60 15 empty 41label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 136 97 cnv 15 60 15 empty 42label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 198 97 cnv 15 60 15 empty 43label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 260 97 cnv 15 60 15 empty 44label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 322 97 cnv 15 60 15 empty 45label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 384 97 cnv 15 60 15 empty 46label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
+#X obj 446 97 cnv 15 60 15 empty 47label rec|load 6 8 0 10 #aaaaaa #2a2a2a 0;
 #X connect 0 0 4 0;
 #X connect 0 1 1 0;
 #X connect 0 2 1 1;
@@ -136,10 +88,8 @@
 #X obj 142 79 t b b;
 #X text 101 12 must have window open \; vis 1 doesn't work!!;
 #X msg 174 233 symbol \$1label;
-#X msg 93 286 obj \$1 \$2 cnv 15 60 15 empty \$3 rec|load 6 8 0 10
-#aaaaaa #2a2a2a 0, f 35;
-#X obj 142 54 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000;
+#X msg 93 286 obj \$1 \$2 cnv 15 60 15 empty \$3 rec|load 6 8 0 10 #aaaaaa #2a2a2a 0, f 35;
+#X obj 142 54 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000;
 #X connect 0 0 1 0;
 #X connect 1 0 4 0;
 #X connect 1 1 3 0;
@@ -161,9 +111,8 @@
 #X connect 18 0 14 0;
 #X restore 270 18 pd render_labels;
 #X obj 250 67 r graph_click\$0;
-#X obj 250 92 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
-#N canvas 26 124 369 387 hover 0;
+#X obj 250 92 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
+#N canvas 27 160 369 387 hover 1;
 #X obj 66 19 r graph_coords\$0;
 #X obj 66 44 unpack;
 #X obj 66 70 / 62;
@@ -172,7 +121,6 @@
 #X obj 105 95 i;
 #X obj 105 120 * 8;
 #X obj 66 120 +;
-#X obj 66 150 limit-range 0 48;
 #X obj 92 246 f;
 #X obj 66 207 t f f b;
 #X msg 66 323 \; \$1label color \$2 0 \$3;
@@ -182,27 +130,28 @@
 #X obj 76 180 outlet;
 #X obj 253 164 wrap;
 #X obj 253 189 outlet;
+#X obj 66 150 atoms/limit-range 0 48;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 1 1 3 0;
 #X connect 2 0 4 0;
-#X connect 2 0 16 0;
+#X connect 2 0 15 0;
 #X connect 3 0 5 0;
 #X connect 4 0 7 0;
 #X connect 5 0 6 0;
 #X connect 6 0 7 1;
-#X connect 7 0 8 0;
-#X connect 8 0 10 0;
-#X connect 8 0 15 0;
-#X connect 8 1 14 0;
+#X connect 7 0 17 0;
+#X connect 8 0 11 0;
 #X connect 9 0 12 0;
-#X connect 10 0 13 0;
-#X connect 10 1 9 1;
-#X connect 10 2 9 0;
-#X connect 12 0 11 0;
-#X connect 13 0 11 0;
-#X connect 14 0 9 0;
-#X connect 16 0 17 0;
+#X connect 9 1 8 1;
+#X connect 9 2 8 0;
+#X connect 11 0 10 0;
+#X connect 12 0 10 0;
+#X connect 13 0 8 0;
+#X connect 15 0 16 0;
+#X connect 17 0 9 0;
+#X connect 17 0 14 0;
+#X connect 17 1 13 0;
 #X restore 148 62 pd hover;
 #X floatatom 148 87 5 0 0 0 - - - 0;
 #X floatatom 201 88 5 0 0 0 - - - 0;

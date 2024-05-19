@@ -1,6 +1,6 @@
 local find_bpm = pd.Class:new():register("find_bpm")
 
-function find_bpm:initialize(sel, atoms)
+function find_bpm:initialize(_,atoms)
     self.inlets = 2
     self.outlets = 2
     self.smp_rate = 48

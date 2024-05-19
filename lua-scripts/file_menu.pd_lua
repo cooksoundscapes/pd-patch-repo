@@ -97,6 +97,7 @@ function file_menu:resolve_path(list)
             path = path .. "/" .. d
         end
     end
+    print(path)
     self:stream_files(target_dir, path)
 end
 
@@ -122,16 +123,15 @@ function file_menu:flush(allow_dirs, allow_files)
         for k,v in pairs(dir) do
             if type(v) ~= "table" then
                 if allow_files == true then
-                    self:outlet(2, "file", {v, path, level})
+                    self:outlet(1, "file", {v, path, level})
                 end
             else
                 if allow_dirs == true then
-                    self:outlet(2, "dir", {k, path, level})
+                    self:outlet(1, "dir", {k, path, level})
                 end
                 flush_dir(v, path .. "/" .. k, level + 1)
             end
         end
-
     end
     flush_dir(self.dir_struct, self.rootpath, 1)
 end

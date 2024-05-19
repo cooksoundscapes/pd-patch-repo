@@ -1,5 +1,10 @@
 local sample_trimmer = pd.Class:new():register("sample_trimmer")
 
+--[[
+    receives 0~1 range value for start and length
+    adjust one value according to another;
+]]
+
 function sample_trimmer:initialize(_,atoms)
     self.inlets = 2
     self.outlets = 2
