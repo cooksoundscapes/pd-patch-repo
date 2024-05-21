@@ -26,7 +26,13 @@ local config = {
     {path="lfo/target", default=0, min=0, max=4, int=1},
     {path="lfo/wave", default=0, min=0, max=5, int=1},
     {path="lfo/sr-seq", default=16, min=1, max=64, int=1},
-    {path="lfo/depth", default=0, min=0, max=1}
+    {path="lfo/depth", default=0, min=0, max=1},
+    {path="drive_sw", default=0, hidden=true},
+    {path="crusher_sw", default=0, hidden=true},
+    {path="filter_sw", default=0, hidden=true},
+    {path="delay_sw", default=0, hidden=true},
+    {path="verb_sw", default=0, hidden=true},
+    {path="chorus_sw", default=0, hidden=true}
 }
 
 return config

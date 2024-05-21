@@ -21,18 +21,13 @@ function multichannel_state:initialize(_,atoms)
 
     -- if provided with a preset file, preload each channel with path:value
     if atoms[2] ~= nil then
-        package.path = "/home/me/pd/core-lib/lua-scripts/?.lua;" .. package.path
+        local home = os.getenv("HOME")
+        package.path = home .. "/pd/core-lib/lua-scripts/?.lua;" .. package.path
         local default = require("param_presets." .. atoms[2])
         for _,ch in pairs(self.state) do
             for _,p in pairs(default) do
                 local path = p.path
                 local value = p.default or p.min
-                if p.pow ~= nil then
-                    value = value ^ p.pow
-                end
-                if p.mult ~= nil then
-                    value = value * p.mult
-                end
                 if path ~= nil and value ~= nil then
                     ch[path] = value
                 end
@@ -42,31 +37,16 @@ function multichannel_state:initialize(_,atoms)
     return true
 end
 
-function multichannel_state:deserialize_current()
-    for k,v in pairs(self.state[self.selected]) do
-        -- deserialize key
-        local msg = {}
-        for p in k:gmatch("([^/]+)") do
-            table.insert(msg, p)
-        end
-        table.insert(msg, v)
-        self:outlet(1, "list", msg)
-    end
-end
-
 function multichannel_state:dump_current_state()
     if self.state[self.selected] == nil then return end
 
     local s = 0
-    for _,_ in pairs(self.state[self.selected]) do
+    for k,v in pairs(self.state[self.selected]) do
+        self:outlet(1, "list", {k, v})
         s = s + 1
     end
     if s < 1 then
         self:outlet(1, "empty", {})
-    end
-
-    for k,v in pairs(self.state[self.selected]) do
-        self:outlet(1, "list", {k, v})
     end
 end
 
@@ -75,11 +55,22 @@ function multichannel_state:in_1_float(ch)
     self:dump_current_state()
 end
 
-function multichannel_state:in_1_bang()
-    self:deserialize_current()
+function multichannel_state:in_1_list(msg)
+    local key = msg[1]
+    local value = msg[2]
+    self.state[self.selected][key] = value
 end
 
-function multichannel_state:in_1_list(msg)
+function multichannel_state:in_1_select(atoms)
+    local ch = atoms[1]
+    if self.state[ch] ~= nil then
+        self.selected = ch
+    end
+end
+
+-- deprecate those---------
+
+function multichannel_state:serialize(msg)
     local key = ""
     local value
     -- serialize key
@@ -96,4 +87,15 @@ function multichannel_state:in_1_list(msg)
     end
     self.state[self.selected][key] = value
 end
-    
+
+function multichannel_state:deserialize_current()
+    for k,v in pairs(self.state[self.selected]) do
+        -- deserialize key
+        local msg = {}
+        for p in k:gmatch("([^/]+)") do
+            table.insert(msg, p)
+        end
+        table.insert(msg, v)
+        self:outlet(1, "list", msg)
+    end
+end
