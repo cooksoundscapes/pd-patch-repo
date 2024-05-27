@@ -1,9 +1,9 @@
-#N canvas 733 327 450 519 12;
+#N canvas 360 157 450 519 12;
 #X obj 44 474 outlet~;
 #X msg 45 333 next \$1;
 #X obj 294 260 noise~;
 #X obj 45 255 + 45;
-#X obj 45 224 lua-scripts/list_arp;
+#X obj 45 224 scripts/list_arp;
 #X msg 129 161 stop;
 #X msg 128 134 play;
 #X msg 77 28 0 12 19 12 17 12 17 19;
@@ -16,7 +16,7 @@
 #X msg 132 188 rate 387;
 #X obj 45 363 clone instruments/pluck~ 16 0.95 0.7;
 #X obj 81 394 else/flanger~ 0.1 20 -0.4 -tri;
-#X obj 179 307 atoms/keybed;
+#X obj 179 277 atoms/keybed;
 #X obj 179 332 stripnote;
 #X obj 44 448 *~ 0.5;
 #N canvas 733 327 450 300 2string 0;
@@ -35,9 +35,11 @@
 #X restore 62 302 pd 2string;
 #X floatatom 89 276 5 0 0 0 - - - 0;
 #X floatatom 129 256 4 0 0 0 - - - 0;
-#X obj 179 255 hradio 20 1 0 5 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0;
-#X obj 179 282 + 1;
+#X obj 179 225 hradio 20 1 0 5 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0;
+#X obj 179 252 + 1;
 #X obj 294 286 sqrt~;
+#X obj 179 305 spigot;
+#X obj 235 303 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
 #X connect 1 0 15 0;
 #X connect 2 0 25 0;
 #X connect 3 0 1 0;
@@ -56,7 +58,7 @@
 #X connect 15 0 11 0;
 #X connect 15 0 16 0;
 #X connect 16 0 11 1;
-#X connect 17 0 18 0;
+#X connect 17 0 26 0;
 #X connect 18 0 1 0;
 #X connect 18 0 20 0;
 #X connect 19 0 0 0;
@@ -66,3 +68,5 @@
 #X connect 23 0 24 0;
 #X connect 24 0 17 0;
 #X connect 25 0 15 1;
+#X connect 26 0 18 0;
+#X connect 27 0 26 1;

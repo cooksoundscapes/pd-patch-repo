@@ -1,4 +1,4 @@
-#N canvas 549 496 323 494 12;
+#N canvas 549 460 323 494 12;
 #X obj 54 168 else/parabolic~;
 #X obj 54 193 *~;
 #X obj 175 167 pow~ 4;
@@ -14,9 +14,7 @@
 #X obj 112 285 vline~;
 #X msg 112 260 0 \, 1 200 200;
 #X obj 103 39 inlet;
-#X obj 240 45 inlet;
 #X obj 55 402 outlet~;
-#X obj 55 362 atoms/gain~ -100;
 #X obj 165 296 loadbang;
 #X connect 0 0 1 0;
 #X connect 1 0 11 0;
@@ -29,11 +27,9 @@
 #X connect 7 1 5 0;
 #X connect 8 0 1 1;
 #X connect 9 0 13 0;
-#X connect 11 0 17 0;
+#X connect 11 0 15 0;
 #X connect 12 0 11 1;
 #X connect 13 0 12 0;
 #X connect 14 0 4 0;
 #X connect 14 0 7 0;
-#X connect 15 0 17 1;
-#X connect 17 0 16 0;
-#X connect 18 0 13 0;
+#X connect 16 0 13 0;

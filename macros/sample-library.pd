@@ -3,8 +3,8 @@
 #X obj 379 30 r smp_preview;
 #X obj 379 83 readsf~ 2;
 #X obj 379 108 dac~;
-#X obj 358 229 lua-scripts/gen_file_tree;
-#X obj 197 192 lua-scripts/file_menu;
+#X obj 358 229 scripts/gen_file_tree;
+#X obj 197 192 scripts/file_menu;
 #X obj 372 260 else/click;
 #X msg 372 285 vis 1;
 #X msg 475 315 clear;
@@ -142,7 +142,7 @@
 #X obj 20 1532 folder-file bonobete /home/me/samples/recorded/bonobete;
 #X restore 515 27 pd smp_window;
 #X obj 530 201 bng 20 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
-#X obj 27 243 lua-scripts/gen_file_tree;
+#X obj 27 243 scripts/gen_file_tree;
 #X obj 229 253 bng 20 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
 #X obj 57 351 s pd-smp_window;
 #X obj 197 41 t a b;

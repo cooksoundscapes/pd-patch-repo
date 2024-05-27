@@ -4,8 +4,10 @@
 #X msg 104 70 95;
 #X obj 80 177 outlet;
 #X obj 143 177 s global-bpm;
+#X obj 199 59 r set-global-bpm;
 #X connect 0 0 3 0;
 #X connect 0 0 4 0;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
+#X connect 5 0 0 0;
 #X coords 0 -1 1 1 124 42 2 100 100;

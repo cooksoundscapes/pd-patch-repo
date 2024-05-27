@@ -18,7 +18,7 @@
 #X obj 207 410 output~;
 #X obj 27 46 atoms/keybed;
 #X obj 287 25 declare -path sawsynth;
-#X obj 87 102 lua-scripts/sequencer;
+#X obj 87 102 scripts/sequencer;
 #X msg 201 72 rec;
 #X msg 235 72 stop;
 #X msg 275 72 play;

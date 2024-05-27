@@ -18,8 +18,6 @@ end
 function find_bpm:in_1_float(length)
     local duration = length / self.smp_rate
     local ntimes = -1
-    print(length)
-    print(duration)
     -- determine minimum beat duration, this case should be < than 60bpm or 1sec
     while duration >= 900 do
         duration = duration / 2

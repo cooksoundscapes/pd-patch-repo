@@ -97,7 +97,6 @@ function file_menu:resolve_path(list)
             path = path .. "/" .. d
         end
     end
-    print(path)
     self:stream_files(target_dir, path)
 end
 

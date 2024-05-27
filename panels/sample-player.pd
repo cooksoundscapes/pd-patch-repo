@@ -9,13 +9,13 @@
 #X obj 139 121 route load, f 16;
 #X msg 100 297 \$1;
 #X floatatom 24 49 6 0 0 1 BPM \$0show_bpm \$0set_bpm 0;
-#X obj 35 324 lua-scripts/find_bpm;
+#X obj 35 324 scripts/find_bpm;
 #X obj 35 379 s \$0show_bpm;
 #X msg 35 349 set \$1;
 #X obj 118 50 bng 20 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
 #X obj 114 49 cnv 20 28 21 empty empty load 2 11 0 10 #e0e0e0 #404040 0;
 #X obj 28 268 s \$0show_name;
-#X obj 28 187 lua-scripts/filename;
+#X obj 28 187 scripts/filename;
 #X obj 24 24 cnv 20 118 21 empty \$0show_name - 4 10 0 12 #e0e0e0 #404040 0;
 #X msg 28 241 label \$1;
 #X obj 28 214 atoms/trim-symbol 16;

@@ -1,5 +1,4 @@
--- stands for Binary Damage State Machine
-local BDSM = pd.Class:new():register("BDSM")
+local grid_sampler = pd.Class:new():register("grid_sampler")
 
 --[[
     INLET 1 receives MIDI note pair & messages
@@ -32,7 +31,9 @@ local side = {
     shift = 98
 }
 
-function BDSM:initialize(_, atoms)
+function grid_sampler:initialize(_, atoms)
+    local home = os.getenv("HOME")
+    package.path = home .. "/pd/core-lib/scripts/?.lua;" .. package.path
     self.inlets = 3
     self.outlets = 2
     --[[
@@ -64,64 +65,10 @@ function BDSM:initialize(_, atoms)
             cue = {}
         }
     }
-    -- when the channel is set to [state], this is what happens
-    self.action_map = {
-        [state.off] = function(chan)
-            self:set_row(chan, 0)
-            self:outlet(1, "list", {chan, "clear"})
-        end,
-        [state.stopped] = function(chan)
-            self:set_row(chan, 0)
-            self:outlet(2, "list", {chan * self.n_row, 1})
-            self:outlet(1, "list", {chan, "float", 0})
-        end,
-        [state.rec] = function(chan)
-            local channel = self.channels[chan]
-            if channel.auto_stop_bars > 0 then
-                self:set_row(chan, 0)
-                self:set_row(chan, state.rec, channel.auto_stop_bars)
-            else
-                self:set_row(chan, state.rec)
-            end
-            channel.is_recording = true
-            self:outlet(1, "list", {chan, "rec", 1})
-            self:outlet(1, "list", {chan, "float", 0})
-        end,
-        [state.playing] = function(chan, col)
-            self:set_row(chan, 0)
-            local channel = self.channels[chan]
 
-            -- stop rec in case it's on
-            if channel.is_recording == true then
-                channel.is_recording = false
-                self:outlet(1, "list", {chan, "rec", 0})
-            end
-            local curr_slice = col / self.n_col
-
-            -- if channel is playing backwards, slice actually starts in the end of the slice
-            if channel.reverse > 0 then
-                curr_slice = curr_slice + 1/self.n_col
-            end
-            self:outlet(2, "list", {chan * self.n_row + col, state.playing})
-            self:outlet(1, "list", {chan, 1, curr_slice})
-        end,
-        [state.stop_cue] = function(chan)
-            self:set_row(chan, state.stop_cue)
-        end,
-        [state.rec_cue] = function(chan)
-            local channel = self.channels[chan]
-            if channel.auto_stop_bars > 0 then
-                self:set_row(chan, state.rec_cue, channel.auto_stop_bars)
-            else
-                self:set_row(chan, state.rec_cue)
-            end
-        end,
-        [state.play_cue] = function(chan)
-            self:set_row(chan, state.play_cue)
-        end,
-        [state.stop_rec_cue] = function(chan)
-            self:set_row(chan, state.play_cue)
-        end
+    self.action_map = require("grid_sampler.action-map")(self, state)
+    self.page_actions = {
+        [0] = require("grid_sampler.page_0")
     }
     self.n_row = 8
     self.n_col = 8
@@ -133,12 +80,13 @@ function BDSM:initialize(_, atoms)
     self.aux_press_state = {}
     self.grid_size = (self.n_row * self.n_col) - 1
 
+    self.n_pages = 3
     self.current_page = 0
 
     return true
 end
 
-function BDSM:reset_channels()
+function grid_sampler:reset_channels()
     for i=0,self.n_channels-1 do
         self.channels[i] = {
             state = state.off,
@@ -154,73 +102,24 @@ function BDSM:reset_channels()
     end
 end
 
-function BDSM:in_1_list(list)
+function grid_sampler:in_1_list(list)
     local note = list[1]
     local velocity = list[2]
-    if note == nil or velocity == nil then return end
-    -- check if note is outside grid range
-    if note < 0 or note > self.grid_size then
+    if note == nil or velocity == nil or note < 0 then return end
+
+    if note > self.grid_size then
         self:process_aux_btn(note, velocity)
-        return
-    end
 
-    -- find column and row values
-    local col = note % self.n_col
-    local row = math.floor(note / self.n_row)
+    elseif note >= 7*self.n_row then
+        if velocity > 0 then self:set_page(note) end
 
-    local channel = self.channels[row]
+    elseif self.page_actions[self.current_page] ~= nil then
+        self.page_actions[self.current_page](self, state, side, note, velocity)
 
-    -- update / clear row's press_state acording to the velocity
-    if velocity > 0 then
-        channel.pressed = col
-    else
-        channel.pressed = nil
-    end
-
-    -- if this input is not a note-on, return now
-    if velocity < 1 then return end
-
-    local curr_state = channel.state
-    local new_state = 0
-
-    -- if stop button is being held, check if it can work
-    if self.aux_press_state[side.stop] == true and
-        curr_state == state.playing
-    then
-        if channel.sync == true then
-            new_state = state.stop_cue
-        else
-            new_state = state.stopped
-        end
-    else
-        if channel.sync > 0 then
-            new_state = self.mappings.hard_sync.note_in[curr_state]
-        else
-            new_state = self.mappings.free.note_in[curr_state]
-        end
-    end
-
-    -- if rec_arm is being held and state is off, it will auto stop rec at X bars,
-    -- depending on which col was pressed to record
-    if self.aux_press_state[side.rec_arm] == true and
-        curr_state == state.off
-    then
-        channel.auto_stop_bars = col + 1
-        channel.recorded_bar_count = 0
-    else
-        channel.auto_stop_bars = 0
-    end
-
-    -- if new_state is valid, update and call the action for the new state
-    if new_state ~= nil then
-        channel.state = new_state
-        if self.action_map[new_state] ~= nil then
-            self.action_map[new_state](row, col)
-        end
     end
 end
 
-function BDSM:in_2_bang()
+function grid_sampler:in_2_bang()
     -- iterate through channels to check for waiting states
     for i=0,self.n_channels-1 do
         local channel = self.channels[i]
@@ -254,19 +153,10 @@ function BDSM:in_2_bang()
     end
 end
 
-function BDSM:set_row(row, color, amount)
-    local times = self.n_col - 1
-    if amount ~= nil then
-        times = amount - 1
-    end
-    local col_1 = row * self.n_row
-    for i=0,times do
-        self:outlet(2, "list", {col_1 + i, color})
-    end
-end
+-- play position feedback routed to lights - only works if page == 0
+function grid_sampler:in_3_list(pair)
+    if self.current_page ~= 0 then return end
 
--- play position feedback routed to lights
-function BDSM:in_3_list(pair)
     local row = pair[1]
     local col = pair[2]
     if row == nil or col == nil then return end
@@ -283,7 +173,26 @@ function BDSM:in_3_list(pair)
     end
 end
 
-function BDSM:process_aux_btn(note, velocity)
+-- assorted functions
+
+function grid_sampler:set_row(row, color, amount)
+    local times = self.n_col - 1
+    if amount ~= nil then
+        times = amount - 1
+    end
+    local col_1 = row * self.n_row
+    for i=0,times do
+        self:outlet(2, "list", {col_1 + i, color})
+    end
+end
+
+function grid_sampler:clear_lights()
+    for i=0,self.n_channels-1 do
+        self:set_row(i, 0)
+    end
+end
+
+function grid_sampler:process_aux_btn(note, velocity)
     if velocity > 0 then
         self.aux_press_state[note] = true
         self:outlet(2, "list", {note, 1})
@@ -293,13 +202,24 @@ function BDSM:process_aux_btn(note, velocity)
     end
 end
 
--- assorted functions
+function grid_sampler:set_page(button)
+    local col = button % self.n_col
+    if col > self.n_pages-1 then return end
 
-function BDSM:in_1_reset()
+    self:outlet(2, "list", {self.current_page + 7*self.n_col, state.stopped}) -- green
+    self.current_page = col
+    self:outlet(2, "list", {self.current_page + 7*self.n_col, state.playing}) -- yellow
+
+    self:clear_lights()
+end
+
+function grid_sampler:in_1_reset()
     self:reset_channels()
 end
 
-function BDSM:in_1_sync(atoms)
+-- control messages that must be forwarded:
+
+function grid_sampler:in_1_sync(atoms)
     local chan = atoms[1]
     local onoff = atoms[2]
     local channel = self.channels[chan]
@@ -308,7 +228,7 @@ function BDSM:in_1_sync(atoms)
     self:outlet(1, "list", {chan, "sync", onoff})
 end
 
-function BDSM:in_1_clear(atoms)
+function grid_sampler:in_1_clear(atoms)
     local chan = atoms[1]
     local channel = self.channels[chan]
     if channel == nil then return end
@@ -320,7 +240,7 @@ function BDSM:in_1_clear(atoms)
     self:set_row(chan, state.off)
 end
 
-function BDSM:in_1_reverse(atoms)
+function grid_sampler:in_1_reverse(atoms)
     local chan = atoms[1]
     local channel = self.channels[chan]
     if channel == nil then return end
@@ -330,7 +250,7 @@ function BDSM:in_1_reverse(atoms)
     self:outlet(1, "list", {chan, "reverse", rev});
 end
 
-function BDSM:in_1_load(atoms)
+function grid_sampler:in_1_load(atoms)
     local chan = atoms[1]
     local channel = self.channels[chan]
     if channel == nil then return end
@@ -339,10 +259,10 @@ function BDSM:in_1_load(atoms)
     self:outlet(1, "list", {chan, "load"})
 end
 
-function BDSM:in_1(sel, atoms)
-    -- expects <command> <chan> <args>
+function grid_sampler:in_1(sel, atoms)
+    -- expects <command> <chan> <...args>
     -- rearrange to fit a [clone] message like:
-    -- <chan> <command> <args>
+    -- <chan> <command> <...args>
     local msg = {atoms[1], sel}
     for i=2,#atoms do
         table.insert(msg, atoms[i])
