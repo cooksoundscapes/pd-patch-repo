@@ -1,0 +1,38 @@
+local config = {
+    {path="volume", default=1, min=0, max=1, pow=3, component="slider", send="fx-ctrl"},
+    {path="pan", default=0.5, min=0, max=1, component="slider", send="fx-ctrl"},
+    {path="verb", default=0.25, min=0, max=1, pow=3, component="slider", send="fx-ctrl"},
+    {path="drive/gain", default=30, min=0, max=100, component="slider", send="fx-ctrl"},
+    {path="chorus/level", default=0.5, min=0, max=1, component="slider", send="fx-ctrl"},
+    {path="chorus/depth", default=10, min=2, max=20, component="slider", send="fx-ctrl"},
+    {path="chorus/rate", default=0.2, min=0, max=1, pow=2, mult=18, component="slider", send="fx-ctrl"},
+    {path="chorus/waveform", default=0, min=0, max=1, component="slider", send="fx-ctrl"},
+    {path="crusher/quant", default=0, min=0, max=1, pow=4, component="slider", send="fx-ctrl"},
+    {path="crusher/downsamp", default=1, min=0, max=1, pow=3, component="slider", send="fx-ctrl"},
+    {path="crusher/interp", default=0, min=0, max=1, int=1, component="slider", send="fx-ctrl"},
+    {path="delay/dry", default=1, min=0, max=1, pow=3, component="slider", send="fx-ctrl"},
+    {path="delay/level", default=0.5, min=0, max=1, pow=3, component="slider", send="fx-ctrl"},
+    {path="delay/feedback", default=0.3, min=0, max=1, pow=3, component="slider", send="fx-ctrl"},
+    -- {path="delay/time", default=0.4, min=0, max=1, pow=2, mult=2000, component="slider", send="fx-ctrl"}, USE RATIO ONLY!
+    {path="delay/modInt", default=0.2, min=0, max=1, pow=2, mult=12, component="slider", send="fx-ctrl"},
+    {path="delay/modRate", default=0.2, min=0, max=10, component="slider", send="fx-ctrl"},
+    {path="delay/lp", default=1, min=0, max=1, pow=3, mult=21000, component="slider", send="fx-ctrl"},
+    {path="delay/hp", default=0, min=0, max=1, pow=3, mult=21000, component="slider", send="fx-ctrl"},
+    {path="delay/pitch", default=0, min=-24, max=24, int=1, component="slider", send="fx-ctrl"},
+    {path="delay/magic", default=0, min=0, max=1, pow=3, component="slider", send="fx-ctrl"},
+    {path="filter/cutoff", default=1, min=0.001, max=1, pow=3, mult=21000, component="slider", send="fx-ctrl"},
+    {path="filter/q", default=0.75, min=0.5, max=4, component="slider", send="fx-ctrl"},
+    {path="lfo/rate", default=1, min=0, max=25, component="slider", send="fx-ctrl"},
+    {path="lfo/target", default=0, min=0, max=4, int=1, component="slider", send="fx-ctrl"},
+    {path="lfo/wave", default=0, min=0, max=5, int=1, component="slider", send="fx-ctrl"},
+    {path="lfo/sr-seq", default=16, min=1, max=64, int=1, component="slider", send="fx-ctrl"},
+    {path="lfo/depth", default=0, min=0, max=1, component="slider", send="fx-ctrl"},
+    {path="drive_sw", default=0, hidden=true, send="fx-ctrl"},
+    {path="crusher_sw", default=0, hidden=true, send="fx-ctrl"},
+    {path="filter_sw", default=0, hidden=true, send="fx-ctrl"},
+    {path="delay_sw", default=0, hidden=true, send="fx-ctrl"},
+    {path="verb_sw", default=0, hidden=true, send="fx-ctrl"},
+    {path="chorus_sw", default=0, hidden=true, send="fx-ctrl"}
+}
+
+return config

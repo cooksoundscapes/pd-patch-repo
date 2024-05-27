@@ -1,0 +1,16 @@
+#N canvas 475 353 450 460 12;
+#X obj 102 149 scripts/file_menu;
+#X obj 102 174 print files;
+#X obj 102 109 bng 20 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
+#X obj 99 261 scripts/file_menu ~/samples/FX, f 21;
+#X obj 99 230 bng 20 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
+#X text 23 15 [file_menu] optionally takes a symbol as argument \, which must be a valid directory path. Default is $HOME/samples \;;
+#X obj 99 307 print FX_files;
+#X msg 132 109 list FX;
+#X msg 261 120 flush_all;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 3 0 6 0;
+#X connect 4 0 3 0;
+#X connect 7 0 0 0;
+#X connect 8 0 0 0;
