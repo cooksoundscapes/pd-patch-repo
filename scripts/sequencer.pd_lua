@@ -11,6 +11,7 @@ function sequencer:initialize()
     self.epoch = 0
     self.curr = 0
     self.loop = true
+    self.note_range = {0, 47}
     self.clock = pd.Clock:new():register(self, "start")
     return true
 end
@@ -20,10 +21,7 @@ function sequencer:time()
 end
 
 function sequencer:in_2_rec()
-    -- clear
-    for i=1,#self.seq do
-        self.seq[i] = nil
-    end
+    self:in_2_clear()
     self.recording = true
     self.epoch = self:time()
     self:outlet(2, "rec", {1})
@@ -34,7 +32,10 @@ function sequencer:finalize()
 end
 
 function sequencer:in_1_list(pair)
-    if self.recording == false then return end
+    if self.recording == false or
+        pair[1] < self.range[1] or
+        pair[1] > self.range[2]
+    then return end
 
     table.insert(self.seq, {self:time() - self.epoch, pair[1], pair[2]})
     self.epoch = self:time()
@@ -68,6 +69,13 @@ function sequencer:in_2_play()
     self.playing = true
     self:outlet(2, "play", {1})
     self:start()
+end
+
+function sequencer:in_2_clear()
+    self:in_2_stop()
+    for i=1,#self.seq do
+        self.seq[i] = nil
+    end
 end
 
 function sequencer:start()

@@ -36,51 +36,41 @@ function grid_sampler:initialize(_, atoms)
     package.path = home .. "/pd/core-lib/scripts/?.lua;" .. package.path
     self.inlets = 3
     self.outlets = 2
-    --[[
-        note_in sets the new chan_state on a note_in
-        cue map sets the a new state on every channel if due
-    ]]
-    self.mappings = {
-        hard_sync = {
-            note_in = {
-                [state.off] = state.rec_cue,
-                [state.stopped] = state.play_cue,
-                [state.rec] = state.stop_rec_cue,
-                [state.rec_cue] = state.off,
-            },
-            cue = {
-                [state.stop_cue] = state.stopped,
-                [state.rec_cue] = state.rec,
-                [state.play_cue] = state.playing,
-                [state.stop_rec_cue] = state.playing
-            }
-        },
-        free = {
-            note_in = {
-                [state.off] = state.rec,
-                [state.stopped] = state.playing,
-                [state.playing] = state.playing,
-                [state.rec] = state.playing,
-            },
-            cue = {}
-        }
-    }
 
+    self.transition_map = require("grid_sampler.transition-map")(state)
     self.action_map = require("grid_sampler.action-map")(self, state)
+    self.pattern_action_map = require("grid_sampler.pattern-action-map")(self, state)
+    self.player_param_map = require("grid_sampler.player-param-map")
     self.page_actions = {
-        [0] = require("grid_sampler.page_0")
+        [0] = require("grid_sampler.page_0"),
+        [1] = require("grid_sampler.page_1"),
+        [2] = require("grid_sampler.page_2")
     }
     self.n_row = 8
     self.n_col = 8
     self.n_channels = atoms[1] or 7
+    self.n_pat = 6
+    self.n_pages = 4
 
     self.channels = {}
     self:reset_channels()
 
+    self.recording_pat = nil
+    self.patterns = {}
+    self:reset_patterns()
+
+    -- 6x6 io matrix
+    self.io_matrix = {}
+    for c=0,5 do
+        self.io_matrix[c] = {}
+        for r=0,5 do
+            self.io_matrix[c][r] = 0
+        end
+    end
+
     self.aux_press_state = {}
     self.grid_size = (self.n_row * self.n_col) - 1
 
-    self.n_pages = 3
     self.current_page = 0
 
     return true
@@ -91,13 +81,22 @@ function grid_sampler:reset_channels()
         self.channels[i] = {
             state = state.off,
             pressed = nil,
-            sync = 1,
-            is_recording = false,
+            sync = "hard_sync", -- "hard_sync" | "free"
+            loop = 1,
+            reverse = 0,
+            is_recording = false, -- can't use state for verification
             auto_stop_bars = 0,
             recorded_bar_count = 0,
-            reverse = 0,
-            start = 0,
-            length = 1
+            start = 0
+        }
+    end
+end
+
+function grid_sampler:reset_patterns()
+    for i=0,self.n_pat - 1 do
+        self.patterns[i] = {
+            state = state.off,
+            sync = "hard_sync"
         }
     end
 end
@@ -110,12 +109,11 @@ function grid_sampler:in_1_list(list)
     if note > self.grid_size then
         self:process_aux_btn(note, velocity)
 
-    elseif note >= 7*self.n_row then
+    elseif note >= 7*self.n_col then
         if velocity > 0 then self:set_page(note) end
 
     elseif self.page_actions[self.current_page] ~= nil then
-        self.page_actions[self.current_page](self, state, side, note, velocity)
-
+        self.page_actions[self.current_page].action(self, state, side, note, velocity)
     end
 end
 
@@ -137,17 +135,22 @@ function grid_sampler:in_2_bang()
             end
         end
 
-        local new_state
-        if channel.sync > 0 then
-            new_state = self.mappings.hard_sync.cue[curr_state]
-        else
-            new_state = self.mappings.free.cue[curr_state]
-        end
+        local new_state = self.transition_map[channel.sync].cue[curr_state]
 
         if new_state ~= nil then
             channel.state = new_state
             if self.action_map[new_state] ~= nil then
                 self.action_map[new_state](i, 0)
+            end
+        end
+    end
+    for i=0,self.n_pat-1 do
+        local pattern = self.patterns[i]
+        local new_s = self.transition_map[pattern.sync].cue[pattern.state]
+        if new_s ~= nil then
+            pattern.state = new_s
+            if self.pattern_action_map[new_s] ~= nil then
+                self.pattern_action_map[new_s](i)
             end
         end
     end
@@ -180,7 +183,7 @@ function grid_sampler:set_row(row, color, amount)
     if amount ~= nil then
         times = amount - 1
     end
-    local col_1 = row * self.n_row
+    local col_1 = row * self.n_col
     for i=0,times do
         self:outlet(2, "list", {col_1 + i, color})
     end
@@ -211,10 +214,30 @@ function grid_sampler:set_page(button)
     self:outlet(2, "list", {self.current_page + 7*self.n_col, state.playing}) -- yellow
 
     self:clear_lights()
+    local page = self.page_actions[self.current_page]
+    if page ~= nil and page.init ~= nil then
+        page.init(self)
+    end
 end
 
 function grid_sampler:in_1_reset()
     self:reset_channels()
+end
+
+function grid_sampler:find_next_state(curr_state, is_sync)
+    local new_state
+    if self.aux_press_state[side.stop] == true and
+        curr_state == state.playing
+    then
+        if is_sync == "free" then
+            new_state = state.stopped
+        elseif is_sync == "hard_sync" then
+            new_state = state.stopped
+        end
+    else
+        new_state = self.transition_map[is_sync].note_in[curr_state]
+    end
+    return new_state
 end
 
 -- control messages that must be forwarded:
@@ -224,7 +247,10 @@ function grid_sampler:in_1_sync(atoms)
     local onoff = atoms[2]
     local channel = self.channels[chan]
     if channel == nil then return end
-    channel.sync = onoff
+    -- 0 = free, 1 = hard_sync
+    local types = {"free", "hard_sync"}
+    channel.sync = types[onoff+1]
+
     self:outlet(1, "list", {chan, "sync", onoff})
 end
 
