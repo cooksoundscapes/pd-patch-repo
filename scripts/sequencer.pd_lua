@@ -11,7 +11,7 @@ function sequencer:initialize()
     self.epoch = 0
     self.curr = 0
     self.loop = true
-    self.note_range = {0, 47}
+    self.range = {0, 47}
     self.clock = pd.Clock:new():register(self, "start")
     return true
 end

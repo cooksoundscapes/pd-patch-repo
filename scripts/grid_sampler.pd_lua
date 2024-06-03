@@ -96,7 +96,7 @@ function grid_sampler:reset_patterns()
     for i=0,self.n_pat - 1 do
         self.patterns[i] = {
             state = state.off,
-            sync = "hard_sync"
+            sync = "free"
         }
     end
 end
