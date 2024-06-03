@@ -1,4 +1,4 @@
-local socket = require "socket" -- pacman -S lua-socket
+local socket = require("socket") -- pacman -S lua-socket
 
 local sequencer = pd.Class:new():register("sequencer")
 
