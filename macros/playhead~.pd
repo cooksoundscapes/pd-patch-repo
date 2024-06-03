@@ -1,4 +1,4 @@
-#N canvas 1017 94 759 791 12;
+#N canvas 775 577 1143 471 12;
 #X obj 35 322 *~;
 #X obj 35 363 else/pimp~;
 #X obj 34 494 *~;
@@ -69,7 +69,7 @@
 #X obj 203 352 samphold~;
 #X obj 499 700 tabwrite~ \$1;
 #X obj 500 634 inlet~;
-#N canvas 733 327 450 436 rec/dub 1;
+#N canvas 733 327 450 436 rec/dub 0;
 #X obj 124 13 inlet;
 #X obj 124 38 route rec dub;
 #X obj 94 189 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
@@ -127,7 +127,7 @@
 #X obj 610 538 snapshot~;
 #X obj 610 510 r dub\$0;
 #X obj 610 563 v dub-start\$0;
-#X floatatom 291 404 11 0 0 0 - - - 0;
+#X obj 797 202 print;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 1 0 8 0;
@@ -173,7 +173,6 @@
 #X connect 35 1 46 0;
 #X connect 36 0 11 0;
 #X connect 36 0 45 0;
-#X connect 36 0 60 0;
 #X connect 37 0 38 0;
 #X connect 38 0 39 1;
 #X connect 39 0 3 0;
@@ -205,5 +204,6 @@
 #X connect 54 9 33 0;
 #X connect 54 10 55 0;
 #X connect 54 11 49 0;
+#X connect 54 11 60 0;
 #X connect 57 0 59 0;
 #X connect 58 0 57 0;

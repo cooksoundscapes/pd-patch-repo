@@ -1,5 +1,3 @@
-local socket = require("socket") -- pacman -S lua-socket
-
 local sequencer = pd.Class:new():register("sequencer")
 
 function sequencer:initialize()
@@ -17,7 +15,7 @@ function sequencer:initialize()
 end
 
 function sequencer:time()
-    return socket.gettime() * 1000
+    return os.time() * 1000
 end
 
 function sequencer:in_2_rec()
