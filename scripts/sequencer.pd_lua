@@ -1,6 +1,19 @@
+local mylib = require("pdlib")
 local sequencer = pd.Class:new():register("sequencer")
 
-function sequencer:initialize()
+function sequencer:initialize(_,atoms)
+    local min, max
+    if #atoms >= 2 then
+        min = atoms[1]
+        max = atoms[2]
+    elseif #atoms == 1 then
+        min = 0
+        max = atoms[1]
+    else
+        min = 0
+        max = 127
+    end
+    self.range = {min, max}
     self.inlets = 2
     self.outlets = 2
     self.recording = false
@@ -9,13 +22,16 @@ function sequencer:initialize()
     self.epoch = 0
     self.curr = 0
     self.loop = true
-    self.range = {0, 47}
     self.clock = pd.Clock:new():register(self, "start")
     return true
 end
 
 function sequencer:time()
-    return os.time() * 1000
+    return mylib.gettime()
+end
+
+function sequencer:difftime()
+    return mylib.gettime() - self.epoch
 end
 
 function sequencer:in_2_rec()
@@ -34,15 +50,16 @@ function sequencer:in_1_list(pair)
         pair[1] < self.range[1] or
         pair[1] > self.range[2]
     then return end
-
-    table.insert(self.seq, {self:time() - self.epoch, pair[1], pair[2]})
+    local t = self:difftime()
+    table.insert(self.seq, {t, pair[1], pair[2]})
     self.epoch = self:time()
 end
 
 function sequencer:in_2_stop()
     if self.recording == true then
         self.recording = false
-        table.insert(self.seq, {self:time() - self.epoch, "end"})
+        local t = self:difftime()
+        table.insert(self.seq, {t, "end"})
         self:outlet(2, "rec", {0})
 
     elseif self.playing == true then
@@ -59,10 +76,10 @@ function sequencer:in_2_loop(onoff)
 end
 
 function sequencer:in_2_play()
-    if #self.seq < 1 then return end
     if self.recording == true then
         self:in_2_stop()
     end
+    if #self.seq < 1 then return end
 
     self.playing = true
     self:outlet(2, "play", {1})
