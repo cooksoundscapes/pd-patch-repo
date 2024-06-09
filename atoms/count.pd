@@ -11,7 +11,7 @@
 #X msg 283 115 args;
 #X obj 283 140 pdcontrol;
 #X obj 283 165 route float;
-#X obj 108 73 route float bang max;
+#X obj 108 73 route set bang float;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 1 0 3 0;

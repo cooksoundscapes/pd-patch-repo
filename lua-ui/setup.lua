@@ -9,21 +9,22 @@ Color = {
 -- 128x64 display
 -- FontSize = 12
 -- 320x240 display
-FontSize = 24
+FontSize =16
 
 -- OLED display
 -- FontAntiAlias = false
 -- LCD display
 FontAntiAlias = true
 
-DefaultFont = "m5x7"
+DefaultFont = "Astonpoliz"
 
 function SetColor(rgb_table)
   set_source_rgb(table.unpack(rgb_table))
 end
 
-function HexColor(col)
-  set_source_rgb(hex(col))
+function Color(col)
+  local r, g, b = hex(col)
+  set_source_rgb(r, g, b)
 end
 
 function W(ratio)
