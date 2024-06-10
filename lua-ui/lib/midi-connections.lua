@@ -1,3 +1,7 @@
+local saved_connections = require("config.midi-connections")
+
+-- returns a built string with current devices/connection
+-- AND attempts to auto connect based on saved_connections, if both sender & receiver are present
 return function()
     local handler = io.popen("aconnect -l")
     if handler ~= nil then
@@ -32,11 +36,36 @@ return function()
             end
         end
         handler:close()
+        --attempts to connect
+        for _,saved in pairs(saved_connections) do
+            local sender, receiver
+            for _,dev in pairs(devices) do
+                if dev.name == sender then
+                    sender = dev
+                elseif dev.name == receiver then
+                    receiver = dev
+                end
+            end
+            if sender ~= nil and receiver ~= nil then
+                local s = "'" .. saved.sender
+                if saved.outport ~= nil then
+                    s = s .. ":" .. saved.outport
+                end
+                s = s .. "'"
+                local r = "'" .. saved.receiver
+                if saved.inport ~= nil then
+                    r = r .. ":" .. saved.inport
+                end
+                r = r .. "'"
+                os.execute("aconnect " .. s .. " " .. r)
+            end
+        end
+
         -- build string
         local s = ""
         local i = 0
         for _,dev in pairs(devices) do
-            s = s .. dev.name
+            s = s .. "▪" .. dev.name
             i = i + 1
             for _,port in pairs(dev.ports) do
                 if port.connected_to ~= nil and #port.connected_to > 0 then

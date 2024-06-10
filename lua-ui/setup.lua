@@ -27,22 +27,8 @@ function Color(col)
   set_source_rgb(r, g, b)
 end
 
-function W(ratio)
-  return screen_w * ratio
-end
-
-function H(ratio)
-  return screen_h * ratio
-end
-
 function Center(width, height)
   return (screen_w - width)/2, (screen_h - height)/2
-end
-
-function PrintTable(table)
-  for k, v in pairs(table) do
-    print(k, v)
-  end
 end
 
 function SetOscTarget(ip)
