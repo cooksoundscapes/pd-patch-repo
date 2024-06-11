@@ -7,10 +7,9 @@ local restart_jack = require("lib.restart-jack")
 local conf = {
     cpu = 0,
     jack_status = "",
-    midi_connections = ""
+    midi_connections = "",
+    dhcp_status = ""
 }
-
-ip_list()
 
 local function update()
     conf.jack_status = jack_status()
@@ -77,6 +76,11 @@ local canvas = {
         Color("#ffffff")
         move_to(0, screen_h / 3)
         text("Apply changes for " .. jack_setups[selected_jack_setup].name .. "?", 11, nil, screen_w, "center")
+    end,
+    internet_settings = function()
+        Color("#ffffff")
+        move_to(4, header_h)
+        text(conf.dhcp_status, 12)
     end
 }
 local current = "home"
@@ -102,7 +106,10 @@ local nav_buttons = {
         function() current = "jack_settings" end,
         nil, -- shutdown
         nil, -- MIDI settings
-        function() current = "internet_settings" end,
+        function()
+            current = "internet_settings"
+            conf.dhcp_status = ip_list()
+        end,
         nil -- nothing for now
     },
     jack_settings = {
@@ -119,6 +126,14 @@ local nav_buttons = {
             restart_jack(jack_setups[selected_jack_setup])
             current = "home"
         end,
+        nil,
+        nil,
+        nil,
+        nil,
+    },
+    internet_settings = {
+        function() current = "home" end,
+        nil,
         nil,
         nil,
         nil,
