@@ -18,9 +18,12 @@ return function(config)
     config.io
     )
     local h = io.popen(msg)
+    local output
     if h ~= nil then
-        local o = h:read("*a")
-        print(o)
+        output = h:read("*a")
     end
     jack_start(app)
+    local err = string.match(output, "^.-Failed to open server.-$")
+
+    return err
 end

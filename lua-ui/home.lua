@@ -1,6 +1,7 @@
 local ip_list = require("lib.ip-list")
 local midi_connections = require("lib.midi-connections")
 local jack_status = require("lib.jack-status")
+local jack_settings = require("lib.get-jack-settings")
 local jack_setups = require("config.jack-setups")
 local restart_jack = require("lib.restart-jack")
 
@@ -12,8 +13,10 @@ local conf = {
 }
 
 local function update()
-    conf.jack_status = jack_status()
-    conf.midi_connections = midi_connections()
+    local jstat = jack_status()
+    local jconf = jack_settings()
+     conf.jack_status = "JACK Status: " .. (jstat or "stopped") .. '\n' .. (jconf or "")
+    conf.midi_connections = midi_connections(5)
 end
 local frame = 0
 

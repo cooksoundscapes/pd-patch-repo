@@ -1,4 +1,4 @@
-#N canvas 775 577 1143 471 12;
+#N canvas 960 0 959 956 12;
 #X obj 35 322 *~;
 #X obj 35 363 else/pimp~;
 #X obj 34 494 *~;
@@ -127,7 +127,6 @@
 #X obj 610 538 snapshot~;
 #X obj 610 510 r dub\$0;
 #X obj 610 563 v dub-start\$0;
-#X obj 797 202 print;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 1 0 8 0;
@@ -204,6 +203,5 @@
 #X connect 54 9 33 0;
 #X connect 54 10 55 0;
 #X connect 54 11 49 0;
-#X connect 54 11 60 0;
 #X connect 57 0 59 0;
 #X connect 58 0 57 0;
