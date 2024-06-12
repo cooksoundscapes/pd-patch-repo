@@ -1,8 +1,9 @@
 local jack_setups = require("config.jack-setups")
+local pd_cmd = require("lib.pd-commands")
 local jack_status = require("lib.jack-status")
 local restart_jack = require("lib.restart-jack")
-local pd_cmd = require("lib.pd-commands")
 local connect_pd = require("lib.connect-pd")
+local get_settings = require("lib.system-settings")
 
 FontSize = 16
 FontAntiAlias = true
@@ -38,8 +39,18 @@ if js ~= "started" then
     os.execute("sleep 0.5")
   end
 end
-connect_pd()
 
+local sys_settings = get_settings()
+
+local audio_chan = tonumber(sys_settings["audio-channels"]) or 16
+DefaultView = sys_settings["default-view"] or "home"
+
+connect_pd(audio_chan)
+
+function Navigate(page)
+  print("'" .. page .. "'")
+  load_module(app, page)
+end
 
 -- placeholders to avoid accessing nil functions
 function Draw() end

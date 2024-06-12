@@ -105,9 +105,9 @@ end
 
 local nav_buttons = {
     home = {
-        function() print("goback") end, -- "home" button
+        function() Navigate(DefaultView) end,
         function() current = "jack_settings" end,
-        nil, -- shutdown
+        function() os.execute("sudo poweroff") end,
         nil, -- MIDI settings
         function()
             current = "internet_settings"
