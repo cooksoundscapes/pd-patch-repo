@@ -20,7 +20,8 @@ This should ensure that all will be done at userspace,
 right after the initialization of indiscipline.
 
 That causes some ugly behavior due to blocking os.execute operation BEFORE graphic loop,
-but works, at least. In the future, this can be, somehow, a non-blocking operation
+but works, at least. In the future, this can be, somehow, a non-blocking operation,
+probably delegating this into a registered C function in a separated thread
 ]]
 
 local js = jack_status()
@@ -35,10 +36,10 @@ if js ~= "started" then
   local err = restart_jack(default_jack_config)
   if err == nil then
     pd_cmd:send("pd dsp 0")
-    pd_cmd:send("pd dsp 1")
-    os.execute("sleep 0.5")
   end
 end
+pd_cmd:send("pd dsp 1")
+os.execute("sleep 0.1")
 
 local sys_settings = get_settings()
 
@@ -48,7 +49,6 @@ DefaultView = sys_settings["default-view"] or "home"
 connect_pd(audio_chan)
 
 function Navigate(page)
-  print("'" .. page .. "'")
   load_module(app, page)
 end
 
