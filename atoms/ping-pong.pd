@@ -1,0 +1,11 @@
+#N canvas 773 348 450 300 12;
+#X obj 165 161 b;
+#X obj 165 186 symbol \$1;
+#X msg 165 211 pong \$1;
+#X obj 165 236 atoms/send-osc param;
+#X obj 165 136 r ping;
+#X text 18 18 how that works: ./main.pd has a catch-all net-receive for FUDI messages \; that should redirect messages to any matching receive \; This patch will receive messages starting with "ping" and respond via send-osc with it's 1st argument \, which is best to be the parent's name.;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 4 0 0 0;

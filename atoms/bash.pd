@@ -1,0 +1,18 @@
+#N canvas 733 327 450 300 12;
+#X obj 73 65 inlet;
+#X obj 73 220 atoms/send-osc execute;
+#X text 81 10 ~/scripts/osc-shell.py must be running!!!!;
+#X obj 286 202 loadbang;
+#X msg 286 227 localhost 5005;
+#X msg 283 117 xset -r;
+#X msg 345 117 xset r;
+#X obj 295 59 inlet;
+#X obj 295 84 sel 1 0;
+#X connect 0 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 1 1;
+#X connect 5 0 1 0;
+#X connect 6 0 1 0;
+#X connect 7 0 8 0;
+#X connect 8 0 5 0;
+#X connect 8 1 6 0;

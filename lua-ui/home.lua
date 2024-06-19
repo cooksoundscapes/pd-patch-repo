@@ -18,7 +18,9 @@ local function update()
      conf.jack_status = "JACK Status: " .. (jstat or "stopped") .. '\n' .. (jconf or "")
     conf.midi_connections = midi_connections(5)
 end
-local frame = 0
+
+local max_frame = 120
+local frame = max_frame - 1
 
 local w = screen_w / 3
 local h = screen_h / 6
@@ -36,6 +38,9 @@ end
 
 local canvas = {
     home = function()
+        if frame == 0 then
+            update()
+        end
         Color("#ffffff")
         move_to(4, header_h)
         text(conf.jack_status, 11)
@@ -89,12 +94,9 @@ local canvas = {
 local current = "home"
 
 function Draw()
-    if frame == 0 then
-        update()
-    end
-    frame = (frame + 1) % 120
     header()
     canvas[current]()
+    frame = (frame + 1) % max_frame
 end
 
 function Cleanup() end

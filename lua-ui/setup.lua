@@ -8,6 +8,7 @@ local get_settings = require("lib.system-settings")
 FontSize = 16
 FontAntiAlias = true
 DefaultFont = "Astonpoliz"
+FirstOpened = false
 
 function Color(col)
   local r, g, b = hex(col)
@@ -42,10 +43,8 @@ pd_cmd:send("pd dsp 1")
 os.execute("sleep 0.1")
 
 local sys_settings = get_settings()
-
 local audio_chan = tonumber(sys_settings["audio-channels"]) or 16
 DefaultView = sys_settings["default-view"] or "home"
-
 connect_pd(audio_chan)
 
 function Navigate(page)

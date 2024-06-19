@@ -11,6 +11,7 @@ return function()
             local k, v = trim(p[1]), trim(p[2])
             t[k] = v
         end
+        settings:close()
         return t
     end
 end

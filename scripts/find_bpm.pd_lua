@@ -15,6 +15,10 @@ function find_bpm:in_2_float(smp_rate)
     self.smp_rate = smp_rate / 1000
 end
 
+function find_bpm:in_1_list(atoms)
+    self:in_1_float(atoms[1])
+end
+
 function find_bpm:in_1_float(length)
     local duration = length / self.smp_rate
     local ntimes = -1

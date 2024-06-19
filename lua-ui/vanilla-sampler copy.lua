@@ -4,6 +4,12 @@ local sound_graph = require("components.sound_graph")
 local knob = require("components.knob")
 local h_slider = require("components.h_slider")
 
+if FirstOpened == false then
+  FirstOpened = true
+  local pdcmd = require("lib.pd-commands")
+  pdcmd:open_file("minimal-sampler", "instruments")
+end
+
 local palette = {
   charcoal = "#2e2e2e",
   slate_grey = "#3c3c3c",
@@ -179,10 +185,6 @@ end
 
 -- expects "name" to be "graph_<selected>"
 function SetTable(data, name)
-  if name == "game" then
-    game = data
-    return
-  end
   destroy_surface(name)
   local w = screen_w * 0.7
   local h = screen_h * 0.35
