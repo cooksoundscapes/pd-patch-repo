@@ -17,9 +17,9 @@
 #X obj 158 160 r click-output;
 #X obj 443 307 bng 20 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
 #X obj 443 332 atoms/send-osc reset;
-#X obj 46 406 snake~ out 6, f 17;
-#X obj 46 443 dac~ 5 6 7 8 9 10;
-#X text 52 387 dry input meter;
+#X obj 45 406 snake~ out 6, f 17;
+#X obj 45 443 dac~ 5 6 7 8 9 10;
+#X text 51 387 dry input meter;
 #X obj 199 445 dac~ 1 2 11 12 13 14 15 16;
 #N canvas 733 327 450 300 average6 0;
 #X obj 235 36 inlet~;

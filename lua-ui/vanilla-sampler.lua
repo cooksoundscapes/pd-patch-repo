@@ -1,3 +1,5 @@
+local fps = require("lib.fps")
+
 if FirstOpened == false then
   FirstOpened = true
   local pdcmd = require("lib.pd-commands")
@@ -43,8 +45,12 @@ local ch_params = {
     rec_trig_threshold = 0
 }
 
-local function header()
-    Color(palette.orange)
+function Draw()
+  Color("#ffffff")
+  text(string.format("FPS: %.2f", fps:get()))
 
-
+  if mouse_x ~= nil and mouse_y ~= nil then
+    move_to(0, 20)
+    text(string.format("X: %d, Y: %d", mouse_x, mouse_y))
+  end
 end

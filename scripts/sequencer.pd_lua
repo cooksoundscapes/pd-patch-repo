@@ -1,4 +1,4 @@
-local time = require("time")
+local time = require("lib.time")
 local sequencer = pd.Class:new():register("sequencer")
 
 function sequencer:initialize(_,atoms)

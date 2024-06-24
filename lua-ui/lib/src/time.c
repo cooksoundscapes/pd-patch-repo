@@ -3,7 +3,7 @@
 #include "lua.h"
 #include "lauxlib.h"
 
-int time_gettime(lua_State* l) {
+int time_ms(lua_State* l) {
   struct timespec t;
   clock_gettime(CLOCK_MONOTONIC, &t);
   int secs_in_millis = t.tv_sec * 1000;
@@ -19,10 +19,12 @@ int time_sleep (lua_State *L) {
   return 0;
 }
 
-int luaopen_time(lua_State* l) {
+// estranho - pd_lua pede por "luaopen_time",
+// enquanto o indiiscipline pede por luaopen_lib_time!
+int luaopen_lib_time(lua_State* l) {
   lua_newtable(l);
-  lua_pushcfunction(l, time_gettime);
-  lua_setfield(l, -2, "gettime");
+  lua_pushcfunction(l, time_ms);
+  lua_setfield(l, -2, "ms");
   lua_pushcfunction(l, time_sleep);
   lua_setfield(l, -2, "sleep");
   return 1;

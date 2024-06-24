@@ -2,6 +2,5 @@
 gcc -fPIC -o time.o -c time.c -Ilua &&
 gcc -fpic -shared -o time.so time.o -Llua -llua &&
 
-cp time.so ../lua-ui/lib/ &&
-mv time.so ../scripts &&
+mv time.so ../lib/ &&
 rm time.o

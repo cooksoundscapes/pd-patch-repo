@@ -1,6 +1,6 @@
 #! /bin/bash
 
-FILE=${1:-"~/pd/main.pd"}
+FILE=${1:-"~/pd/core-lib/main.pd"}
 
 killall -15 pd &
 (sleep .2 && pd $FILE) &
