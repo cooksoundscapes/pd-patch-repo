@@ -26,6 +26,7 @@
         "mouse_x",
         "mouse_y",
         "mouse_button",
+        "drop_in_file",
         "app",
         "get_audio_buffer",
         "get_buffer_size",

@@ -2,7 +2,7 @@ return {
     port = 7779,
     send = function(self, msg)
         local cmd = string.format("echo '%s;' | pdsend %d", msg, self.port)
-        os.execute(cmd)
+        os.execute(cmd .. " &> /dev/null")
     end,
     open_file = function(self, file, path)
         local home = os.getenv("HOME")

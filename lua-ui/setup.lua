@@ -52,8 +52,23 @@ function Navigate(page)
 end
 
 -- placeholders to avoid accessing nil functions
+
+-- Draw will be called every frame by host
 function Draw() end
-function SetParam(name, value) end
+
+-- SetParam is called whenever the OSC endpoint /param is hit in the host
+-- it can have any number of arguments; the values will be captured in order
+function SetParam() end
+
+-- Cleanup is called before loading a new file, usually at /navigate
 function Cleanup() end
+
+-- PanelInput is only called when the current page is "home.lua";
+-- it can be called by the GPIO module OR by /panel OSC endpoint
 function PanelInput(device, pin, value) end
-function SetTable(table, name) end
+
+-- SetTable is called by /buffer endpoint
+function SetTable(name, buffer) end
+
+-- FileDrop is called when host is running in SDL window and a file is dropped onto it
+function FileDrop(file) end

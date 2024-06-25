@@ -1,0 +1,61 @@
+local slider = require("components.h_slider")
+local pd = require("lib.pd-commands")
+
+return {
+    x = 20,
+    y = 20,
+    w = 200,
+    h = 20,
+    lvl = 0,
+    max = 1,
+    min = 0,
+    dx = 0,
+    label = "",
+    show_label = false,
+    pd_address = "sl",
+    line_col = "#fafafa",
+    bg_col = "#2e2e2e",
+    bar_col = "#ee2233",
+    font_col = "#ffffff",
+
+    draw = function(self)
+        if self.show_label then
+            Color(self.font_col)
+            move_to(self.x, self.y - 22)
+            text(self.pd_address, 12)
+        end
+        slider(self.x, self.y, self.w, self.h, self.min, self.max, self.lvl, self.line_col, self.bg_col, self.bar_col)
+    end,
+
+    drag = function(self, dx, _)
+        local inc = (dx - self.dx) * ((self.max - self.min) / self.w)
+        self.dx = dx
+        self.lvl = math.min(self.max, math.max(self.min, self.lvl + inc))
+        pd:send(string.format("%s %f", self.pd_address, self.lvl))
+    end,
+
+    release = function(self)
+        self.dx = 0
+    end,
+
+    new = function(self, x, y, w, h, min, max, pd_address, label, bar_col, font_col, line_col, bg_col)
+        self.__index = self
+        local instance = setmetatable({}, self)
+        instance.x = x
+        instance.y = y
+        instance.w = w
+        instance.h = h
+        instance.min = min
+        instance.max = max
+        instance.pd_address = pd_address
+        instance.label = label
+        instance.line_col = line_col
+        instance.bg_col = bg_col
+        instance.bar_col = bar_col
+        instance.font_col = font_col
+        if string.len(label) > 0 then
+            instance.show_label = true
+        end
+        return instance
+    end
+}

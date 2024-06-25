@@ -1,5 +1,5 @@
 local grid = require("components.grid")
-local unigrid = require("components.unicode-grid")
+local unigrid = require("components.unicode_grid")
 
 local palette = {
   charcoal = "#2e2e2e",
@@ -14,19 +14,25 @@ local palette = {
 
 local game = {}
 
+local row_s = 100
+
 function Draw()
   grid(
-    0, 0, screen_w, 200, game,
-    --palette.off_white, palette.slate_grey, palette.dark_orange
-    palette.black, palette.black, palette.dark_orange
+    0, 0, screen_w, screen_h, row_s, game,
+    palette.black, palette.slate_grey, palette.dark_orange
+    --palette.black, palette.black, palette.dark_orange
   )
   --unigrid(0, 0, 32, game, {"░", "▓"}, palette.dark_orange)
 end
 
-function SetTable(data, name)
+function SetTable(name, data)
   if name == "game" then
     game = data
   end
+end
+
+function SetParam(r)
+  row_s = r
 end
 
 function Cleanup()
