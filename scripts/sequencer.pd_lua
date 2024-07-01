@@ -1,4 +1,4 @@
-local mylib = require("pdlib")
+local time = require("lib.time")
 local sequencer = pd.Class:new():register("sequencer")
 
 function sequencer:initialize(_,atoms)
@@ -6,7 +6,7 @@ function sequencer:initialize(_,atoms)
     if #atoms >= 2 then
         min = atoms[1]
         max = atoms[2]
-    elseif #atoms == 1 then
+    elseif #atoms == 1  then
         min = 0
         max = atoms[1]
     else
@@ -27,11 +27,11 @@ function sequencer:initialize(_,atoms)
 end
 
 function sequencer:time()
-    return mylib.gettime()
+    return time.gettime()
 end
 
 function sequencer:difftime()
-    return mylib.gettime() - self.epoch
+    return time.gettime() - self.epoch
 end
 
 function sequencer:in_2_rec()

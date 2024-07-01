@@ -1,4 +1,4 @@
-#N canvas 1133 415 450 460 12;
+#N canvas 1135 487 450 460 12;
 #X obj 192 151 else/click;
 #X msg 192 176 symbol ~/samples;
 #X obj 192 201 openpanel;
@@ -16,7 +16,7 @@
 #X obj 85 325 f;
 #X msg 94 296 \$1;
 #X text 25 21 arg 1 is table \; inlet1 bang = openapanel \; inlet2 bang = output file info \; inlet3 symbol = direct load file \;;
-#X obj 38 131 route bang symbol;
+#X obj 38 131 route bang;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 2 0 4 0;

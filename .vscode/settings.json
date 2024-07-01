@@ -1,0 +1,51 @@
+{
+    "files.associations": {
+        "*.pd_lua": "lua"
+    },
+    "Lua.diagnostics.globals": [
+        "pd",
+        "set_source_rgb",
+        "set_source_rgba",
+        "new_path",
+        "close_path",
+        "set_line_width",
+        "rectangle",
+        "arc",
+        "text_alignment",
+        "text",
+        "move_to",
+        "line_to",
+        "rel_move_to",
+        "rel_line_to",
+        "paint",
+        "fill",
+        "fill_preserve",
+        "stroke",
+        "screen_w",
+        "screen_h",
+        "mouse_x",
+        "mouse_y",
+        "mouse_button",
+        "drop_in_file",
+        "app",
+        "get_audio_buffer",
+        "get_buffer_size",
+        "hex",
+        "fps",
+        "load_module",
+        "create_surface",
+        "finish_surface",
+        "draw_surface",
+        "destroy_surface",
+        "set_operator",
+        "jack_start",
+        "jack_stop",
+        "set_lights",
+        "set_osc_target",
+        "mouse"
+    ],
+    "Lua.diagnostics.disable": [
+        "unused-function",
+        "discard-returns"
+    ]
+}

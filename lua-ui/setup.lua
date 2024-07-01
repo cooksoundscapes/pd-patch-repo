@@ -1,56 +1,74 @@
-Color = {
-  red = {hex("#ff0000")},
-  blue = {hex("#0000ff")},
-  green = {hex("#00ff00")},
-  white = {hex("#ffffff")},
-  black = {hex("#000000")}
-}
+local jack_setups = require("config.jack-setups")
+local pd_cmd = require("lib.pd-commands")
+local jack_status = require("lib.jack-status")
+local restart_jack = require("lib.restart-jack")
+local connect_pd = require("lib.connect-pd")
+local get_settings = require("lib.system-settings")
 
--- 128x64 display
--- FontSize = 12
--- 320x240 display
-FontSize = 24
-
--- OLED display
--- FontAntiAlias = false
--- LCD display
+FontSize = 16
 FontAntiAlias = true
+DefaultFont = "Astonpoliz"
+FirstOpened = false
 
-DefaultFont = "m5x7"
-
-function SetColor(rgb_table)
-  set_source_rgb(table.unpack(rgb_table))
+function Color(col)
+  local r, g, b = hex(col)
+  set_source_rgb(r, g, b)
 end
 
-function HexColor(col)
-  set_source_rgb(hex(col))
-end
+--[[
+Audio setup will be done here, at least for now.
+This should ensure that all will be done at userspace,
+right after the initialization of indiscipline.
 
-function W(ratio)
-  return screen_w * ratio
-end
+That causes some ugly behavior due to blocking os.execute operation BEFORE graphic loop,
+but works, at least. In the future, this can be, somehow, a non-blocking operation,
+probably delegating this into a registered C function in a separated thread
+]]
 
-function H(ratio)
-  return screen_h * ratio
-end
+local js = jack_status()
 
-function Center(width, height)
-  return (screen_w - width)/2, (screen_h - height)/2
-end
-
-function PrintTable(table)
-  for k, v in pairs(table) do
-    print(k, v)
+if js ~= "started" then
+  local default_jack_config
+  for _,conf in pairs(jack_setups) do
+    if conf.default == true then
+      default_jack_config = conf
+    end
+  end
+  local err = restart_jack(default_jack_config)
+  if err == nil then
+    pd_cmd:send("pd dsp 0")
   end
 end
+pd_cmd:send("pd dsp 1")
+os.execute("sleep 0.1")
 
-function SetOscTarget(ip)
-  set_osc_target(app, ip)
+local sys_settings = get_settings()
+local audio_chan = tonumber(sys_settings["audio-channels"]) or 16
+DefaultView = sys_settings["default-view"] or "home"
+connect_pd(audio_chan)
+
+function Navigate(page)
+  load_module(app, page)
 end
 
 -- placeholders to avoid accessing nil functions
+
+-- Draw will be called every frame by host
 function Draw() end
-function SetParam(name, value) end
+
+-- SetParam is called whenever the OSC endpoint /param is hit in the host
+-- it can have any number of arguments; the values will be captured in order
+function SetParam() end
+
+-- Cleanup is called before loading a new file, usually at /navigate
 function Cleanup() end
+
+-- PanelInput is only called when the current page is "home.lua";
+-- it can be called by the GPIO module OR by /panel OSC endpoint
 function PanelInput(device, pin, value) end
-function SetTable(table, name) end
+
+-- SetTable is called by /buffer endpoint
+function SetTable(name, buffer) end
+
+-- FileDrop is called when host is running in SDL window and a file is dropped onto it
+function FileDrop(file) end

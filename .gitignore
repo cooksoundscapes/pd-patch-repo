@@ -1,1 +1,3 @@
-.vscode/
+lua-ui/fonts/*/
+*/*.so
+*/*/*.so

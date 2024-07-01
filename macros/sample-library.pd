@@ -10,7 +10,7 @@
 #X msg 475 315 clear;
 #X msg 475 287 loadbang;
 #X obj 197 16 r folder_view;
-#N canvas 17 36 310 956 dir_window 1;
+#N canvas 17 0 310 956 dir_window 1;
 #X obj 40 20 folder-file deprecated /home/me/samples/deprecated;
 #X obj 40 44 folder-file 41\ -\ 1017\ Bricksquad\ Drum\ Kit\ Grátis\ +\ SoundFonts /home/me/samples/41\ -\ 1017\ Bricksquad\ Drum\ Kit\ Grátis\ +\ SoundFonts;
 #X obj 60 68 folder-file FX /home/me/samples/41\ -\ 1017\ Bricksquad\ Drum\ Kit\ Grátis\ +\ SoundFonts/FX;
@@ -71,11 +71,10 @@
 #X obj 40 1388 folder-file Shorts /home/me/samples/Shorts;
 #X obj 40 1412 folder-file loops /home/me/samples/loops;
 #X obj 40 1436 folder-file Cymbals /home/me/samples/Cymbals;
-#X obj 37 37;
 #X coords 0 956 1 955 144 236 0;
 #X restore 37 30 pd dir_window;
 #X obj 358 315 s pd-dir_window;
-#N canvas 329 36 329 956 smp_window 1;
+#N canvas 329 36 329 956 smp_window 0;
 #X obj 20 20 sample-file allalongthewatchtower.wav /home/me/samples/recorded;
 #X obj 20 44 sample-file aromatizador\ de\ ambientes.wav /home/me/samples/recorded;
 #X obj 20 68 sample-file cantoria-direct.mp3 /home/me/samples/recorded;

@@ -59,11 +59,12 @@ function grid_sampler:initialize(_, atoms)
     self.patterns = {}
     self:reset_patterns()
 
-    -- 6x6 io matrix
-    self.io_matrix = {}
-    for c=0,5 do
+    -- 4x6 io matrix
+    self.io_matrix_ins = 4
+    self.io_matrix_outs = 6
+    for c=0,self.io_matrix_ins-1 do
         self.io_matrix[c] = {}
-        for r=0,5 do
+        for r=0,self.io_matrix_outs-1 do
             self.io_matrix[c][r] = 0
         end
     end
