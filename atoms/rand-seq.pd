@@ -1,4 +1,4 @@
-#N canvas 1020 154 566 467 12;
+#N canvas 1024 298 566 467 12;
 #X obj 39 168 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X obj 39 420 outlet;
 #X obj 317 192 loadbang;
@@ -51,6 +51,10 @@
 #X restore 327 79 pd init;
 #X text 434 70 rate <f> \; steps <f> \; prev <> (seed) \; next <> (seed) \; missBy <f> \; amount <f> \; min <f> \; max <f> \; seed <f> \;;
 #X text 39 30 arg 1: rate \; arg 2&3: range \;;
+#X obj 445 339 bng 20 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
+#X obj 445 364 v seed\$0;
+#X obj 445 389 outlet;
+#X obj 443 287 r \$0get_seed;
 #X connect 0 0 18 0;
 #X connect 2 0 3 0;
 #X connect 3 0 10 0;
@@ -87,3 +91,6 @@
 #X connect 31 0 17 1;
 #X connect 32 0 8 0;
 #X connect 34 0 33 0;
+#X connect 37 0 38 0;
+#X connect 38 0 39 0;
+#X connect 40 0 37 0;

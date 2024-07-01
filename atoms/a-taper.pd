@@ -1,0 +1,12 @@
+#N canvas 407 357 450 300 12;
+#X obj 55 112 expr log10(1 + $f1 * ($f2 - 1)) / log10($f2);
+#X obj 360 33 loadbang;
+#X floatatom 360 83 5 0 0 0 - - - 0;
+#X msg 360 58 10;
+#X obj 55 157 outlet;
+#X obj 55 68 inlet;
+#X connect 0 0 4 0;
+#X connect 1 0 3 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 5 0 0 0;

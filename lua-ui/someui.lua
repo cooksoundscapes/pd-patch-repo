@@ -2,10 +2,10 @@ local mouse = require("lib.mouse")
 local slider = require("components.controlled_h_slider")
 local knob = require("components.controlled_knob")
 
-local sl1 = slider:new(20, 20, 200, 20, 0, 1, "sl1", "sl1")
-local sl2 = slider:new(20, 60, 200, 20, 0, 1, "sl2", "sl2")
+local sl1 = slider:new(20, 20, 200, 20, {0, 1}, "sl1", "sl1")
+local sl2 = slider:new(20, 60, 200, 20, {0, 1}, "sl2", "sl2")
 
-local k1 = knob:new(20, 100, 50, 1, 100, "fx overdrive gain", "gain")
+local k1 = knob:new(20, 100, 50, {1, 100}, "fx overdrive gain", "gain")
 
 mouse:add_area(sl1)
 mouse:add_area(sl2)
