@@ -41,8 +41,7 @@
         "jack_start",
         "jack_stop",
         "set_lights",
-        "set_osc_target",
-        "mouse"
+        "set_osc_target"
     ],
     "Lua.diagnostics.disable": [
         "unused-function",

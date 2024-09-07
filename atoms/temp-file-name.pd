@@ -1,0 +1,18 @@
+#N canvas 734 363 450 300 12;
+#X obj 136 104 t b b;
+#X obj 136 175 atoms/timestamp;
+#X obj 136 200 list append;
+#X obj 136 62 inlet;
+#X obj 210 149 symbol;
+#X msg 136 225 symbol \$2/\$1.wav;
+#X obj 136 250 outlet;
+#X obj 249 69 inlet;
+#X text 291 69 directory name;
+#X connect 0 0 1 0;
+#X connect 0 1 4 0;
+#X connect 1 0 2 0;
+#X connect 2 0 5 0;
+#X connect 3 0 0 0;
+#X connect 4 0 2 1;
+#X connect 5 0 6 0;
+#X connect 7 0 4 1;

@@ -12,6 +12,7 @@ function playhead2_ctl:initialize()
     self.trim_start = 0
     self.trim_end = 1
     self.loop = 1
+    self.rec_state = 0
     self.retrig_timer = pd.Clock:new():register(self, "retrigger")
     return true
 end
@@ -50,11 +51,13 @@ function playhead2_ctl:play(level, phase)
     self.paused_at = nil
     self:outlet(1, "stop", {})
     self.retrig_timer:unset()
-    if level > 0 then
+    if level > 0 and self.rec_state == 0 then
         self:outlet(1, "float", {phase})
         local remaining = self:get_remaining(phase)
         self:outlet(1, "list", {1 - self.reverse, remaining})
         self.retrig_timer:delay(remaining)
+    else
+        self:outlet(1, "float", {0})
     end
 end
 
@@ -161,14 +164,16 @@ function playhead2_ctl:in_1_trim_end(atoms)
 end
 
 function playhead2_ctl:in_1_seek(atoms)
+    if self.rec_state ~= 0 then return end
     local phase = atoms[1]
-    local time = atoms[2]
+    local time = atoms[2] or 100
     self.seeking = phase
     self.max_seek_time = time
     self:outlet(4, "bang", {})
 end
 
 function playhead2_ctl:in_1_cue(atoms)
+    if self.rec_state ~= 0 then return end
     local offset = atoms[1]
     local time = atoms[2]
     self.cueing = offset
@@ -177,7 +182,7 @@ function playhead2_ctl:in_1_cue(atoms)
 end
 
 function playhead2_ctl:in_1_pause(atoms)
-    if self.playing <= 0 then return end
+    if self.playing == 0 or self.rec_state ~= 0 then return end
 
     local p = atoms[1]
     if p > 0 then
@@ -189,13 +194,23 @@ function playhead2_ctl:in_1_pause(atoms)
     end
 end
 
+function playhead2_ctl:in_1_rec_state(atoms)
+    local s = atoms[1]
+    if type(s) ~= "number" then return end
+    self.rec_state = s
+    self:play(0, 0)
+end
+
 function playhead2_ctl:in_1_float(level)
     self:play(level, self.reverse)
 end
 
 function playhead2_ctl:in_1_list(atoms)
     local lvl = atoms[1]
-    local phase = atoms[2]
+    local phase = atoms[2] or self.reverse
     if lvl == nil or phase == nil then return end
     self:play(lvl, phase)
 end
+
+-- catch all to avoid errors
+function playhead2_ctl:in_1(_,_) end

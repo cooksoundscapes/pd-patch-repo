@@ -1,4 +1,4 @@
-#N canvas 736 435 501 363 12;
+#N canvas 738 507 501 363 12;
 #X obj 113 25 inlet;
 #X obj 145 78 route float symbol list;
 #X obj 38 100 del \$1;
@@ -17,6 +17,7 @@
 #X obj 398 165 list;
 #X obj 398 190 list trim;
 #X obj 113 50 t b a;
+#X text 200 23 delays any kind of message in \$1 ms \;;
 #X connect 0 0 17 0;
 #X connect 1 0 10 1;
 #X connect 1 0 7 0;

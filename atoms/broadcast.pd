@@ -1,4 +1,4 @@
-#N canvas 475 227 319 434 12;
+#N canvas 476 263 319 434 12;
 #X obj 44 27 inlet;
 #X obj 44 52 list split 1;
 #X msg 44 182 symbol \$2\$1;
