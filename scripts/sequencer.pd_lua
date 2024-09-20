@@ -70,7 +70,8 @@ function sequencer:in_2_stop()
     end
 end
 
-function sequencer:in_2_loop(onoff)
+function sequencer:in_2_loop(atoms)
+    local onoff = atoms[1]
     if type(onoff) ~= "number" then return end
     self.loop = onoff > 0
 end
