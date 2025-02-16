@@ -1,11 +1,11 @@
-#N canvas 733 327 450 300 12;
+#N canvas 734 363 450 300 12;
 #X obj 108 135 inlet~;
 #X obj 108 160 *~;
 #X obj 108 185 outlet~;
-#X obj 204 117 inlet;
+#X obj 195 108 inlet;
 #X msg 227 161 \$1 10;
 #X obj 227 186 line~;
-#X obj 263 118 r \$1;
+#X obj 259 109 r \$1;
 #X text 63 22 1st argument: sets internal [receive] \; 2nd argument: sets initial value;
 #X obj 311 110 loadbang;
 #X obj 311 135 \$2;
