@@ -1,4 +1,4 @@
-#N canvas 441 600 494 429 12;
+#N canvas 410 335 494 317 12;
 #X obj 74 141 inlet;
 #X obj 74 166 list;
 #X obj 74 216 netsend -u -b;
@@ -8,15 +8,11 @@
 #X msg 196 196 disconnect \, connect \$1 \$2;
 #X msg 208 141 192.168.1.23 7777;
 #X obj 198 227 loadbang;
-#X msg 198 252 args;
-#X obj 198 277 pdcontrol;
-#X msg 198 358 connect localhost \$2;
 #X text 333 140 <- to pi's UI;
 #X text 55 14 1st arg is address (required) \; caveat: fails with composite addresses \; 2nd arg is port (optional), f 41;
 #X msg 210 115 localhost 7778;
 #X text 317 115 <-to py_system;
-#X obj 198 302 route list;
-#X msg 265 329 0 7777;
+#X msg 198 254 connect localhost 7777;
 #X connect 0 0 1 0;
 #X connect 1 0 3 0;
 #X connect 3 0 2 0;
@@ -24,11 +20,6 @@
 #X connect 5 0 6 0;
 #X connect 6 0 2 0;
 #X connect 7 0 5 0;
-#X connect 8 0 9 0;
-#X connect 9 0 10 0;
-#X connect 10 0 16 0;
-#X connect 11 0 2 0;
-#X connect 14 0 5 0;
-#X connect 16 0 11 0;
-#X connect 16 1 17 0;
-#X connect 17 0 11 0;
+#X connect 8 0 13 0;
+#X connect 11 0 5 0;
+#X connect 13 0 2 0;
