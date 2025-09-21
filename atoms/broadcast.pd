@@ -1,4 +1,4 @@
-#N canvas 840 163 488 445 12;
+#N canvas 841 199 488 445 12;
 #X obj 137 175 inlet;
 #X obj 137 200 list split 1;
 #X obj 137 315 send;
@@ -11,8 +11,6 @@
 #X obj 218 295 makefilename;
 #X msg 259 268 set \$1%s;
 #X obj 137 256 list;
-#X obj 231 347 print addr;
-#X obj 176 384 print income-addr;
 #X msg 339 288 set %s;
 #X obj 259 217 route float symbol;
 #X connect 0 0 1 0;
@@ -21,15 +19,13 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 6 0;
-#X connect 6 0 15 0;
+#X connect 6 0 13 0;
 #X connect 7 0 11 0;
 #X connect 7 1 9 0;
-#X connect 7 1 13 0;
 #X connect 9 0 2 1;
-#X connect 9 0 12 0;
 #X connect 10 0 9 0;
 #X connect 11 0 3 0;
-#X connect 14 0 9 0;
-#X connect 15 0 10 0;
-#X connect 15 1 10 0;
-#X connect 15 2 14 0;
+#X connect 12 0 9 0;
+#X connect 13 0 10 0;
+#X connect 13 1 10 0;
+#X connect 13 2 12 0;

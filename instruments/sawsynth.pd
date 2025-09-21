@@ -1,4 +1,4 @@
-#N canvas 675 422 477 532 12;
+#N canvas 633 262 598 551 12;
 #X declare -path sawsynth;
 #X obj 133 382 *~;
 #X obj 133 448 outlet~;
@@ -25,6 +25,8 @@
 #X obj 270 103 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
 #X obj 313 103 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
 #X obj 133 307 clone -s 1 sawsynth-voice 8, f 16;
+#X obj 409 165 theme;
+#X msg 409 140 symbol neon_abyss;
 #X connect 0 0 1 0;
 #X connect 0 0 14 0;
 #X connect 2 0 7 0;
@@ -52,3 +54,4 @@
 #X connect 21 0 22 0;
 #X connect 21 1 23 0;
 #X connect 24 0 0 0;
+#X connect 26 0 25 0;
