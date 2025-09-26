@@ -1,7 +1,7 @@
 local theme = pd.Class:new():register("theme")
 
 
-local function append_lib_to_path()
+local function append_lib_path()
     local home = os.getenv("HOME")
     local lib_path = home .. "/pd/core-lib/?.lua;"
 
@@ -11,7 +11,7 @@ local function append_lib_to_path()
 end
 
 function theme:initialize()
-    append_lib_to_path()
+    append_lib_path()
     self.inlets = 1
     self.outlets = 1
     return true
