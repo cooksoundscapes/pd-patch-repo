@@ -1,4 +1,4 @@
-#N canvas 745 565 529 426 12;
+#N canvas 366 416 529 426 12;
 #X obj 17 201 inlet~;
 #X obj 17 281 fftease/pvharm~;
 #X obj 17 340 outlet~;
@@ -18,7 +18,7 @@
 #X obj 335 19 inlet;
 #X obj 138 87 route float list;
 #X obj 192 148 unpack;
-#X obj 338 51 switch~ 512 1 0.25;
+#X obj 338 51 switch~ 128 1 0.25;
 #X connect 0 0 1 0;
 #X connect 1 0 10 0;
 #X connect 3 0 1 1;
