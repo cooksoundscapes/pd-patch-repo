@@ -1,4 +1,4 @@
-#N canvas 675 225 548 367 12;
+#N canvas 176 219 548 367 12;
 #X obj 177 196 preset;
 #X obj 216 37 loadbang;
 #X obj 177 224 print dump;
@@ -13,6 +13,11 @@
 #X obj 394 177 r glitch;
 #X obj 394 202 print glitch;
 #X msg 95 94 load radiohead;
+#X obj 50 284 * 127;
+#X msg 50 309 controller pedal 2 \$1;
+#X obj 403 237 r leds;
+#X obj 403 262 print leds;
+#X obj 50 249 else/button 20 20 #FFFFFF #808080 0 1 0 0 0 empty empty;
 #X connect 0 0 2 0;
 #X connect 1 0 10 0;
 #X connect 3 0 0 1;
@@ -22,3 +27,7 @@
 #X connect 10 0 0 1;
 #X connect 11 0 12 0;
 #X connect 13 0 0 0;
+#X connect 14 0 15 0;
+#X connect 15 0 0 0;
+#X connect 16 0 17 0;
+#X connect 18 0 14 0;

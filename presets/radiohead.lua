@@ -118,6 +118,6 @@ return {
     end,
     seq_buttons = function(seq_btn, press, state)
     end,
-    exp_pedal = function(pedal, state)
+    exp_pedal = function(_, position, state)
     end
 }

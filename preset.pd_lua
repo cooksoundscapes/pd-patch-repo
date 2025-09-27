@@ -99,15 +99,37 @@ function preset:reset(m, skip) -- module instance
 end
 
 function preset:in_1_controller(atoms)
-    local controller = table.remove(atoms, 1)
-    if self.current_preset[controller] then
-        local changes = self.current_preset[controller](atoms)
+    local c_type = atoms[1]
+    local c_number = atoms[2]
+    local c_state = atoms[3]
+    if self.current_preset[c_type] then
+        local changes = self.current_preset[c_type](
+            c_number,
+            c_state,
+            self.loaded_modules
+        )
         if changes ~= nil then
             if changes.params ~= nil then
-                for _,p in pairs(changes.params) do
-                    
+                for _,affected in ipairs(changes.params) do
+                    local module = affected[1]
+                    local param  = affected[2]
+                    pd.send(
+                        module,
+                        param,
+                        self.loaded_modules[module][param]:get()
+                    )
                 end
             end
+            if changes.leds ~= nil then
+                for led,state in pairs(changes.leds) do
+                    pd.send(
+                        'leds',
+                        'led',
+                        {led, state and 1 or 0}
+                    )
+                end
+            end
+            
         end
     end
 end
