@@ -22,6 +22,7 @@ function preset:initialize()
     return true
 end
 
+-- add module
 function preset:in_2_add(atoms)
     local module_name = atoms[1]
     local receiver = atoms[2]
@@ -36,7 +37,7 @@ function preset:in_2_add(atoms)
         local instance = mod_factory.new()
         instance.receiver = receiver or module_name
         self:reset(instance)
-        self.loaded_modules[module_name] = instance
+        self.loaded_modules[module_name] = instance -- a definir: sempre name ou receiver?
     end
 end
 
@@ -45,12 +46,14 @@ function preset:in_2_remove(atoms)
     self.loaded_modules[m_name] = nil
 end
 
+-- prints out loaded modules
 function preset:in_2_bang()
     for k,_ in pairs(self.loaded_modules) do
         self:outlet(1, "loaded", {k})
     end
 end
 
+-- load preset
 function preset:in_1_load(atoms)
     local preset_name = atoms[1]
     local preset_module = require("presets." .. preset_name)
@@ -64,15 +67,14 @@ function preset:in_1_load(atoms)
 
     if preset_module.defaults then
         -- aplica defaults definidos no preset
-        for _, def in pairs(preset_module.defaults) do
-            local module_name = def[1]
-            local param_name  = def[2]
-            local value       = def[3]
+        for _, def in ipairs(preset_module.defaults) do
+            local module = def[1]
+            local param  = def[2]
+            local value  = def[3]
 
-            self.loaded_modules[module_name][param_name]:set(value)
-            pd.send(module_name, param_name, value)
-
-            applied_params[param_name] = true
+            self.loaded_modules[module][param]:set(value)
+            self:send_param(module, param)
+            applied_params[param] = true
         end
     end
     -- reseta parâmetros não listados no defaults
@@ -80,6 +82,22 @@ function preset:in_1_load(atoms)
         self:reset(module, applied_params)
     end
     self.current_preset = preset_module
+end
+
+function preset:send_param(module, param)
+    if self.loaded_modules[module].omit_module then
+        pd.send(
+            param,
+            'float',
+            self.loaded_modules[module][param]:get()
+        )
+        return
+    end
+    pd.send(
+        module,
+        param,
+        self.loaded_modules[module][param]:get()
+    )
 end
 
 function preset:in_1_reset()
@@ -98,32 +116,30 @@ function preset:reset(m, skip) -- module instance
     end
 end
 
+--[[
+a liberdade é total para definir os controles de um preset;
+1 arg é sempre o nome do controller, que deve ser uma chave na table do preset;
+o restante sao argumentos que a funçao definida no preset recebe, 1o sempre vem os modulos.
+]]
 function preset:in_1_controller(atoms)
-    local c_type = atoms[1]
-    local c_number = atoms[2]
-    local c_state = atoms[3]
+    local c_type = table.remove(atoms, 1)
     if self.current_preset[c_type] then
         local changes = self.current_preset[c_type](
-            c_number,
-            c_state,
-            self.loaded_modules
+            self.loaded_modules,
+            table.unpack(atoms)
         )
         if changes ~= nil then
             if changes.params ~= nil then
                 for _,affected in ipairs(changes.params) do
                     local module = affected[1]
                     local param  = affected[2]
-                    pd.send(
-                        module,
-                        param,
-                        self.loaded_modules[module][param]:get()
-                    )
+                    self:send_param(module, param)
                 end
             end
             if changes.leds ~= nil then
                 for led,state in pairs(changes.leds) do
                     pd.send(
-                        'leds',
+                        'visuals',
                         'led',
                         {led, state and 1 or 0}
                     )

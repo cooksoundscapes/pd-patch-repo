@@ -1,4 +1,10 @@
 return {
+    default={
+        fg="#000000",
+        bg="#ffffff",
+        select="#0000ff",
+        gop="#ff0000"
+    },
     neon_abyss={
         fg="#85bdbf",
         bg="#040f0f",
@@ -74,10 +80,10 @@ return {
     monokai = {
         fg = "#f8f8f2",
         bg = "#272822",
-        select = "#fd971f",
-        gop = "#66d9ef",
-        guis = "#a6e22e",
-        action = "#f92672",
+        select = "#f92672",
+        gop = "#a6e22e",
+        action = "#fd971f",
         labels = "#e6db74",
+        guis = "#66d9ef",
     }
 }

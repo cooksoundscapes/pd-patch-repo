@@ -1,11 +1,19 @@
 return {
     _base_type = {
         map = function(self, value)
-            local v = (value / self.res) * (self.max - self.min) + self.min
+            local v = value / self.res
+            if self.curve then
+                v = v ^ self.curve
+            end
+            v = v * (self.max - self.min) + self.min
             return {v}
         end,
         inverse_map = function(self, value)
-            return (value - self.min) / (self.max - self.min) * self.res
+            local v = (value - self.min) / (self.max - self.min)
+            if self.curve then
+                v = v ^ (1 / self.curve)
+            end
+            return v * self.res
         end,
         set_default = function(self)
             self.current = self:inverse_map(self.default)
@@ -125,15 +133,7 @@ return {
             default=0,
             res=256,
             suffix='Hz',
-            map = function(_self, value)
-                local norm = value / _self.res
-                local v = _self.min + (_self.max - _self.min) * (norm^2)
-                return {v}
-            end,
-            inverse_map = function(_self, value)
-                local norm = (value - _self.min) / (_self.max - _self.min)
-                return math.sqrt(norm) * _self.res
-            end
+            curve=2,
         }, t)
     end,
 

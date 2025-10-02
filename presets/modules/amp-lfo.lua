@@ -10,7 +10,7 @@ return {
             depth=types:custom({
                 min=60, max=100, default=60,res=40
             }),
-            bypass=types:toggle()
+            bypass=types:toggle{default=1}
         }
     end
 }

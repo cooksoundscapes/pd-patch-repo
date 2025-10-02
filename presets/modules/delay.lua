@@ -8,15 +8,7 @@ return {
                 default=360,
                 res=256,
                 suffix='ms',
-                map = function(self, value)
-                    local norm = value / self.res
-                    local v = self.min + (self.max - self.min) * (norm^3)
-                    return {v}
-                end,
-                inverse_map = function(self, value)
-                    local norm = (value - self.min) / (self.max - self.min)
-                    return self.res * (norm ^ (1/3))
-                end
+                curve=3,
             },
             bypass=types:toggle(),
             fdbk=types:volume{default=-100, max=3},
@@ -24,7 +16,13 @@ return {
             lop=types:freq_sweep{default=136},
             hip=types:freq_sweep(),
             ['mod.rate']=types:low_freq(),
-            ['mod.depth']=types:custom{min=0,max=8,default=0,res=256}
+            ['mod.depth']=types:custom{
+                min=0,max=8,default=0,res=256,curve=3
+            },
+            bpm=types:bpm{default=120},
+            ['bpm.div']=types:custom{
+                min=1,max=8,default=4,res=7
+            }
         }
     end
 }

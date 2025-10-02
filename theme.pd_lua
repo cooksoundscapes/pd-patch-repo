@@ -29,7 +29,7 @@ function theme:in_1_symbol(title)
         })
         pd.send("theme.obj", "color", {
             chosen.bg,
-            chosen.action or chosen.select,
+            chosen.action or chosen.fg,
             chosen.labels or chosen.fg
         })
     else
