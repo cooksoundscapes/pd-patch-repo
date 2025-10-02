@@ -149,3 +149,14 @@ function preset:in_1_controller(atoms)
         end
     end
 end
+
+function preset:in_1(atoms)
+    local module = atoms[1]
+    local param  = atoms[2]
+    local value  = atoms[3]
+    if self.loaded_modules[module] and self.loaded_modules[module][param] then
+        self.loaded_modules[module][param]:set(value)
+        self:send_param(module, param)
+    end
+end
+

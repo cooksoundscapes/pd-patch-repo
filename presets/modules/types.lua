@@ -27,6 +27,10 @@ return {
         increment = function(self, inc)
             self.current = math.max(self.min, math.min(self.max, self.current + inc))
         end,
+        pot = function(self, v)
+            local norm = v / 127
+            self.current = norm * (self.max - self.min) + self.min
+        end,
     },
 
     _factory = function(self, p_type, overrides)
