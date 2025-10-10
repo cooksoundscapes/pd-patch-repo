@@ -32,32 +32,4 @@ return {
             }
         }
     },
-    controls={
-        ['exp-pedal']={
-            ['bank-1'] = {
-                type='pot',
-                params={
-                    {
-                        module='delay',
-                        param='fdbk',
-                        transform=function(v)
-                            return math.abs(v - 1) * .2 + .78
-                        end
-                    },
-                    {
-                        module='glitch',
-                        param='chance',
-                    }
-                }
-            }
-        },
-        ['ftsw-1']={
-            type='toggle',
-            params={
-                {
-                    module='oneoffs'
-                }
-            }
-        }
-    }
 }

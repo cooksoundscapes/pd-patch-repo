@@ -10,13 +10,23 @@ local function append_lib_path()
 end
 
 --[[
-    1st inlet takes care of PRESETS;
-    2nd inlet takes care of MODULES;
+    1st inlet takes care of CONTROLS;
+    2nd inlet takes care of PRESETS;
+    3rd inlet takes care of MODULES;
+    The idea is to have 3 types of config files:
+    1. control mappings
+    2. parameters presets
+    3. modules
+
+    general workflow is:
+    1. loading each module individually
+    2. loading one control mapping at a time - these defines what encoders can control
+    3. loading presets for setting groups os parameters and shortcuts to control mapping
 ]]
 
 function preset:initialize()
     append_lib_path()
-    self.inlets = 2
+    self.inlets = 3
     self.outlets = 1
     self.loaded_modules = {}
     return true
@@ -24,7 +34,7 @@ end
 
 
 -- add module
-function preset:in_2_add(atoms)
+function preset:in_3_add(atoms)
     local module_name = atoms[1]
     local receiver = atoms[2]
 
@@ -47,16 +57,9 @@ function preset:in_2_add(atoms)
 end
 
 
-function preset:in_2_remove(atoms)
+function preset:in_3_remove(atoms)
     local m_name = atoms[1]
     self.loaded_modules[m_name] = nil
-end
-
--- prints out loaded modules
-function preset:in_2_bang()
-    for k,_ in pairs(self.loaded_modules) do
-        self:outlet(1, "loaded", {k})
-    end
 end
 
 -- load preset
@@ -124,64 +127,29 @@ function preset:send_param(module, param)
     )
 end
 
-
-function preset:in_1_control(atoms)
-    local c_name = atoms[1]
-    local c_val = atoms[2]
-    local ctl = self.current_preset.controls[c_name]
-    if ctl then
-        if ctl.params then
-            for _,p in ipairs(ctl.params) do
-                local target = self.loaded_modules[p.module][p.param]
-                local method = target[ctl.type]
-                if p.transform then
-                    method(target, p.transform(c_val))
-                else
-                    method(target, c_val)
-                end
-                self:send_param(p.module, p.param)
-            end
+function preset:set_param(module,param,value,action)
+    if
+        self.loaded_modules[module] and
+        self.loaded_modules[module][param]
+    then
+        local target = self.loaded_modules[module][param]
+        local method = target[action]
+        if not method then
+            self:error("Invalid set method: " .. action)
         end
-        
+        method(target, value)
+        self:send_param(module, param)
     end
 end
 
 function preset:in_1_pot(atoms)
-    local module = atoms[1]
-    local param  = atoms[2]
-    local value  = atoms[3]
-    if
-        self.loaded_modules[module] and
-        self.loaded_modules[module][param]
-    then
-        self.loaded_modules[module][param]:pot(value)
-        self:send_param(module, param)
-    end
+    self:set_param(atoms[1], atoms[2], atoms[3], 'pot')
 end
 
 function preset:in_1_increment(atoms)
-    local module = atoms[1]
-    local param  = atoms[2]
-    local value  = atoms[3]
-    if
-        self.loaded_modules[module] and
-        self.loaded_modules[module][param]
-    then
-        self.loaded_modules[module][param]:increment(value)
-        self:send_param(module, param)
-    end
+    self:set_param(atoms[1], atoms[2], atoms[3], 'increment')
 end
 
 function preset:in_1_set(atoms)
-    local module = atoms[1]
-    local param  = atoms[2]
-    local value  = atoms[3]
-    if
-        self.loaded_modules[module] and
-        self.loaded_modules[module][param]
-    then
-        self.loaded_modules[module][param]:set(value)
-        self:send_param(module, param)
-    end
-
+    self:set_param(atoms[1], atoms[2], atoms[3], 'set')
 end

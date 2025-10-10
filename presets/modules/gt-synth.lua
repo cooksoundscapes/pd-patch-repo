@@ -14,15 +14,6 @@ return {
             waveform=types:custom{
                 min=0,max=2,default=0,res=2
             },
-            ['filter.env.pow']=types:custom{
-                min=1,max=4,default=2,res=256
-            },
-            ['filter.env.mult']=types:custom{
-                min=1,max=80,default=5,res=256
-            },
-            ['filter.env.floor']=types:custom{
-                min=-1,max=0,default=0,res=256
-            },
             ['filter.lfo.depth']=types:custom{
                 min=0,max=1,default=0,res=256
             },
