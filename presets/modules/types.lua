@@ -25,11 +25,10 @@ return {
             self.current = self:inverse_map(value)
         end,
         increment = function(self, inc)
-            self.current = math.max(self.min, math.min(self.max, self.current + inc))
+            self.current = math.max(0, math.min(self.res, self.current + inc))
         end,
         pot = function(self, v)
-            local norm = v / 127
-            self.current = norm * (self.max - self.min) + self.min
+            self.current = math.floor(v * self.res + 0.5)
         end,
     },
 
@@ -60,37 +59,12 @@ return {
         return t
     end,
 
-    compound = function(_, types)
-        return {
-            values=types,
-            set_default = function(self)
-                for _,v in pairs(self.values) do
-                    v:set_default()
-                end
-            end,
-            get = function(self)
-                local result = {}
-                for _,v in pairs(self.values) do
-                    table.insert(result, v:get()[1])
-                end
-                return result
-            end,
-            set = function(self, values)
-                for i,v in pairs(values) do
-                    self.values[i]:set(v)
-                end
-            end,
-            increment = function(self, idx, inc)
-                self.values[idx]:increment(inc)
-            end,
-        }
-    end,
-
     volume = function(self, t)
         return self:_factory({
             min=-100,max=0,
             default=0,
             res=100,
+            curve=.5,
             suffix='dB'
         }, t)
     end,
@@ -100,8 +74,6 @@ return {
             min=0,max=136,
             default=0,
             res=256,
-            suffix='Hz',
-            --vis_value=function(v) return 440 * 2 * ((v - 69) / 12) end,
         }, t)
     end,
 
@@ -131,6 +103,12 @@ return {
         }, t)
     end,
 
+    bpm_div = function(self, t)
+        return self:_factory({
+            min=1,max=8,default=4,res=14
+        }, t)
+    end,
+
     low_freq = function(self, t)
         return self:_factory({
             min=0,max=20,
@@ -141,15 +119,20 @@ return {
         }, t)
     end,
 
+    waveform = function(self, t)
+        return self:_factory({
+            min=0,
+            max=4,
+            default=0,
+            res=4
+        }, t)
+    end,
+
     semitones = function(self, t)
         return self:_factory({
             min=-24,max=24,
             default=0,
-            res=96,
-            map = function(_self, value)
-                local v = _self._base_type.map(_self, value)
-                return {math.floor(v[1])}
-            end,
+            res=48,
         }, t)
     end,
 }

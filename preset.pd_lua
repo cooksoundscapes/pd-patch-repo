@@ -22,13 +22,14 @@ function preset:initialize()
     return true
 end
 
+
 -- add module
 function preset:in_2_add(atoms)
     local module_name = atoms[1]
     local receiver = atoms[2]
 
     if not module_name then
-        pd.error("'add' needs module name as 1st arg;")
+        self:error("'add' needs module name as 1st arg;")
         return
     end
 
@@ -36,10 +37,15 @@ function preset:in_2_add(atoms)
     if mod_factory then
         local instance = mod_factory.new()
         instance.receiver = receiver or module_name
-        self:reset(instance)
-        self.loaded_modules[module_name] = instance -- a definir: sempre name ou receiver?
+        self.loaded_modules[module_name] = instance
+        for param_name, param in pairs(instance) do
+            if param.set_default then
+                self:send_param(module_name, param_name)
+            end
+        end
     end
 end
+
 
 function preset:in_2_remove(atoms)
     local m_name = atoms[1]
@@ -59,7 +65,7 @@ function preset:in_1_load(atoms)
     local preset_module = require("presets." .. preset_name)
 
     if not preset_module then
-        pd.error("Invalid preset name" .. preset_name)
+        self:error("Invalid preset name" .. preset_name)
         return
     end
 
@@ -67,96 +73,115 @@ function preset:in_1_load(atoms)
 
     if preset_module.defaults then
         -- aplica defaults definidos no preset
-        for _, def in ipairs(preset_module.defaults) do
-            local module = def[1]
-            local param  = def[2]
-            local value  = def[3]
-
-            self.loaded_modules[module][param]:set(value)
-            self:send_param(module, param)
-            applied_params[param] = true
+        for module_name, param in ipairs(preset_module.defaults) do
+            if self.loaded_modules[module_name] then
+                for param_name,value in pairs(param) do
+                    self.loaded_modules[module_name][param_name]:set(value)
+                    self:send_param(module_name, param_name)
+                    applied_params[module_name..':'..param_name] = true
+                end
+            else
+                self:error("Preset '" .. preset_name .. "' needs module '" .. module_name .. "'")
+            end
         end
     end
     -- reseta parâmetros não listados no defaults
-    for _, module in pairs(self.loaded_modules) do
-        self:reset(module, applied_params)
+    for module_name, module in pairs(self.loaded_modules) do
+        for param_name, param in pairs(module) do
+            if param.set_default and not applied_params[module_name..":"..param_name] then
+                param:set_default()
+                self:send_param(module_name, param_name)
+            end
+        end
     end
     self.current_preset = preset_module
 end
 
 function preset:send_param(module, param)
-    if self.loaded_modules[module].omit_module then
+    local omit =
+        self.loaded_modules[module].config and
+        self.loaded_modules[module].config.omit_module
+    local receiver = self.loaded_modules[module].receiver or module
+    local value = self.loaded_modules[module][param]:get()
+    local suffix = self.loaded_modules[module][param].suffix or ""
+    if omit then
         pd.send(
             param,
             'float',
-            self.loaded_modules[module][param]:get()
+            value
         )
-        return
+    else
+        pd.send(
+            receiver,
+            param,
+            value
+        )
     end
     pd.send(
-        module,
-        param,
-        self.loaded_modules[module][param]:get()
+        'monitor',
+        'list',
+        {receiver, param, value[1], suffix}
     )
 end
 
-function preset:in_1_reset()
-    for _,m in pairs(self.loaded_modules) do
-        self:reset(m)
-    end
-end
 
-function preset:reset(m, skip) -- module instance
-    skip = skip or {}
-    for p_name,param in pairs(m) do
-        if not skip[p_name] and param.set_default then
-            param:set_default()
-            pd.send(m.receiver, p_name, param:get())
-        end
-    end
-end
-
---[[
-a liberdade é total para definir os controles de um preset;
-1 arg é sempre o nome do controller, que deve ser uma chave na table do preset;
-o restante sao argumentos que a funçao definida no preset recebe, 1o sempre vem os modulos.
-]]
-function preset:in_1_controller(atoms)
-    local c_type = table.remove(atoms, 1)
-    if self.current_preset[c_type] then
-        local changes = self.current_preset[c_type](
-            self.loaded_modules,
-            table.unpack(atoms)
-        )
-        if changes ~= nil then
-            if changes.params ~= nil then
-                for _,affected in ipairs(changes.params) do
-                    local module = affected[1]
-                    local param  = affected[2]
-                    self:send_param(module, param)
+function preset:in_1_control(atoms)
+    local c_name = atoms[1]
+    local c_val = atoms[2]
+    local ctl = self.current_preset.controls[c_name]
+    if ctl then
+        if ctl.params then
+            for _,p in ipairs(ctl.params) do
+                local target = self.loaded_modules[p.module][p.param]
+                local method = target[ctl.type]
+                if p.transform then
+                    method(target, p.transform(c_val))
+                else
+                    method(target, c_val)
                 end
+                self:send_param(p.module, p.param)
             end
-            if changes.leds ~= nil then
-                for led,state in pairs(changes.leds) do
-                    pd.send(
-                        'visuals',
-                        'led',
-                        {led, state and 1 or 0}
-                    )
-                end
-            end
-            
         end
+        
     end
 end
 
-function preset:in_1(atoms)
+function preset:in_1_pot(atoms)
     local module = atoms[1]
     local param  = atoms[2]
     local value  = atoms[3]
-    if self.loaded_modules[module] and self.loaded_modules[module][param] then
-        self.loaded_modules[module][param]:set(value)
+    if
+        self.loaded_modules[module] and
+        self.loaded_modules[module][param]
+    then
+        self.loaded_modules[module][param]:pot(value)
         self:send_param(module, param)
     end
 end
 
+function preset:in_1_increment(atoms)
+    local module = atoms[1]
+    local param  = atoms[2]
+    local value  = atoms[3]
+    if
+        self.loaded_modules[module] and
+        self.loaded_modules[module][param]
+    then
+        self.loaded_modules[module][param]:increment(value)
+        self:send_param(module, param)
+    end
+end
+
+function preset:in_1_set(atoms)
+    local module = atoms[1]
+    local param  = atoms[2]
+    local value  = atoms[3]
+    if
+        self.loaded_modules[module] and
+        self.loaded_modules[module][param]
+    then
+        self.loaded_modules[module][param]:set(value)
+        self:send_param(module, param)
+    end
+
+end

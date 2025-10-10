@@ -1,42 +1,63 @@
-local simple_toggle = require 'presets.common'.simple_toggle
-
-local ftsw_actions = {
-    simple_toggle{
-        on_activate={
-            {'oneoffs', 'ps-synth-sw', 1},
-            {'pitchshift', 't1', 0},
-            {'pitchshift', 't2', 12}
-        },
-        on_deactivate={
-            {'oneoffs', 'ps-synth-sw', 0}
-        },
+return {
+    defaults={
+        ['bank-1']={
+            glitch={
+                length=50,
+                bpm=113,
+                ['bpm.div']=4,
+                dry=100
+            },
+            delay={
+                level=-6,
+                fdbk=-18,
+                lop=108,
+                hip=30,
+                ['mod.rate']=.9,
+                ['mod.depth']=3
+            },
+            ['gt-synth']={
+                ['pitch-1']=0,
+                ['osc-2']=-100,
+                waveform=0,
+                ['pitch.lfo.rate']=3,
+                ['pitch.lfo.cents']=16,
+                cutoff=120,
+                Q=.8,
+                ['cutoff.key']=0,
+                glide=0
+            },
+            oneoffs={
+                master=3,
+                ['ps-synth-sw']=2
+            }
+        }
     },
-    simple_toggle{
-        on_activate={
-            {'amp-lfo', 'bypass', 0}
+    controls={
+        ['exp-pedal']={
+            ['bank-1'] = {
+                type='pot',
+                params={
+                    {
+                        module='delay',
+                        param='fdbk',
+                        transform=function(v)
+                            return math.abs(v - 1) * .2 + .78
+                        end
+                    },
+                    {
+                        module='glitch',
+                        param='chance',
+                    }
+                }
+            }
         },
-        on_deactivate={
-            {'amp-lfo', 'bypass', 1}
+        ['ftsw-1']={
+            type='toggle',
+            params={
+                {
+                    module='oneoffs'
+                }
+            }
         }
     }
-}
-
-return {
-    defaults = {
-        {'amp-lfo', 'depth', 90},
-        {'amp-lfo', 'bypass', 1},
-        {'oneoffs', 'ps-synth-sw', 0},
-    },
-    footsw = function(state, ftsw, press)
-        if ftsw_actions[ftsw] ~= nil then
-            return ftsw_actions[ftsw](press, state)
-        end
-    end,
-    encoders = function(state, enc, direction)
-    end,
-    seq_buttons = function(state, seq_btn, press)
-    end,
-    ['exp-pedal'] = function(state, position)
-
-    end
 }

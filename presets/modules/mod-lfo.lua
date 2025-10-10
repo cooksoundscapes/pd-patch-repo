@@ -4,9 +4,7 @@ return {
     new = function()
         return {
             rate=types:low_freq(),
-            wave=types:custom{
-                min=0,max=4,default=0,res=4
-            },
+            wave=types:waveform(),
             range=types:custom{
                 min=3,max=12,default=3,res=256,
                 map = function(self, value)
