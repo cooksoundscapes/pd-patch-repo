@@ -9,32 +9,16 @@ local function append_lib_path()
     end
 end
 
---[[
-    1st inlet takes care of CONTROLS;
-    2nd inlet takes care of PRESETS;
-    3rd inlet takes care of MODULES;
-    The idea is to have 3 types of config files:
-    1. control mappings
-    2. parameters presets
-    3. modules
-
-    general workflow is:
-    1. loading each module individually
-    2. loading one control mapping at a time - these defines what encoders can control
-    3. loading presets for setting groups os parameters and shortcuts to control mapping
-]]
-
 function preset:initialize()
     append_lib_path()
-    self.inlets = 3
+    self.inlets = 2
     self.outlets = 1
     self.loaded_modules = {}
     return true
 end
 
-
 -- add module
-function preset:in_3_add(atoms)
+function preset:in_2_add(atoms)
     local module_name = atoms[1]
     local receiver = atoms[2]
 
@@ -56,8 +40,8 @@ function preset:in_3_add(atoms)
     end
 end
 
-
-function preset:in_3_remove(atoms)
+-- remove module
+function preset:in_2_remove(atoms)
     local m_name = atoms[1]
     self.loaded_modules[m_name] = nil
 end
